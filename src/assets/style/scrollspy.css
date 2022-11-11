@@ -1,0 +1,29 @@
+.App {
+  font-family: sans-serif;
+}
+.scrollspy {
+  position: sticky;
+  background-color:#2b2d42;
+  top: 25vh;
+}
+ul {
+  list-style: none;
+}
+li {
+  margin: 10px;
+  padding: 10px 0;
+}
+a{
+  text-decoration: none;
+}
+.nav-link {
+  color: white;
+  text-decoration: none;
+}
+.isCurrent {
+  font-weight: bold;
+}
+
+.isCurrent a, h2 {
+  color: #d8042a;
+}
