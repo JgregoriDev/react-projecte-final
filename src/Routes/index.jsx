@@ -2,19 +2,19 @@ import React, { useEffect, useState } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import { useLocation } from "react-router-dom";
 import Filter from '../components/filter';
-import Diapositives from '../components/Diapositives';
+import Diapositives from '../components/diapositives';
 import { ClockHistory } from 'react-bootstrap-icons';
 import { Cart } from 'react-bootstrap-icons';
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom'
+
 const Index = ({afegirProducteAlCarret}) => {
 	const [videojocs, setvideojocs] = useState([]);
 	const [TotalPages, setTotalPages] = useState(1);
 	const [CurrentPage, setCurrentPage] = useState(1);
 	const numero = [];
 	const [showGames, setshowGames] = useState(false);
-	useEffect(() => {
-		getVideojocsFromServer();
-	}, []);
+	
 	const search = useLocation().search;
 	let page = new URLSearchParams(search).get("pagina") ?? 1;
 	let pagina=`?pagina=${page}` ?? ``;
@@ -22,6 +22,9 @@ const Index = ({afegirProducteAlCarret}) => {
 	let filt=`&filtrar=${filtrar}` ?? ``;
 	let orden = new URLSearchParams(search).get("orden") ?? "ASC";
 	let ord = `&orden=${orden}` ?? "";
+	useEffect(() => {
+		getVideojocsFromServer();
+	}, [pagina]);
 	const getVideojocsFromServer = async () => {
 		page=page<=0?1:page;	
 		let pag=`${parseInt(page)}`;
@@ -66,9 +69,16 @@ const Index = ({afegirProducteAlCarret}) => {
 		numero.push(
 			<li key={i} className="page-item">
 				{/* <a className="page-link" href={`?pagina=${i}`}> */}
-				<a className="page-link" href={`?pagina=${i}${filt}${ord}`}>
+				{/* <a className="page-link" href={`http://localhost:3000/?pagina=${i}${filt}${ord}`}>
 					{i}
-				</a>
+				</a> */}
+				<Link className="page-link"
+				to={{
+					pathname: "",
+					search: `pagina=${i}${filt}${ord}`,
+				}} >
+					{i}
+				</Link>
 			</li>
 		);
 	}

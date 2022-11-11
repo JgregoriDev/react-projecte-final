@@ -1,7 +1,8 @@
 import React from 'react';
 import { Twitter,Facebook,Instagram  } from 'react-bootstrap-icons';
 import "../assets/style/footer.css";
-import { Link } from "react-router-dom";export const Peu = () => {
+import { Link } from "react-router-dom";
+export const Peu = () => {
 
   return (
     <div className='container-fluid bg-dark  mt-9'>

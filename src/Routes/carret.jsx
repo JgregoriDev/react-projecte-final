@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Trash, ArrowLeft } from "react-bootstrap-icons";
+import { Link } from "react-router-dom";
 
 const Carrito = () => {
 	const [ArrayCarret, setArrayCarret] = useState([]);
@@ -122,12 +123,12 @@ const Carrito = () => {
 								</p>
 							</div>
 							<div className="d-flex flex-column gap-3">
-								<a href="" className="btn btn-primary">
+								<Link to="" className="btn btn-primary">
 									Comprar
-								</a>
-								<a href="/" className="btn btn-secondary mb-3">
+								</Link>
+								<Link to="/" className="btn btn-secondary mb-3">
 									<ArrowLeft className="mx-2"></ArrowLeft>Volver a la tienda
-								</a>
+								</Link>
 							</div>
 						</div>
 					</div>

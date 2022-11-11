@@ -6,6 +6,8 @@ import Logo from '../assets/images/icon64x64.png';
 import "../assets/style/header.css";
 import { Search, Cart,PersonCircle} from 'react-bootstrap-icons';
 import { useEffect, useState } from 'react';
+import { NavLink,Link } from "react-router-dom";
+
 export const Header = ({mostrar,tamanyCarret}) => {
 	const [Marques, setMarques] = useState([]);
 	useEffect(() => {

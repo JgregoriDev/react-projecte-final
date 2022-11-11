@@ -1,5 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import Carousel from 'react-bootstrap/Carousel';
+import { Link } from 'react-router-dom'
+
 const Diapositives = () => {
   const [index, setIndex] = useState(0);
   const [Jocs, setJocs] = useState([]);
@@ -29,7 +31,7 @@ const Diapositives = () => {
        <Carousel activeIndex={index} className={`d-none d-lg-block`} onSelect={handleSelect}>
       {Jocs && Jocs.map((joc)=>{
         return(
-          <Carousel.Item key={joc.id} href={`/videojuegos/${joc.id}`}>
+          <Carousel.Item key={joc.id} to={`/videojuegos/${joc.id}`}>
           <img
             className="w-100 h-50"
             src={joc.portada}
@@ -37,11 +39,11 @@ const Diapositives = () => {
           />
   
           <Carousel.Caption>
-            <h3><a href={`/videojoc/${joc.id}`}>{joc.title}</a></h3>
+            <p>{joc.title}</p>
             <p>
               {joc.descripcio}
             </p>
-            <a className="btn btn-primary" href={`/videojoc/${joc.id}`}>Conseguir ara</a>
+            <Link className="btn btn-primary" to={`/videojoc/${joc.id}`}>Conseguir ara</Link>
           </Carousel.Caption>
         </Carousel.Item>
         )})}

@@ -6,6 +6,18 @@ function Buscar() {
 	let buscar = new URLSearchParams(search).get("buscar");
   const [Valor, setValor] = useState("");
   const [ArrayVideojocs, setArrayVideojocs] = useState("");
+
+  let location = {
+    pathname: "/bbq/pig-pickins",
+    search: "?campaign=instagram&popular=true",
+    hash: "",
+    state: null,
+    key: "aefz24ie",
+  };
+  let params = new URLSearchParams(location.search);
+  params.get("campaign"); // "instagram"
+params.get("popular"); // "true"
+params.toString(); // "campaign=instagram&popular=true",
   useEffect(() => {
     setValor(window.location.pathname.split("/")[2]);
     console.log(window.location.pathname.split("/")[2]);
@@ -22,7 +34,7 @@ function Buscar() {
   return (
     <div className='row'>
       <div className="col-2"></div>
-      <div className="col-8 w-50">
+      <div className="col-8">
         <h1>Buscar videojoc amb titol {Valor}</h1>
         <h3>{ArrayVideojocs.length>0?"Resultats de busqueda":"No s'han trobat resultats"}</h3>
         {ArrayVideojocs && ArrayVideojocs.map((joc)=>{
