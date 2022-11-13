@@ -7,17 +7,7 @@ function Buscar() {
   const [Valor, setValor] = useState("");
   const [ArrayVideojocs, setArrayVideojocs] = useState("");
 
-  let location = {
-    pathname: "/bbq/pig-pickins",
-    search: "?campaign=instagram&popular=true",
-    hash: "",
-    state: null,
-    key: "aefz24ie",
-  };
-  let params = new URLSearchParams(location.search);
-  params.get("campaign"); // "instagram"
-params.get("popular"); // "true"
-params.toString(); // "campaign=instagram&popular=true",
+
   useEffect(() => {
     setValor(window.location.pathname.split("/")[2]);
     console.log(window.location.pathname.split("/")[2]);

@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Header } from "./header";
 import { Peu } from "./peu";
-import SearchBar from "./Search";
+import SearchBar from "./search";
 import About from "../Routes/about";
 import Carret from "../Routes/carret";
 import Index from "../Routes/index";
@@ -11,6 +11,7 @@ import Buscar from "../Routes/buscar";
 import Login from '../Routes/login';
 import PresentarJoc from "../Routes/presentar-joc";
 import Profile from "../Routes/profile";
+import {Plataforma} from '../Routes/plataforma';
 export const Container = () => {
 	const [title, setTitle] = useState("");
 	const [showSearchBar, setshowSearchBar] = useState(false);
@@ -65,6 +66,10 @@ export const Container = () => {
 		{
 			path: "/perfil/",
 			element: <Profile></Profile>,
+		},
+		{
+			path: "/plataforma/:id",
+			element: <Plataforma></Plataforma>,
 		},
 	]);
 

@@ -1,0 +1,17 @@
+.missatge{
+  background-color: rgba(0, 0, 0, 0.835);
+  color: white;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 80vh;
+  border-radius: 15px;
+
+  font-size: 0.8rem;
+  left: 45%;
+  height: 50px;
+  width: 250px;
+  z-index: 5;
+}

@@ -7,14 +7,15 @@ import { ClockHistory } from 'react-bootstrap-icons';
 import { Cart } from 'react-bootstrap-icons';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom'
-
+import Toast from '../components/toast';
 const Index = ({afegirProducteAlCarret}) => {
 	const [videojocs, setvideojocs] = useState([]);
+	const [Show, setShow] = useState();
 	const [TotalPages, setTotalPages] = useState(1);
-	const [CurrentPage, setCurrentPage] = useState(1);
 	const numero = [];
 	const [showGames, setshowGames] = useState(false);
 	
+
 	const search = useLocation().search;
 	let page = new URLSearchParams(search).get("pagina") ?? 1;
 	let pagina=`?pagina=${page}` ?? ``;
@@ -33,8 +34,8 @@ const Index = ({afegirProducteAlCarret}) => {
 		let results=`&results=12`;
 
 		const url={
-			"link1":`http://vos.es/api/v1/videojocs?page=${page}${results}${parametro}${ordenar}`,
-			"link2":`http://vos.es/api/v1/videojocs?page=${page}${results}`
+			"link1":`https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?page=${page}${results}${parametro}${ordenar}`,
+			"link2":`https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?page=${page}${results}`
 		}	
 		let link;
 		filtrar && ordenar?link=url.link1:link=url.link2;
@@ -56,6 +57,14 @@ const Index = ({afegirProducteAlCarret}) => {
 			</div>
 		);
 	};
+	const mostrar=()=>{
+		setShow(!Show);
+		setTimeout(()=>{
+			setShow(false);
+		
+		
+		},1500);
+	}
 
 	const onSubmit=(e)=>{
 		
@@ -68,14 +77,12 @@ const Index = ({afegirProducteAlCarret}) => {
 	for (let i = 1; i <= TotalPages; i++) {
 		numero.push(
 			<li key={i} className="page-item">
-				{/* <a className="page-link" href={`?pagina=${i}`}> */}
-				{/* <a className="page-link" href={`http://localhost:3000/?pagina=${i}${filt}${ord}`}>
-					{i}
-				</a> */}
-				<Link className="page-link"
+			
+				<Link className={`page-link ${page===i?"active":""}`}
 				to={{
 					pathname: "",
 					search: `pagina=${i}${filt}${ord}`,
+					hash: "#filtrado"
 				}} >
 					{i}
 				</Link>
@@ -93,17 +100,17 @@ const Index = ({afegirProducteAlCarret}) => {
 							</div>
 						</div>
 		</div>
-		<div className="mt-9 container">
+		<div className="mt-9 container-fluid">
 			<div className="row">
-				<div className="col-2"></div>
-				<div className="col-8">
+				<div className="d-none d-lg-block col col-lg-2"></div>
+				<div className="col col-lg-8">
 					<div className="row">
 					<Filter></Filter>
-				
+					<div id="filtrado"></div>
 						{videojocs.length < 1 ? infiniteSpinner() : ""}
 						{videojocs &&
 							videojocs.map((joc, index) => (
-								<div className="col col-lg-4 border-2 my-3 my-3 gap-4" key={joc.id}>
+								<div className="col col-lg-4 justify-content-center border-2 my-3 gap-9" key={joc.id}>
 									<a href={`/videojoc/${joc.id}`}>
 										<img
 										loading="lazy"
@@ -119,11 +126,15 @@ const Index = ({afegirProducteAlCarret}) => {
 									<p>Preu: {joc.preu}€</p>
 									<p><ClockHistory className="me-1"></ClockHistory>Fecha Estreno: {new Date(joc.fechaEstreno).toLocaleDateString()}</p>
 									<div className="d-flex justify-content-around">
-									<Button onClick={()=>afegirAlCarret(joc)} title="Poner en " variant="secondary"><Cart></Cart></Button>{' '}
+									<Button onClick={()=>{
+										mostrar();
+										afegirAlCarret(joc);
+									}} title="Poner en " variant="secondary"><Cart></Cart></Button>{' '}
 									<Button title="Comprar ya" variant="primary">Comprar ya</Button>{' '}
 									</div>
 								</div>
 							))}
+							{Show?	<Toast message={`Has afegit un producte\n al carret`}></Toast>:""}
 						<div className=" mb-9 d-flex justify-content-center">
 							<nav aria-label="Page navigation example">
 								<ul className="pagination d-flex m-0">
@@ -133,7 +144,7 @@ const Index = ({afegirProducteAlCarret}) => {
 						</div>
 					</div>
 				</div>
-				<div className="col-2"></div>
+				<div className="d-none d-lg-block col col-lg-2"></div>
 			</div>
 		</div>
 		</div>

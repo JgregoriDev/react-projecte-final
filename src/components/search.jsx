@@ -14,9 +14,12 @@ const SearchBar = () => {
     window.location.href=`/buscar?buscar=${busqueda}`;
 	};
 	return (
-		<div className="">
+		<div className="container-fluid">
+			<div className="row">
+			<div className="col"></div>
+			
 			<form
-				className="d-flex my-3 gap-1"
+				className="d-flex my-3 col-10 gap-1"
 				onSubmit={onSubmit}
 				action=""
 				method="get"
@@ -32,6 +35,8 @@ const SearchBar = () => {
 					<Search></Search>
 				</button>
 			</form>
+			<div className="col"></div>
+			</div>
 		</div>
 	);
 };

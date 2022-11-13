@@ -21,14 +21,15 @@ const Diapositives = () => {
 		let parametro=`&parametro=fechaEstreno`;
 		let ordenar=`&sort=DESC`;
 		let results=`&results=3`;
-		const response = await fetch(`http://vos.es/api/v1/videojocs?page=${page}${parametro}${ordenar}${results}`);
+		const response = await fetch(`https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?page=${page}${parametro}${ordenar}${results}`);
 		const videojoscArray = await response.json();
 		setJocs(videojoscArray.Resultat);
+    
 	};
 
   return (
     <div>
-       <Carousel activeIndex={index} className={`d-none d-lg-block`} onSelect={handleSelect}>
+       <Carousel activeIndex={index}  className={`d-none d-lg-block ${Jocs.length>0?"":"d-none"}`} onSelect={handleSelect}>
       {Jocs && Jocs.map((joc)=>{
         return(
           <Carousel.Item key={joc.id} to={`/videojuegos/${joc.id}`}>

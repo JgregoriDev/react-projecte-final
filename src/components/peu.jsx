@@ -5,14 +5,11 @@ import { Link } from "react-router-dom";
 export const Peu = () => {
 
   return (
-    <div className='container-fluid bg-dark  mt-9'>
-      <div className="row">
+    <div className='container-fluid bg-dark footer'>
+      <div className="row mt-3">
       <div className="col-2"></div>
       <div className="col-8">
         <nav>
-          {/* <li> <Link to={`/sobre-nosotros`}>Sobre nosotros</Link></li>
-          <li> <Link to={`/sobre-nosotros`}>Sobre nosotros</Link></li>
-          <li> <Link to={`/sobre-nosotros`}>Sobre nosotros</Link></li> */}
           <a href="/sobre-nosotros" className='icon nav-link' title='Sobre nosaltres'>Sobre nosaltres</a>
         </nav>
       </div>
