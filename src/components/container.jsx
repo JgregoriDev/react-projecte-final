@@ -25,18 +25,21 @@ export const Container = () => {
 		setshowSearchBar(!bandera);
 	};
 	const afegirProducteAlCarret = (producte) => {
-		let carrito;
-		if (localStorage.getItem("carrito")) {
-			carrito = JSON.parse(localStorage.getItem("carrito"));
-			carrito.push(producte);
-			console.log(carrito);
-			setCarrito(carrito);
-			localStorage.setItem("carrito", JSON.stringify(carrito));
-		} else {
-			setCarrito(producte);
-			localStorage.setItem("carrito", JSON.stringify(carrito));
+		
+		console.log(producte);
+		const carrito=JSON.parse(localStorage.getItem("carrito"));
+		console.log(carrito);
+		if(carrito===null){
+			// const carritoAux=[];
+
+			localStorage.setItem("carrito",JSON.stringify(producte));
+		}else{
+			const carritoJSON=JSON.parse(carrito);
+			const carritoAux=[...carritoJSON,producte];
+			console.log(carritoAux);
+			localStorage.setItem("carrito",JSON.stringify(carritoAux));
 		}
-		return <></>;
+		// console.log(JSON.parse(localStorage.getItem("carrito")));
 	};
 	const router = createBrowserRouter([
 		{

@@ -1,48 +1,47 @@
 import React from "react";
 import jwt_decode from "jwt-decode";
+import axios from "axios";
+
 const Login = () => {
 	const onSubmit = (e) => {
 		e.preventDefault();
 		console.log(e.target[0].value);
 		console.log(e.target[1].value);
 		const objecteDadesLogin = {
-			"email": e.target[0].value,
-			"password": e.target[1].value,
+			email: e.target[0].value,
+			password: e.target[1].value,
 		};
 		const result = login(objecteDadesLogin);
-		// result
-		// 	.then((result) => {
-		// 		if (result) {
-		// 			console.log(result);
-		// 			const token = JSON.parse(result);
-
-		// 			const decoded = jwt_decode(token.token);
-		// 			console.log(decoded.roles);
-		// 			localStorage.setItem("token", token.token.token);
-		// 			window.location.href = "/perfil";
-		// 		}
-		// 	})
-		// 	.catch((err) => {});
+		result
+			.then((result) => {
+				console.log(result);
+				localStorage.setItem("token",JSON.stringify({"id":result.id,"email":result.email,"token":result.token}));
+				window.location.href = "/perfil";
+			})
+			.catch((err) => {});
 	};
 	const login = async (objecte) => {
-		console.log(objecte);
-
-		// let bodyContent = JSON.stringify(objecte);
-		fetch('http://vos.es/api/login_check', {
-      credentials: 'include',
-      method: 'POST',
-			
-      headers: {
-				'Content-Type': 'application/json',
-				'Access-Control-Allow-Credentials':true,
-			},
-      body: JSON.stringify(objecte),
-
-      }).then(result => console.log('success====:', result))
-        .catch(error => console.log('error============:', error));
+		let headersList = {
+			"Accept": "*/*",
+			"User-Agent": "Thunder Client (https://www.thunderclient.com)",
+			"Content-Type": "application/json",
+		};
 
 
-		// return data;
+		
+		let bodyContent = JSON.stringify({
+			email: "admin",
+			password: "admin",
+		});
+
+		let response = await fetch("http://vos.es/api/login", {
+			method: "POST",
+			body: bodyContent,
+			headers: headersList,
+		});
+
+		let data = await response.json();
+		return data;
 	};
 	return (
 		<div className="row">

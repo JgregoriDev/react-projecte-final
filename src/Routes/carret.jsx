@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Trash, ArrowLeft } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
-import Toast from '../components/toast';
+import Toast from "../components/toast";
 const Carrito = () => {
 	const [ArrayCarret, setArrayCarret] = useState([]);
 	const [TamanyCarret, setTamanyCarret] = useState(0);
@@ -9,7 +8,6 @@ const Carrito = () => {
 	const [Show, setShow] = useState(false);
 	useEffect(() => {
 		setArrayCarret(JSON.parse(localStorage.getItem("carrito")));
-	
 	}, []);
 
 	const borrarVideojocCarret = (key) => {
@@ -28,12 +26,12 @@ const Carrito = () => {
 		localStorage.removeItem("carrito");
 		setArrayCarret([]);
 	};
-	const modificarVista=()=>{
+	const modificarVista = () => {
 		setShow(true);
 		setTimeout(() => {
 			setShow(false);
 		}, 1300);
-	}
+	};
 
 	return (
 		<div className="container">
@@ -83,7 +81,20 @@ const Carrito = () => {
 																borrarVideojocCarret(producte.id);
 															}}
 														>
-															<Trash />
+															<svg
+																xmlns="http://www.w3.org/2000/svg"
+																width="16"
+																height="16"
+																fillRule="currentColor"
+																className="bi bi-trash"
+																viewBox="0 0 16 16"
+															>
+																<path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+																<path
+																	fillRule="evenodd"
+																	d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+																/>
+															</svg>
 														</button>
 													</td>
 												</tr>
@@ -107,13 +118,32 @@ const Carrito = () => {
 									<b>Preu:</b> {PreuTotal}
 								</p>
 							</div>
-							{Show?<Toast message={`Has borrat un producte\n de la pàgina `}></Toast>:""}
+							{Show ? (
+								<Toast
+									message={`Has borrat un producte\n de la pàgina `}
+								></Toast>
+							) : (
+								""
+							)}
 							<div className="d-flex flex-column gap-3">
 								<Link to="" className="btn btn-primary">
 									Comprar
 								</Link>
 								<Link to="/" className="btn btn-secondary mb-3">
-									<ArrowLeft className="mx-2"></ArrowLeft>Volver a la tienda
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										width="16"
+										height="16"
+										fillRule="currentColor"
+										className="bi bi-arrow-left"
+										viewBox="0 0 16 16"
+									>
+										<path
+											fillRule="evenodd"
+											d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
+										/>
+									</svg>
+									Volver a la tienda
 								</Link>
 							</div>
 						</div>

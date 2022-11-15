@@ -21,7 +21,8 @@ const Diapositives = () => {
 		let parametro=`&parametro=fechaEstreno`;
 		let ordenar=`&sort=DESC`;
 		let results=`&results=3`;
-		const response = await fetch(`https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?page=${page}${parametro}${ordenar}${results}`);
+		// const response = await fetch(`https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?page=${page}${parametro}${ordenar}${results}`);
+		const response = await fetch(`http://vos.es/api/v1/videojocs?page=${page}${parametro}${ordenar}${results}`);
 		const videojoscArray = await response.json();
 		setJocs(videojoscArray.Resultat);
     
@@ -34,6 +35,7 @@ const Diapositives = () => {
         return(
           <Carousel.Item key={joc.id} to={`/videojuegos/${joc.id}`}>
           <img
+            loading='lazy'
             className="w-100 h-50"
             src={joc.portada}
             alt="Third slide"
