@@ -15,7 +15,7 @@ function Buscar() {
   console.log(window.location.pathname.split("/")[2]);
   }, []);
   const buscarPerText=async()=>{
-    const response=await fetch(`http://vos.es/api/v1/videojoc/${buscar}/buscar`);
+    const response=await fetch(`http://vos.es/api/v1/videojoc/buscar/${buscar}`);
     const arrayBusqueda=await response.json();
     console.log(arrayBusqueda);
     setArrayVideojocs(arrayBusqueda.Resultat);

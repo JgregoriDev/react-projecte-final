@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Toast from "../components/toast";
-const Carrito = () => {
+const Carrito = ({Carrito}) => {
 	const [ArrayCarret, setArrayCarret] = useState([]);
 	const [TamanyCarret, setTamanyCarret] = useState(0);
 	const [PreuTotal, setPreuTotal] = useState(0);
 	const [Show, setShow] = useState(false);
 	useEffect(() => {
-		setArrayCarret(JSON.parse(localStorage.getItem("carrito")));
+		console.log(Carrito);
+		setArrayCarret(Carrito);
+		ArrayCarret.forEach(element => {
+			const preuAux=element.preu+PreuTotal;
+			setPreuTotal(preuAux);
+		});
 	}, []);
 
 	const borrarVideojocCarret = (key) => {
@@ -20,6 +25,7 @@ const Carrito = () => {
 		let help = ArrayCarret.splice(carro[index], 1);
 		// console.log(help);
 		setArrayCarret(ArrayCarret);
+	
 		localStorage.setItem("carrito", JSON.stringify(ArrayCarret));
 	};
 	const onClick = () => {
@@ -47,22 +53,24 @@ const Carrito = () => {
 								<thead>
 									<tr>
 										<th>Id</th>
-										<th>Borrar</th>
 										<th>Portada</th>
 										<th>Titul</th>
-										<th>Cantitat</th>
 										<th>Preu</th>
+										<th>Cantitat</th>
+										<th>Borrar</th>
 									</tr>
 								</thead>
 								<tbody className="table-group-divider">
-									{ArrayCarret &&
+									{ArrayCarret && ArrayCarret.map &&
 										ArrayCarret.map((producte, index) => {
 											return (
 												<tr
 													key={index}
-													className={index % 2 === 0 ? "bg-light" : ""}
+													className={index % 2 === 0 ? "bg-secondary" : ""}
 												>
+													
 													<th scope="row">{producte.id}</th>
+													
 													<td>
 														<img
 															className="img-thumbnail w-25 h-auto"

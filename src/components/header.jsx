@@ -83,11 +83,12 @@ export const Header = ({ mostrar, tamanyCarret }) => {
 							: ""}
 						<Nav.Link
 							title="Buscar"
+							as={Link}
 							onClick={() => {
 								mostrar();
 							}}
 							className="text-white mx-3"
-							href="#link"
+							to="#link"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
@@ -101,7 +102,7 @@ export const Header = ({ mostrar, tamanyCarret }) => {
 							</svg>
 						</Nav.Link>
 
-						<Nav.Link title="Carret" className="text-white mx-3" href="/carret">
+						<Nav.Link title="Carret" as={Link} className="text-white mx-3" to="/carret">
 							{tamanyCarret !== undefined && tamanyCarret > 0
 								? `${tamanyCarret}`
 								: ``}
@@ -144,16 +145,7 @@ export const Header = ({ mostrar, tamanyCarret }) => {
 							d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
 						/>
 					</svg>
-					<NavDropdown
-						className="text-white"
-						title={Email}
-						id="basic-nav-dropdown"
-					>
-						{Email==="Usuari"?usuariNoLogin():""}
-						{Email!=="Usuari"?<NavDropdown.Item onClick={()=>borrarLS()}>
-							Tanca sesió
-						</NavDropdown.Item>:""}
-					</NavDropdown>
+				
 				</div>
 			</Container>
 		</Navbar>

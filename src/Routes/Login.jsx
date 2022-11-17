@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import jwt_decode from "jwt-decode";
-import axios from "axios";
+import { redirect } from 'react-router-dom'
 
 const Login = () => {
+	const [ErrorMessage, setErrorMessage] = useState('');
 	const onSubmit = (e) => {
 		e.preventDefault();
-		console.log(e.target[0].value);
-		console.log(e.target[1].value);
 		const objecteDadesLogin = {
 			email: e.target[0].value,
 			password: e.target[1].value,
@@ -15,10 +14,24 @@ const Login = () => {
 		result
 			.then((result) => {
 				console.log(result);
-				localStorage.setItem("token",JSON.stringify({"id":result.id,"email":result.email,"token":result.token}));
-				window.location.href = "/perfil";
+				if (result?.Title) {
+					if (result.Title === "Login incocorrecte") {
+						setErrorMessage("Error dades incorrectes");
+					} else {
+						localStorage.setItem(
+							"token",
+							JSON.stringify({
+								id: result.id,
+								email: result.email,
+								token: result.token,
+							})
+						);
+							window.location.href="/perfil";
+					}
+
+				}
 			})
-			.catch((err) => {});
+			.catch((err) => { });
 	};
 	const login = async (objecte) => {
 		let headersList = {
@@ -27,14 +40,13 @@ const Login = () => {
 			"Content-Type": "application/json",
 		};
 
-
-		
+		console.log(objecte);
 		let bodyContent = JSON.stringify({
-			email: "admin",
-			password: "admin",
+			email: objecte.email,
+			password: objecte.password,
 		});
 
-		let response = await fetch("http://vos.es/api/login", {
+		let response = await fetch("http://127.0.0.9/api/login", {
 			method: "POST",
 			body: bodyContent,
 			headers: headersList,
@@ -65,6 +77,7 @@ const Login = () => {
 					<div className="d-flex justify-content-center">
 						<input type="submit" className="btn btn-primary" value="Login" />
 					</div>
+					<small className="text-danger">{ErrorMessage}</small>
 				</form>
 				<div className="mt-50vh"></div>
 			</div>

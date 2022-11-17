@@ -7,12 +7,12 @@ function filter() {
 							<div className={``}>
 							<label className="d-block" htmlFor="orden">Orden</label>
 							<select className="form-select" name="orden" id="">
-								<option value="ASC">Asc</option>
-								<option value="DESC">Desc</option>
+								<option value="ASC">Ascendent</option>
+								<option value="DESC">Descendent</option>
 							</select>
 							</div>
 							<div className={`my-2 my-lg-0 mx-2`}>
-							<label htmlFor="orden">Orden</label>
+							<label htmlFor="orden">Ordenar</label>
 							<select className="form-select" name="filtrar" id="filtrar">
 								<option value="id">identificador</option>
 								<option value="preu">preu</option>

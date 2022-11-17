@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import { useLocation } from "react-router-dom";
 import Filter from "../components/filter";
+import FilterPreu from "../components/Filtratge";
 import Diapositives from "../components/diapositives";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
@@ -20,9 +21,28 @@ const Index = ({ afegirProducteAlCarret }) => {
 	let filt = `&filtrar=${filtrar}` ?? ``;
 	let orden = new URLSearchParams(search).get("orden") ?? "ASC";
 	let ord = `&orden=${orden}` ?? "";
+	let min = new URLSearchParams(search).get("filtrarMin")??'';
+	let max = new URLSearchParams(search).get("filtrarMax")??'';
 	useEffect(() => {
-		getVideojocsFromServer();
+			
+				console.trace(pagina)
+				
+				getVideojocsFromServer();
+
+		
+
+
 	}, [pagina]);
+
+	useEffect(() => {
+		if(min!=='')
+			window.location.href=`/filtrar/${min}/${max}`;
+	
+		
+	
+	}, [min])
+	
+
 	const getVideojocsFromServer = async () => {
 		page = page <= 0 ? 1 : page;
 		let pag = `${parseInt(page)}`;
@@ -103,7 +123,12 @@ const Index = ({ afegirProducteAlCarret }) => {
 					<div className="d-none d-lg-block col col-lg-2"></div>
 					<div className="col col-lg-8">
 						<div className="row">
-							<Filter></Filter>
+							<div className="row">
+								<div className="col-6">
+									<Filter></Filter>
+								</div>
+
+							</div>
 							<div id="filtrado"></div>
 							{videojocs.length < 1 ? infiniteSpinner() : ""}
 							{videojocs &&
@@ -180,7 +205,9 @@ const Index = ({ afegirProducteAlCarret }) => {
 							</div>
 						</div>
 					</div>
-					<div className="d-none d-lg-block col col-lg-2"></div>
+					<div className="d-none d-lg-block col col-lg-2">
+						<FilterPreu />
+					</div>
 				</div>
 			</div>
 		</div>
