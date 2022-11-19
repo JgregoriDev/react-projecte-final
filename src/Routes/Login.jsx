@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import jwt_decode from "jwt-decode";
-import { redirect } from 'react-router-dom'
-
+import { useNavigate } from "react-router-dom";
 const Login = () => {
 	const [ErrorMessage, setErrorMessage] = useState('');
+	const navigate = useNavigate();
 	const onSubmit = (e) => {
 		e.preventDefault();
 		const objecteDadesLogin = {
@@ -26,7 +26,8 @@ const Login = () => {
 								token: result.token,
 							})
 						);
-							window.location.href="/perfil";
+							// window.location.href="/perfil";
+							navigate('/perfil', { replace: true });
 					}
 
 				}

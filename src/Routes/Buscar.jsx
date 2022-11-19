@@ -3,7 +3,7 @@ import { useLocation,Link } from "react-router-dom";
 
 function Buscar() {
 	const search = useLocation().search;
-	let buscar = new URLSearchParams(search).get("buscar");
+	let buscar = new URLSearchParams(search).get("q");
   const [Valor, setValor] = useState("");
   const [ArrayVideojocs, setArrayVideojocs] = useState("");
 
@@ -13,9 +13,10 @@ function Buscar() {
     console.log(window.location.pathname.split("/")[2]);
     buscarPerText();
   console.log(window.location.pathname.split("/")[2]);
-  }, []);
+  }, [Valor]);
   const buscarPerText=async()=>{
-    const response=await fetch(`http://vos.es/api/v1/videojoc/buscar/${buscar}`);
+    // const response=await fetch(`http://vos.es/api/v1/videojoc/buscar/${Valor}`);
+    const response=await fetch(`http://vos.es/api/v1/videojoc/buscar/${Valor}`);
     const arrayBusqueda=await response.json();
     console.log(arrayBusqueda);
     setArrayVideojocs(arrayBusqueda.Resultat);
@@ -26,7 +27,7 @@ function Buscar() {
       <div className="col-2"></div>
       <div className="col-8">
         <h1>Buscar videojoc amb titol {Valor}</h1>
-        <h3>{ArrayVideojocs.length>0?"Resultats de busqueda":"No s'han trobat resultats"}</h3>
+        <h3>{ArrayVideojocs && ArrayVideojocs.length>0?"Resultats de busqueda":"No s'han trobat resultats"}</h3>
         {ArrayVideojocs && ArrayVideojocs.map((joc)=>{
           return(
             <>

@@ -5,10 +5,12 @@ import Filter from "../components/filter";
 import FilterPreu from "../components/Filtratge";
 import Diapositives from "../components/diapositives";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
+import SearchBar from '../components/search';
 import Toast from "../components/toast";
 const Index = ({ afegirProducteAlCarret }) => {
-	const [videojocs, setvideojocs] = useState([]);
+	const params=useParams("")
+	const [Videojocs, setVideojocs] = useState([]);
 	const [Show, setShow] = useState();
 	const [TotalPages, setTotalPages] = useState(1);
 	const numero = [];
@@ -21,27 +23,27 @@ const Index = ({ afegirProducteAlCarret }) => {
 	let filt = `&filtrar=${filtrar}` ?? ``;
 	let orden = new URLSearchParams(search).get("orden") ?? "ASC";
 	let ord = `&orden=${orden}` ?? "";
-	let min = new URLSearchParams(search).get("filtrarMin")??'';
-	let max = new URLSearchParams(search).get("filtrarMax")??'';
+	let min = new URLSearchParams(search).get("filtrarMin") ?? '';
+	let max = new URLSearchParams(search).get("filtrarMax") ?? '';
 	useEffect(() => {
-			
-				console.trace(pagina)
-				
-				getVideojocsFromServer();
 
-		
+		console.trace(pagina)
+
+		getVideojocsFromServer();
+
+
 
 
 	}, [pagina]);
 
-	useEffect(() => {
-		if(min!=='')
-			window.location.href=`/filtrar/${min}/${max}`;
-	
-		
-	
-	}, [min])
-	
+	// useEffect(() => {
+	// 	if(min!=='')
+	// 		window.location.href=`/filtrar/${min}/${max}`;
+
+
+
+	// }, [min])
+
 
 	const getVideojocsFromServer = async () => {
 		page = page <= 0 ? 1 : page;
@@ -63,7 +65,7 @@ const Index = ({ afegirProducteAlCarret }) => {
 		const response = await fetch(link);
 		const videojoscArray = await response.json();
 		setTotalPages(videojoscArray.Tamany);
-		setvideojocs(videojoscArray.Resultat);
+		setVideojocs(videojoscArray.Resultat);
 	};
 
 	const infiniteSpinner = () => {
@@ -75,6 +77,7 @@ const Index = ({ afegirProducteAlCarret }) => {
 			</div>
 		);
 	};
+
 	const mostrar = () => {
 		setShow(!Show);
 		setTimeout(() => {
@@ -88,6 +91,7 @@ const Index = ({ afegirProducteAlCarret }) => {
 	const afegirAlCarret = (joc) => {
 		afegirProducteAlCarret(joc);
 	};
+
 	for (let i = 1; i <= TotalPages; i++) {
 		numero.push(
 			<li key={i} className="page-item">
@@ -130,9 +134,9 @@ const Index = ({ afegirProducteAlCarret }) => {
 
 							</div>
 							<div id="filtrado"></div>
-							{videojocs.length < 1 ? infiniteSpinner() : ""}
-							{videojocs &&
-								videojocs.map((joc, index) => (
+							{Videojocs.length < 1 ? infiniteSpinner() : ""}
+							{Videojocs &&
+								Videojocs.map((joc, index) => (
 									<div
 										className="col col-lg-4 justify-content-center border-2 my-3 gap-9"
 										key={joc.id}
@@ -205,7 +209,8 @@ const Index = ({ afegirProducteAlCarret }) => {
 							</div>
 						</div>
 					</div>
-					<div className="d-none d-lg-block col col-lg-2">
+					<div className="d-none d-lg-flex flex-column col col-lg-2">
+						<SearchBar></SearchBar>
 						<FilterPreu />
 					</div>
 				</div>

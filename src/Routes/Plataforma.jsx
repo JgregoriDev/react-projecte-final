@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link,useParams } from "react-router-dom";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
+
 const Plataforma = () => {
-	const [Jocs, setJocs] = useState("");
+	const {id}=useParams();
+	const [Jocs, setJocs] = useState([]);
 	const [Marca, setMarca] = useState([]);
 	const [Generes, setGeneres] = useState([]);
-	let id;
-	id = window.location.pathname.split("/")[2];
 	useEffect(() => {
+		console.log(id);
 		conseguirJocsPlataforma();
 		conseguirGeneresPlataforma();
-	}, []);
-	const conseguirJocsPlataforma = async (id) => {
+	}, [id]);
+	const conseguirJocsPlataforma = async () => {
 		const response = await fetch(
-			`http://vos.es/api/v1/plataforma/${window.location.pathname.split("/")[2]
-			}`
+			`http://vos.es/api/v1/plataforma/${id}`
 		);
 		const resultat = await response.json();
-		setJocs(resultat.plataforma_videojocs);
 		console.log(resultat);
+
+		setJocs(resultat.plataforma_videojocs);
 		
 	};
 	const conseguirGeneresPlataforma = async (id) => {
@@ -43,7 +44,7 @@ const Plataforma = () => {
 							<Breadcrumb.Item active>Plataforma  {`${id}`}</Breadcrumb.Item>
 						</Breadcrumb>
 						<h1>Plataforma amb id {`${id}`}</h1>
-						{Jocs.length > 0
+						{Jocs && Jocs.length > 0
 							? Jocs.map((Joc) => {
 								return (
 									<div key={Joc.id} className="col gap-5 col-lg-4">
@@ -65,7 +66,7 @@ const Plataforma = () => {
 									</div>
 								);
 							})
-							: <p>No hi han jocs amb aquest genere</p>}
+							: <p>No hi han jocs amb aquesta plataforma</p>}
 					</div>
 					<div className="mb-3"></div>
 				</div>
@@ -82,7 +83,7 @@ const Plataforma = () => {
 							);
 						})
 						: ""}
-					{Jocs.length < 1 ?
+					{Jocs && Jocs.length < 1 ?
 						<div className='my-3'>
 							&nbsp;
 						</div> : ""}

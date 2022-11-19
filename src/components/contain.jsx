@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, NavLink,Link } from 'react-router-dom'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -16,7 +16,6 @@ import Login from '../Routes/Login';
 import PresentarJoc from '../Routes/Presentar-joc';
 import Profile from '../Routes/Profile';
 import Notfound from '../Routes/404';
-import SearchBar from './search';
 import FiltratgePreu from '../Routes/FiltratgePreu';
 import FiltrePreu from './Filtratge';
 const Contain = () => {
@@ -24,26 +23,26 @@ const Contain = () => {
   const [Usuari, setUsuari] = useState({});
   const [Marques, setMarques] = useState([]);
   const [Email, setEmail] = useState("Login");
-  const [showSearchBar, setshowSearchBar] = useState(false);
   const arrayAux = [];
   const [Carrito, setCarrito] = useState([]);
   const [CarritoTamany, setCarritoTamany] = useState(0);
+  
   const modificarTitul = (title) => {
     setTitle(title);
   };
-  const mostrarBarraBusqueda = () => {
-    const bandera = showSearchBar;
-    setshowSearchBar(!bandera);
-  };
+
 
 
 
   const afegirProducteAlCarret = (producte) => {
-    //const carrito=JSON.parse(localStorage.getItem("carrito"));
-    Carrito.push(producte);
-    setCarrito(Carrito);
-    localStorage.setItem("carrito", Carrito);
-    console.log(Carrito);
+    const carrito=JSON.parse(localStorage.getItem("carrito"));
+    if(carrito){
+      setCarrito(carrito);
+      Carrito.push(producte);
+      localStorage.setItem("carrito", JSON.stringify(Carrito));
+      console.log(Carrito);
+    }
+ 
   };
 
   useEffect(() => {
@@ -113,7 +112,7 @@ const Contain = () => {
                             ? marca?.marcaPlataforma.map((plataforma) => {
                               return (
                                 <NavDropdown.Item
-                                  as={NavLink}
+                                  as={Link}
                                   key={plataforma.id}
                                   to={`/plataforma/${plataforma.id}`}
                                 >
@@ -126,19 +125,18 @@ const Contain = () => {
                       );
                     })
                     : ""}
-                  <Nav.Link
+                  {/* <Nav.Link
                     title="Buscar"
                     onClick={() => {
-                      mostrarBarraBusqueda();
                     }}
                     className="text-white mx-3"
                   >
                     <i className="bi bi-search"></i>
-                  </Nav.Link>
+                  </Nav.Link> */}
 
                   <Nav.Link title="Carret" as={NavLink} className="text-white mx-3" to="/carret">
                     {CarritoTamany > 0
-                      ? <small>`${CarritoTamany}`</small>
+                      ? <small>{CarritoTamany}</small>
                       : ``}
                     <i className="bi bi-cart"></i>
 
@@ -161,10 +159,11 @@ const Contain = () => {
             </Container>
           </Navbar>
         </div>
-        {!showSearchBar ? "" : <SearchBar></SearchBar>}
         <Routes>
-          <Route path='/carret' element={<Carret />}></Route>
+          <Route path='/carret' element={<Carret Carrito={Carrito}/>}></Route>
+          {/* <Route path='/buscar/:buscar' element={<Buscar />}></Route> */}
           <Route path='/buscar' element={<Buscar />}></Route>
+          <Route path='/buscar/:buscar' element={<Buscar />}></Route>
           <Route path='/filtrar/:min/:max' element={<FiltratgePreu />}></Route>
           <Route path='/' element={<Index afegirProducteAlCarret={afegirProducteAlCarret} />}></Route>
           <Route path='/videojoc/:id' element={<PresentarJoc />}></Route>
