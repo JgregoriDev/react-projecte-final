@@ -13,18 +13,18 @@ const SearchBar = () => {
 			<div className="">
 				<h5>Buscar</h5>
 				<form
-					className="d-flex flex-row gap-1"
+					className="d-flex flex-column gap-1 justify-content-center"
 					onSubmit={(e) => { onSubmit(e) }}
 					method="get"
 				>
 					<input
-						className="form-control"
+						className="form-control w-75 mb-2"
 						type="text"
 						formMethod="GET"
 						placeholder="Buscar"
 					/>
-					<button type="submit" title="Buscar" className="btn btn-primary">
-						{" "}
+					<button type="submit" title="Buscar" title="Buscar" className="btn btn-primary w-75">
+				
 						<i className="bi bi-search"></i>
 					</button>
 				</form>

@@ -1,56 +1,17 @@
-import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, NavLink,Link } from 'react-router-dom'
+import React,{useEffect, useState} from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Navbar from 'react-bootstrap/Navbar';
+import { useNavigate, NavLink, Link } from 'react-router-dom'
 import Logo from "../assets/images/icon64x64.png";
-import {Peu} from "../components/peu";
-import About from '../Routes/About';
-import Plataforma from '../Routes/Plataforma';
-import Buscar from '../Routes/Buscar';
-import Carret from '../Routes/Carret';
-import Index from '../Routes/Index';
-import Login from '../Routes/Login';
-import PresentarJoc from '../Routes/Presentar-joc';
-import Profile from '../Routes/Profile';
-import Notfound from '../Routes/404';
-import FiltratgePreu from '../Routes/FiltratgePreu';
-import FiltrePreu from './Filtratge';
-const Contain = () => {
-  const [title, setTitle] = useState("");
-  const [Usuari, setUsuari] = useState({});
+
+const Header = ({props}) => {
+  const navigate = useNavigate();
+  const {CarritoTamany}=props;
   const [Marques, setMarques] = useState([]);
+  const [title, setTitle] = useState("");
   const [Email, setEmail] = useState("Login");
-  const arrayAux = [];
-  const [Carrito, setCarrito] = useState([]);
-  const [CarritoTamany, setCarritoTamany] = useState(0);
-  
-  const modificarTitul = (title) => {
-    setTitle(title);
-  };
-
-
-
-
-  const afegirProducteAlCarret = (producte) => {
-    const carrito=JSON.parse(localStorage.getItem("carrito"));
-    if(carrito){
-      setCarrito(carrito);
-      Carrito.push(producte);
-      localStorage.setItem("carrito", JSON.stringify(Carrito));
-      console.log(Carrito);
-    }
- 
-  };
-
-  useEffect(() => {
-    setCarritoTamany(Carrito.length)
-  
-  
-  }, [Carrito])
-  
 
   useEffect(() => {
     cargarMarques();
@@ -61,12 +22,20 @@ const Contain = () => {
     }
     return () => { };
   }, []);
-
   const cargarMarques = async () => {
     const response = await fetch(`http://vos.es/api/v1/marques`);
     const resultat = await response.json();
     setMarques(resultat);
   };
+
+
+
+  const borrarLS = () => {
+    localStorage.removeItem("token");
+    setEmail("Login");
+    navigate(`/`);
+  }
+
 
   const usuariNoLogin = () => {
     return (
@@ -76,20 +45,10 @@ const Contain = () => {
       </>
     );
   };
-
-  const borrarLS = () => {
-    localStorage.removeItem("token");
-    window.location.href = "/";
-  }
-
-
-
-
+  
   return (
     <div>
-      <Router>
-        <div>
-          <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Container>
               <Navbar.Brand as={NavLink} to="/">	<img className="logo-header" src={Logo} alt="" />
                 VOS</Navbar.Brand>
@@ -105,7 +64,6 @@ const Contain = () => {
                           title={marca.marca}
                           className={`text-white bg-dark mx-03 ${marca.marcaPlataforma.length > 0 ? "" : "d-none"
                             }`}
-                          // href={`/marca/${marca.id}`}
                           id="basic-nav-dropdown"
                         >
                           {marca?.marcaPlataforma
@@ -125,14 +83,7 @@ const Contain = () => {
                       );
                     })
                     : ""}
-                  {/* <Nav.Link
-                    title="Buscar"
-                    onClick={() => {
-                    }}
-                    className="text-white mx-3"
-                  >
-                    <i className="bi bi-search"></i>
-                  </Nav.Link> */}
+
 
                   <Nav.Link title="Carret" as={NavLink} className="text-white mx-3" to="/carret">
                     {CarritoTamany > 0
@@ -158,24 +109,8 @@ const Contain = () => {
               </Navbar.Collapse>
             </Container>
           </Navbar>
-        </div>
-        <Routes>
-          <Route path='/carret' element={<Carret Carrito={Carrito}/>}></Route>
-          {/* <Route path='/buscar/:buscar' element={<Buscar />}></Route> */}
-          <Route path='/buscar' element={<Buscar />}></Route>
-          <Route path='/buscar/:buscar' element={<Buscar />}></Route>
-          <Route path='/filtrar/:min/:max' element={<FiltratgePreu />}></Route>
-          <Route path='/' element={<Index afegirProducteAlCarret={afegirProducteAlCarret} />}></Route>
-          <Route path='/videojoc/:id' element={<PresentarJoc />}></Route>
-          <Route path='/sobre-nosotros' element={<About></About>}></Route>
-          <Route path='/perfil' element={<Profile Usuari></Profile>}></Route>
-          <Route path='/plataforma/:id' element={<Plataforma></Plataforma>}></Route>
-          <Route path='/login' element={<Login Usuari></Login>}></Route>
-          <Route path='*' element={<Notfound />}></Route>
-        </Routes>
-      </Router>
-      <Peu></Peu>
     </div>
   )
 }
-export default Contain;
+
+export default Header

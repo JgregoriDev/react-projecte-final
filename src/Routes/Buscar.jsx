@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation,Link } from "react-router-dom";
-
-function Buscar() {
+import useTitle from "../Hooks/useTitle";
+function Buscar({title}) {
+  useTitle(title);
+  const location = useLocation();
 	const search = useLocation().search;
 	let buscar = new URLSearchParams(search).get("q");
   const [Valor, setValor] = useState("");

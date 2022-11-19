@@ -1,0 +1,39 @@
+.container-cookies{
+  background-color: #ef233b94;
+  position: fixed;
+  margin: auto;
+  top: 80%;
+  color: white;
+  min-height: 125px;
+  max-height: 5vh;
+  left: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  font-size: 1.25rem;
+  width: 50%;
+}
+
+.container-cookies>label{
+  position: relative;
+  top: -100px;
+  left: -1%;
+  align-self: flex-end;
+  user-select: none;
+  cursor: pointer;
+}
+
+.container-cookies>img{
+
+}
+@media screen and (max-width:576px) {
+  .container-cookies{
+    font-size: 0.9rem;
+  }
+}
+@media screen and (min-width:992px) {
+  .container-cookies{
+    font-size: 1.5rem;
+  }
+}

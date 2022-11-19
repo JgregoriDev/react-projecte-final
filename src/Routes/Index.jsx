@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import { useLocation } from "react-router-dom";
-import Filter from "../components/filter";
+import Filter from "../components/Filter";
 import FilterPreu from "../components/Filtratge";
 import Diapositives from "../components/diapositives";
 import Button from "react-bootstrap/Button";
-import { Link,useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import SearchBar from '../components/search';
+import useTitle from "../Hooks/useTitle";
 import Toast from "../components/toast";
-const Index = ({ afegirProducteAlCarret }) => {
-	const params=useParams("")
+const Index = ({ afegirProducteAlCarret,title }) => {
+	useTitle(title);
+	const params = useParams("")
 	const [Videojocs, setVideojocs] = useState([]);
 	const [Show, setShow] = useState();
 	const [TotalPages, setTotalPages] = useState(1);
@@ -19,30 +21,19 @@ const Index = ({ afegirProducteAlCarret }) => {
 	const search = useLocation().search;
 	let page = new URLSearchParams(search).get("pagina") ?? 1;
 	let pagina = `?pagina=${page}` ?? ``;
-	let filtrar = new URLSearchParams(search).get("filtrar") ?? "identificador";
+	let filtrar = new URLSearchParams(search).get("filtrar") ?? "preu";
 	let filt = `&filtrar=${filtrar}` ?? ``;
 	let orden = new URLSearchParams(search).get("orden") ?? "ASC";
 	let ord = `&orden=${orden}` ?? "";
 	let min = new URLSearchParams(search).get("filtrarMin") ?? '';
 	let max = new URLSearchParams(search).get("filtrarMax") ?? '';
 	useEffect(() => {
-
-		console.trace(pagina)
-
 		getVideojocsFromServer();
-
-
-
-
 	}, [pagina]);
 
-	// useEffect(() => {
-	// 	if(min!=='')
-	// 		window.location.href=`/filtrar/${min}/${max}`;
-
-
-
-	// }, [min])
+	useEffect(() => {
+		getVideojocsFromServer();
+	}, [filtrar, orden])
 
 
 	const getVideojocsFromServer = async () => {
@@ -88,8 +79,17 @@ const Index = ({ afegirProducteAlCarret }) => {
 	const onSubmit = (e) => {
 		console.log(e.target.value);
 	};
+
+	const scrollToTop = () => {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		});
+	};
+
 	const afegirAlCarret = (joc) => {
 		afegirProducteAlCarret(joc);
+
 	};
 
 	for (let i = 1; i <= TotalPages; i++) {
@@ -97,10 +97,10 @@ const Index = ({ afegirProducteAlCarret }) => {
 			<li key={i} className="page-item">
 				<Link
 					className={`page-link ${page === i ? "active" : ""}`}
+					onClick={() => scrollToTop()}
 					to={{
 						pathname: "",
 						search: `pagina=${i}${filt}${ord}`,
-						hash: "#filtrado",
 					}}
 				>
 					{i}
@@ -129,11 +129,11 @@ const Index = ({ afegirProducteAlCarret }) => {
 						<div className="row">
 							<div className="row">
 								<div className="col-6">
-									<Filter></Filter>
+									<Filter props={[`/`, orden, filtrar]}></Filter>
 								</div>
 
 							</div>
-							<div id="filtrado"></div>
+							<h1 id="Ancora">Videojocs Pàgina {page}</h1>
 							{Videojocs.length < 1 ? infiniteSpinner() : ""}
 							{Videojocs &&
 								Videojocs.map((joc, index) => (
@@ -141,7 +141,7 @@ const Index = ({ afegirProducteAlCarret }) => {
 										className="col col-lg-4 justify-content-center border-2 my-3 gap-9"
 										key={joc.id}
 									>
-										<a href={`/videojoc/${joc.id}`}>
+										<Link to={`/videojoc/${joc.id}`}>
 											<img
 												loading="lazy"
 												src={joc.portada}
@@ -149,11 +149,11 @@ const Index = ({ afegirProducteAlCarret }) => {
 												className={`w-100 h-auto`}
 												alt=""
 											/>
-										</a>
+										</Link>
 										<h5>
-											<a href={`/videojoc/${joc.id}`}>
+											<Link to={`/videojoc/${joc.id}`}>
 												{joc.id}-{joc.titul}
-											</a>
+											</Link>
 										</h5>
 										<p>Preu: {joc.preu}€</p>
 										<p>

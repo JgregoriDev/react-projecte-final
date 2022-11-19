@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link,useParams } from "react-router-dom";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import useTitle from "../Hooks/useTitle";
 
-
-const Plataforma = () => {
+const Plataforma = ({title}) => {
 	const {id}=useParams();
 	const [Jocs, setJocs] = useState([]);
 	const [Marca, setMarca] = useState([]);
 	const [Generes, setGeneres] = useState([]);
+	useTitle(title);
 	useEffect(() => {
 		console.log(id);
 		conseguirJocsPlataforma();
@@ -18,7 +19,6 @@ const Plataforma = () => {
 			`http://vos.es/api/v1/plataforma/${id}`
 		);
 		const resultat = await response.json();
-		console.log(resultat);
 
 		setJocs(resultat.plataforma_videojocs);
 		

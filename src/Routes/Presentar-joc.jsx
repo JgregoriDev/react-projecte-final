@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
-
-const PresentarJoc = () => {
+import useTitle from "../Hooks/useTitle";
+const PresentarJoc = ({title}) => {
+	useTitle(title);
 	const [Videojoc, setVideojoc] = useState({});
 	const [Comentaris, setComentaris] = useState([]);
 	const [NComentaris, setNComentaris] = useState(0);

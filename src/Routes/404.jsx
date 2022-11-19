@@ -1,6 +1,7 @@
 import React from 'react'
-
-const Notfound = () => {
+import useTitle from "../Hooks/useTitle";
+const Notfound = ({title}) => {
+  useTitle(title);
   return (
     <div>Notfound</div>
   )

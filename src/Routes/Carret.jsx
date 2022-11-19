@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import useTitle from "../Hooks/useTitle";
 import Toast from "../components/toast";
-const Carrito = ({Carrito}) => {
+const Carrito = (props) => {
+	const {carrito,buidar,title}=props;
+	useTitle(props.title);
 	const [ArrayCarret, setArrayCarret] = useState([]);
 	const [TamanyCarret, setTamanyCarret] = useState(0);
 	const [PreuTotal, setPreuTotal] = useState(0);
 	const [Show, setShow] = useState(false);
 	useEffect(() => {
-		console.log(Carrito);
-		setArrayCarret(Carrito);
-		ArrayCarret.forEach(element => {
-			const preuAux=element.preu+PreuTotal;
-			setPreuTotal(preuAux);
-		});
-	}, []);
+		console.trace(carrito);
+		setArrayCarret(carrito);
+		// ArrayCarret.forEach(element => {
+		// 	const preuAux=element.preu+PreuTotal;
+		// 	setPreuTotal(preuAux);
+		// });
+	}, [ArrayCarret]);
 
 	const borrarVideojocCarret = (key) => {
 		console.log(key);
@@ -104,7 +107,7 @@ const Carrito = ({Carrito}) => {
 																borrarVideojocCarret(producte.id);
 															}}
 														>
-														<i class="bi bi-trash"></i>
+														<i className="bi bi-trash"></i>
 														</button>
 													</td>
 												</tr>

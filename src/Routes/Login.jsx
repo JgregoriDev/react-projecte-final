@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-const Login = () => {
+import useTitle from "../Hooks/useTitle";
+const Login = ({title}) => {
 	const [ErrorMessage, setErrorMessage] = useState('');
+	useTitle(title)
 	const navigate = useNavigate();
 	const onSubmit = (e) => {
 		e.preventDefault();

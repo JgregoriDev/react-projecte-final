@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import "../assets/style/targeta.css"
-const FiltratgePreu = () => {
+import "../assets/style/targeta.css";
+import useTitle from "../Hooks/useTitle";
+const FiltratgePreu = ({title}) => {
+  useTitle(title)
   const [Titol, setTitol] = useState([]);
   const [Videojocs, setVideojocs] = useState([]);
   useEffect(() => {

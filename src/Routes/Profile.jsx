@@ -1,7 +1,7 @@
 import React from 'react'
-
-const Profile = (Usuari) => {
-
+import useTitle from "../Hooks/useTitle";
+const Profile = (Usuari,{title}) => {
+  useTitle(title);
   
   return (
     <div>Profile</div>
