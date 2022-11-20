@@ -3,20 +3,25 @@ import { Link } from "react-router-dom";
 import useTitle from "../Hooks/useTitle";
 import Toast from "../components/toast";
 const Carrito = (props) => {
-	const {carrito,buidar,title}=props;
+	const { carrito, buidar, title } = props;
 	useTitle(props.title);
 	const [ArrayCarret, setArrayCarret] = useState([]);
 	const [TamanyCarret, setTamanyCarret] = useState(0);
 	const [PreuTotal, setPreuTotal] = useState(0);
 	const [Show, setShow] = useState(false);
 	useEffect(() => {
-		console.trace(carrito);
-		setArrayCarret(carrito);
-		// ArrayCarret.forEach(element => {
-		// 	const preuAux=element.preu+PreuTotal;
-		// 	setPreuTotal(preuAux);
-		// });
-	}, [ArrayCarret]);
+		const items = JSON.parse(localStorage.getItem('carrito'));
+		if (items) {
+			setArrayCarret(items);
+			let preu = 0;
+			console.log(items);
+			for (let i = 0; i < items.length; i++) {
+				const item = items[i];
+				preu+=item.preu;
+			}
+			setPreuTotal(preu);
+		}
+	}, []);
 
 	const borrarVideojocCarret = (key) => {
 		console.log(key);
@@ -28,10 +33,11 @@ const Carrito = (props) => {
 		let help = ArrayCarret.splice(carro[index], 1);
 		// console.log(help);
 		setArrayCarret(ArrayCarret);
-	
+
 		localStorage.setItem("carrito", JSON.stringify(ArrayCarret));
 	};
 	const onClick = () => {
+		props.buidarCarret();
 		localStorage.removeItem("carrito");
 		setArrayCarret([]);
 	};
@@ -42,17 +48,17 @@ const Carrito = (props) => {
 		}, 1300);
 	};
 
-	const espai=()=>{
-		return(
+	const espai = () => {
+		return (
 			<div>
-						<div className="mb-9">&nbsp;</div>
-			<div className="mb-9">&nbsp;</div>
-			<div className="mb-9">&nbsp;</div>
-			<div className="mb-9">&nbsp;</div>
-			<div className="mb-9">&nbsp;</div>
-			<div className="mb-9">&nbsp;</div>
-			<div className="mb-9">&nbsp;</div>
-			<div className="mb-9">&nbsp;</div>
+				<div className="mb-9">&nbsp;</div>
+				<div className="mb-9">&nbsp;</div>
+				<div className="mb-9">&nbsp;</div>
+				<div className="mb-9">&nbsp;</div>
+				<div className="mb-9">&nbsp;</div>
+				<div className="mb-9">&nbsp;</div>
+				<div className="mb-9">&nbsp;</div>
+				<div className="mb-9">&nbsp;</div>
 			</div>
 		);
 	}
@@ -64,9 +70,11 @@ const Carrito = (props) => {
 				<div className="co -8">
 					<div className="row">
 						<div className="col-8">
-							<button className="btn-primary btn" onClick={() => onClick}>
-								Borrar
-							</button>
+							<div className="my-3">
+								<button className="btn-primary btn" onClick={() => { onClick() }}>
+									Borrar
+								</button>
+							</div>
 							<table className="table">
 								<thead>
 									<tr>
@@ -74,7 +82,7 @@ const Carrito = (props) => {
 										<th>Portada</th>
 										<th>Titul</th>
 										<th>Preu</th>
-										<th>Cantitat</th>
+										{/* <th>Cantitat</th> */}
 										<th>Borrar</th>
 									</tr>
 								</thead>
@@ -86,9 +94,9 @@ const Carrito = (props) => {
 													key={index}
 													className={index % 2 === 0 ? "bg-secondary" : ""}
 												>
-													
+
 													<th scope="row">{producte.id}</th>
-													
+
 													<td>
 														<img
 															className="img-thumbnail w-25 h-auto"
@@ -97,8 +105,8 @@ const Carrito = (props) => {
 														/>
 													</td>
 													<td>{producte.titul}</td>
-													<td>{producte.cantitat}</td>
-													<td>{producte.preu}</td>
+													{/* <td>{producte.cantitat}</td> */}
+													<td>{producte.preu} $</td>
 													<td className="">
 														<button
 															className="btn btn-primary text-white"
@@ -107,7 +115,7 @@ const Carrito = (props) => {
 																borrarVideojocCarret(producte.id);
 															}}
 														>
-														<i className="bi bi-trash"></i>
+															<i className="bi bi-trash"></i>
 														</button>
 													</td>
 												</tr>
@@ -158,16 +166,16 @@ const Carrito = (props) => {
 									</svg>
 									Volver a la tienda
 								</Link>
-									<div className="mb-9">&nbsp;</div>
+								<div className="mb-9">&nbsp;</div>
 							</div>
 							{espai()}
-								
+
 						</div>
 					</div>
 				</div>
 				<div className="col-2"></div>
 			</div>
-		
+
 		</div>
 	);
 };

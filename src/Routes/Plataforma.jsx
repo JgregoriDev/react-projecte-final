@@ -48,7 +48,7 @@ const Plataforma = ({title}) => {
 							? Jocs.map((Joc) => {
 								return (
 									<div key={Joc.id} className="col gap-5 col-lg-4">
-										<Link to={`/videojoc/${Joc.id}`}>
+										<Link to={`/videojoc/${Joc.titul}`}>
 											<img
 												src={`${Joc.portada}`}
 												loading="lazy"
@@ -57,7 +57,7 @@ const Plataforma = ({title}) => {
 											/>
 										</Link>
 										<h4>
-											<Link to={`/videojoc/${Joc.id}`}>
+											<Link to={`/videojoc/${Joc.titul}`}>
 												{Joc.id} - {Joc.titul}
 											</Link>
 										</h4>
@@ -74,6 +74,7 @@ const Plataforma = ({title}) => {
 					<div className='my-4'>
 						&nbsp;
 					</div>
+					<h5>Generes</h5>
 					{Generes
 						? Generes.map((Genere) => {
 							return (

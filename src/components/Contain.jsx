@@ -6,11 +6,13 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from "../assets/images/icon64x64.png";
+import Jocs from "../Routes/admin/Jocs";
 import {Peu} from "./peu";
 import About from '../Routes/About';
 import Plataforma from '../Routes/Plataforma';
 import Buscar from '../Routes/Buscar';
 import Carret from '../Routes/Carret';
+import Banejar from '../Routes/admin/Banejar';
 import Index from '../Routes/Index';
 import Login from '../Routes/Login';
 import PresentarJoc from '../Routes/Presentar-joc';
@@ -18,6 +20,7 @@ import Profile from '../Routes/Profile';
 import Notfound from '../Routes/404';
 import FiltratgePreu from '../Routes/FiltratgePreu';
 import MenuCookies from "../components/MenuCookies";
+import Galletes from "../Routes/Galletes";
 import FiltrePreu from './Filtratge';
 //Objecte de titols
 const vosTitle={
@@ -26,6 +29,7 @@ const vosTitle={
   "login": "Vos - Inici de sesió",
   "carret": "Vos - Carret de la compra",
   "comprar": "Vos - Comprar",
+  "admin": "Vos - Panel de administrador",
   "joc": "Vos - Joc",
   "registrar":"Vos - Registrar usuari",
   "inici": "Vos - Inici",
@@ -53,31 +57,26 @@ const Contain = () => {
 
 
   const afegirProducteAlCarret = (producte) => {
-    const carrito=JSON.parse(localStorage.getItem("carrito"));
-    if(carrito){
-      Carrito.push(producte);
-      setCarrito(Carrito);
-      localStorage.setItem("carrito", JSON.stringify(Carrito));
-    }
- 
+    Carrito.push(producte);
+    setCarrito(Carrito);
+    localStorage.setItem('carrito',JSON.stringify(Carrito));
   };
 
-  useEffect(() => {
-    setCarritoTamany(Carrito.length)
-  
-  
-  }, [Carrito])
+
   
 
   useEffect(() => {
     cargarMarques();
     if (localStorage.getItem("token")) {
       const email = JSON.parse(localStorage.getItem("token"));
-      console.log(email);
       setEmail(email.email);
     }
-    return () => { };
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("carrito",JSON.stringify(Carrito));
+  }, [Carrito])
+  
 
   const cargarMarques = async () => {
     const response = await fetch(`http://vos.es/api/v1/marques`);
@@ -100,8 +99,7 @@ const Contain = () => {
 
 
   const buidarCarret=()=>{
-    localStorage.setItem("carrito", "");
-    setCarrito();
+    setCarrito(new Array());
   }
   const buidar=()=>{
     buidarCarret();
@@ -149,9 +147,7 @@ const Contain = () => {
              
 
                   <Nav.Link title="Carret" as={NavLink} className="text-white mx-3" to="/carret">
-                    {CarritoTamany > 0
-                      ? <small>{CarritoTamany}</small>
-                      : ``}
+                  
                     <i className="bi bi-cart"></i>
 
                   </Nav.Link>
@@ -167,6 +163,9 @@ const Contain = () => {
                     {Email !== "Login" ? <NavDropdown.Item onClick={() => borrarLS()}>
                       Tanca sesió
                     </NavDropdown.Item> : ""}
+                    {Email !== "Login" ? <NavDropdown.Item as={NavLink} to={"/admin"}>
+                      Panel d'administrador
+                    </NavDropdown.Item> : ""}
                   </NavDropdown>
                 </Nav>
               </Navbar.Collapse>
@@ -175,8 +174,10 @@ const Contain = () => {
           <MenuCookies></MenuCookies>
         </div>
         <Routes>
-          <Route path='/carret' element={<Carret title={vosTitle.carret} props={[Carrito,buidar]}/>}></Route>
-          <Route path='/galletes' element={<Carret title={vosTitle.cookies} props={[Carrito,buidar]}/>}></Route>
+          <Route path='/carret' element={<Carret title={vosTitle.carret} buidarCarret={()=>buidarCarret()}/>}></Route>
+          <Route path='/admin' element={<Jocs title={vosTitle.admin}/>}></Route>
+          <Route path='/usuari/:id/ban' element={<Banejar title={vosTitle.banjejar}/>}></Route>
+          <Route path='/galletes' element={<Galletes title={vosTitle.cookies} props={[Carrito,buidar]}/>}></Route>
           <Route path='/buscar' element={<Buscar title={vosTitle.buscar} />}></Route>
           <Route path='/buscar/:buscar' element={<Buscar title={vosTitle.buscar} />}></Route>
           <Route path='/filtrar/:min/:max' element={<FiltratgePreu title={vosTitle.filtratge} />}></Route>

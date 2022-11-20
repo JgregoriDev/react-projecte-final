@@ -141,7 +141,7 @@ const Index = ({ afegirProducteAlCarret,title }) => {
 										className="col col-lg-4 justify-content-center border-2 my-3 gap-9"
 										key={joc.id}
 									>
-										<Link to={`/videojoc/${joc.id}`}>
+										<Link to={`/videojoc/${joc.titul}`}>
 											<img
 												loading="lazy"
 												src={joc.portada}
@@ -151,8 +151,8 @@ const Index = ({ afegirProducteAlCarret,title }) => {
 											/>
 										</Link>
 										<h5>
-											<Link to={`/videojoc/${joc.id}`}>
-												{joc.id}-{joc.titul}
+											<Link to={`/videojoc/${joc.titul}`}>
+												{joc.titul}
 											</Link>
 										</h5>
 										<p>Preu: {joc.preu}€</p>
@@ -177,7 +177,7 @@ const Index = ({ afegirProducteAlCarret,title }) => {
 													mostrar();
 													afegirAlCarret(joc);
 												}}
-												title="Poner en "
+												title="Posar en  carret"
 												variant="secondary"
 											>
 												<svg

@@ -19,15 +19,19 @@ const Login = ({title}) => {
 					if (result.Title === "Login incocorrecte") {
 						setErrorMessage("Error dades incorrectes");
 					} else {
+						console.log(result);
+						const token={
+							id: result.id,
+							email: result.email,
+							token: result.token,
+						}
+						console.log();
 						localStorage.setItem(
 							"token",
-							JSON.stringify({
-								id: result.id,
-								email: result.email,
-								token: result.token,
-							})
+							JSON.stringify(token)
 						);
 							// window.location.href="/perfil";
+							// window.location.href='/perfil';
 							navigate('/perfil', { replace: true });
 					}
 
@@ -48,7 +52,7 @@ const Login = ({title}) => {
 			password: objecte.password,
 		});
 
-		let response = await fetch("http://127.0.0.9/api/login", {
+		let response = await fetch("http://vos.es/api/login", {
 			method: "POST",
 			body: bodyContent,
 			headers: headersList,

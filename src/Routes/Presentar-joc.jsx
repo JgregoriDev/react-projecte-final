@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import useTitle from "../Hooks/useTitle";
-const PresentarJoc = ({title}) => {
-	useTitle(title);
+import { Link } from 'react-router-dom'
+import "../assets/style/badge.css"
+const PresentarJoc = ({ title }) => {
 	const [Videojoc, setVideojoc] = useState({});
+	useTitle(`${title} ${Videojoc.titul ?? ''}`);
 	const [Comentaris, setComentaris] = useState([]);
 	const [NComentaris, setNComentaris] = useState(0);
 	const [Usuari, setUsuari] = useState(null);
-	const [Joc,setJoc]=useState(0);
-	const [Missatge,setMissatge]=useState('');
+	const [Joc, setJoc] = useState(0);
+	const [Missatge, setMissatge] = useState('');
 	const idJoc = window.location.pathname.split("/")[2];
 	useEffect(() => {
 		getVideojoc();
@@ -16,19 +18,20 @@ const PresentarJoc = ({title}) => {
 	}, []);
 
 	const conseguirToken = () => {
-	
+
 		if (localStorage.getItem("token")) {
 			const token = localStorage.getItem("token");
 			setUsuari(token.email);
-			console.log(Usuari);
 		}
 	};
 
 	const getVideojoc = async () => {
-		const link = `http://vos.es/api/v1/videojoc/${idJoc}`;
+		const link = `http://vos.es/api/v1/videojoc/titol/${idJoc}`;
 		const response = await fetch(link);
 		const videojocObject = await response.json();
 		setVideojoc(videojocObject.Videojoc);
+		console.trace(videojocObject);
+
 		setNComentaris(videojocObject.NumeroVotacions);
 	};
 
@@ -44,12 +47,12 @@ const PresentarJoc = ({title}) => {
 		e.preventDefault();
 		console.log(e.target[0].value);
 		if (localStorage.getItem("token")) {
-			const resultat=peticion(e);
-			resultat.then((res)=>{
+			const resultat = peticion(e);
+			resultat.then((res) => {
 				console.log(res.title);
 				setMissatge(res.title);
 			})
-			.catch(err=>console.error(err))
+				.catch(err => console.error(err))
 		}
 	};
 
@@ -70,7 +73,7 @@ const PresentarJoc = ({title}) => {
 		});
 
 		let response = await fetch(
-			`http://127.0.0.9/api/v1/videojoc/${idJoc}/usuari/${id}/comentari/nou`,
+			`http://vos.es/api/v1/videojoc/${idJoc}/usuari/${id}/comentari/nou`,
 			{
 				method: "POST",
 				body: bodyContent,
@@ -111,25 +114,40 @@ const PresentarJoc = ({title}) => {
 	return (
 		<div className="container-fluid">
 			<div className="row">
-				<div className="col-2"></div>
-				<div className="col-8">
+				<div className="d-none d-md-block col-md-2"></div>
+				<div className="col col-md-8">
 					<h1 className="text-center">
 						{Videojoc.id} - {Videojoc.titul}
 					</h1>
-					<img className="w-100 h-auto" src={`${Videojoc.portada}`} alt="" />
+					<div className="d-flex gap-2 flex-column flex-lg-row">
+						<div className="w-100 ">
 
-					<p>
-						<b>Fecha llançament</b>:{" "}
-						{new Date(Videojoc.fechaEstreno).toLocaleDateString()}
-					</p>
-					<p>
-						<b>Preu</b>: {Videojoc.preu} €
-					</p>
-					<p>
-						<b>Descripcio</b>: {Videojoc.descripcio}
-					</p>
-					<div className="d-flex justify-content-center">
-						<Button title="Poner en " variant="secondary">
+							<img className="w-100 h-auto" src={`${Videojoc.portada}`} alt="" />
+
+
+						</div>
+						<div className="w-100">
+							<p><b>Generes: </b>{Videojoc.generes && Videojoc.generes.map((genere)=>{
+								return(
+									<span key={genere.id} className="badge rounded-pill  text-bg-primary">
+										<Link className="text-white" to={``}>{genere.genere}
+										</Link></span>
+								)
+							})}</p>
+							<p>
+								<b>Fecha llançament</b>:{" "}
+								{new Date(Videojoc.fechaEstreno).toLocaleDateString()}
+							</p>
+							<p>
+								<b>Preu</b>: {Videojoc.preu} €
+							</p>
+							<p>
+								<b>Descripcio</b>: {Videojoc.descripcio}
+							</p>
+						</div>
+					</div>
+					<div className="d-flex mt-3 justify-content-center">
+						<Button title="Posar en carret " variant="secondary">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="16"
@@ -175,7 +193,7 @@ const PresentarJoc = ({title}) => {
 							})}
 					</div>
 				</div>
-				<div className="col-2"></div>
+				<div className="d-none d-md-block col-md-2"></div>
 			</div>
 		</div>
 	);

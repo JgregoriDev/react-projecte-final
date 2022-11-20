@@ -8,7 +8,7 @@ const Filter = ({props}) => {
 	// 	setActive(`${orden}${orden}`);	
 	// }, [props])
 	
-	console.log(props.at(-1));
+	// console.log(props.at(-1));
 	// const location = useLocation();
 	// let ordenar = new URLSearchParams(location.search()).get("filtrar");
 	// let orden = new URLSearchParams(location.search()).get("orden");
