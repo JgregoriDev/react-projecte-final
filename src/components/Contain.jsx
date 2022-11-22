@@ -6,6 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from "../assets/images/icon64x64.png";
+import Usuaris from "../Routes/admin/Usuaris";
 import Jocs from "../Routes/admin/Jocs";
 import {Peu} from "./peu";
 import About from '../Routes/About';
@@ -22,6 +23,7 @@ import FiltratgePreu from '../Routes/FiltratgePreu';
 import MenuCookies from "../components/MenuCookies";
 import Galletes from "../Routes/Galletes";
 import FiltrePreu from './Filtratge';
+import JocForm from '../Routes/admin/JocForm';
 //Objecte de titols
 const vosTitle={
   "about": "Vos - Sobre nosaltres",
@@ -175,7 +177,9 @@ const Contain = () => {
         </div>
         <Routes>
           <Route path='/carret' element={<Carret title={vosTitle.carret} buidarCarret={()=>buidarCarret()}/>}></Route>
-          <Route path='/admin' element={<Jocs title={vosTitle.admin}/>}></Route>
+          <Route path='/admin' element={<Usuaris title={vosTitle.admin}/>}></Route>
+          <Route path='/admin/jocs' element={<Jocs title={vosTitle.admin}/>}></Route>
+          <Route path='/admin/joc/nou' element={<JocForm title={vosTitle.admin}/>}></Route>
           <Route path='/usuari/:id/ban' element={<Banejar title={vosTitle.banjejar}/>}></Route>
           <Route path='/galletes' element={<Galletes title={vosTitle.cookies} props={[Carrito,buidar]}/>}></Route>
           <Route path='/buscar' element={<Buscar title={vosTitle.buscar} />}></Route>

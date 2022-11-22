@@ -26,7 +26,6 @@ const Carrito = (props) => {
 	const borrarVideojocCarret = (key) => {
 		console.log(key);
 		const carro = JSON.parse(localStorage.getItem("carrito"));
-		console.log(carro);
 		const index = carro.findIndex((producte) => {
 			return key === producte.id;
 		});
@@ -168,8 +167,6 @@ const Carrito = (props) => {
 								</Link>
 								<div className="mb-9">&nbsp;</div>
 							</div>
-							{espai()}
-
 						</div>
 					</div>
 				</div>
