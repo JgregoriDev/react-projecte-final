@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import useTitle from "../Hooks/useTitle";
-import { Link } from 'react-router-dom'
-import "../assets/style/badge.css"
+import { Link } from 'react-router-dom';
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import "../assets/style/badge.css";
+import {useNavigate } from 'react-router-dom'
+
 const PresentarJoc = ({ title }) => {
+	const navigate= useNavigate('');
 	const [Videojoc, setVideojoc] = useState({});
 	useTitle(`${title} ${Videojoc.titul ?? ''}`);
 	const [Comentaris, setComentaris] = useState([]);
@@ -11,6 +16,8 @@ const PresentarJoc = ({ title }) => {
 	const [Usuari, setUsuari] = useState(null);
 	const [Joc, setJoc] = useState(0);
 	const [Missatge, setMissatge] = useState('');
+	const [errorMissatge,seterrorMissatge]=useState('');
+	const [errorVotacio,seterrorVotacio]=useState('');
 	const idJoc = window.location.pathname.split("/")[2];
 	useEffect(() => {
 		getVideojoc();
@@ -30,27 +37,44 @@ const PresentarJoc = ({ title }) => {
 		const response = await fetch(link);
 		const videojocObject = await response.json();
 		setVideojoc(videojocObject.Videojoc);
-		console.trace(videojocObject);
 
 		setNComentaris(videojocObject.NumeroVotacions);
 	};
 
 	const getComentaris = async () => {
-		const link = `http://vos.es/api/v1/videojoc/${idJoc}/comentaris`;
+		const link = `http://vos.es/api/v1/videojoc/${Videojoc.id}/comentaris`;
 		const response = await fetch(link);
 		const comentarisObject = await response.json();
-		console.log(comentarisObject);
 		setComentaris(comentarisObject);
 	};
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		console.log(e.target[0].value);
+		let valor=false;
+		seterrorVotacio("");
+		seterrorMissatge("");
+		if(e.target[0].value<0 || e.target[0].value.length>5){
+			valor=true;
+			seterrorVotacio("El valor no pot ser major de 5 ni menor de 0");
+		}
+		if(e.target[1].value.length<3 || e.target[1].value.length>200){
+			valor=true;
+			seterrorMissatge("No pot ser menor de 3 ni major de 200 caracters")
+			return;
+		}
+		if(valor){
+			return;
+		}
 		if (localStorage.getItem("token")) {
 			const resultat = peticion(e);
 			resultat.then((res) => {
-				console.log(res.title);
-				setMissatge(res.title);
+				if(res.title){
+					setMissatge(res.title);
+				}
+				if(res.Title){
+					setMissatge(res.Title);
+					navigate(0);
+				}
 			})
 				.catch(err => console.error(err))
 		}
@@ -58,22 +82,20 @@ const PresentarJoc = ({ title }) => {
 
 	const peticion = async (e) => {
 		const { id, email, token } = JSON.parse(localStorage.getItem("token"));
-		console.log(id);
-		console.log(token.id);
+		console.trace(token);
 		let headersList = {
 			"Accept": "*/*",
-			"User-Agent": "Thunder Client (https://www.thunderclient.com)",
 			"Authorization": `"Bearer ${token}`,
 			"Content-Type": "application/json",
 		};
 
 		let bodyContent = JSON.stringify({
-			votacio: 5,
-			missatge: e.target[0].value,
+			votacio: e.target[0].value,
+			missatge: e.target[1].value,
 		});
 
 		let response = await fetch(
-			`http://vos.es/api/v1/videojoc/${idJoc}/usuari/${id}/comentari/nou`,
+			`http://vos.es/api/v1/videojoc/${Videojoc.id}/usuari/${id}/comentari/nou`,
 			{
 				method: "POST",
 				body: bodyContent,
@@ -96,11 +118,13 @@ const PresentarJoc = ({ title }) => {
 					name="votacio"
 					id="votacio"
 				/>
+				<small className="text-danger">{errorVotacio}</small>
 				<textarea
 					className="form-control"
 					placeholder="Comenta el videojoc"
 					id="floatingTextarea"
 				></textarea>
+				<small className="text-danger">{errorMissatge}</small>
 				<button className="btn btn-primary my-2" type="submit">
 					Enviar Comentari
 				</button>

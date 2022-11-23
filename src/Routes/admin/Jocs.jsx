@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import jwt_decode from "jwt-decode";
-
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import Dropdown from '../../components/Dropdown';
 const Jocs = () => {
   const [Jocs, setJocs] = useState([]);
   const navigate = useNavigate();
@@ -87,15 +90,23 @@ const Jocs = () => {
     // setJocs()
   }
   return (
-    <div className='container'>
+    <div className='container-fluid'>
       <div className="row">
-        <div className="col-2"></div>
-        <div className="col-8">
+        <div className="d-none d-md-block col col-md-2">
+          <div className="d-flex mt-2 w-100 gap-2 flex-column">
+            <Dropdown props="Usuaris" links={{"Nomlink1":"Llistar usuaris","ToLink1":"/admin","Nomlink2":"Afegir usuari","ToLink2":"/"}}></Dropdown>
+            <Dropdown props="Jocs" links={{"Nomlink1":"Llistar Jocs","ToLink1":"/admin/jocs","Nomlink2":"Afegir Joc","ToLink2":"/admin/joc/nou"}} ></Dropdown>
+            <Dropdown props="Generes" links={{"Nomlink1":"Llistar Generes","ToLink1":"/","Nomlink2":"Afegir genere","ToLink2":"/"}}></Dropdown>
+            <Dropdown props="Plataformes" links={{"Nomlink1":"Llistar Plataformes","ToLink1":"/","Nomlink2":"Afegir Plataforma","ToLink2":"/"}}></Dropdown>
+          </div>
+        </div>
+        <div className="col col-md-8">
           <h1>Llista Jocs</h1>
           <div className="text-end">
-          <Link to={`/admin/joc/nou`} class="btn btn-primary"><i class="bi bi-plus-circle-fill mx-1"></i><span className="d-none d-lg-inline">Videojoc nou</span></Link>
+          <Link to={`/admin/joc/nou`} className="btn btn-primary"><i className="bi bi-plus-circle-fill mx-1"></i><span className="d-none d-lg-inline">Videojoc nou</span></Link>
 
           </div>
+      <Link to={`/admin`}>Llistar usuaris</Link>
           <table className="table table-striped">
             <thead>
               <tr>
@@ -111,8 +122,8 @@ const Jocs = () => {
                     <td>{index + 1}</td>
                     <td>{joc.titul}</td>
                     <td>
-                      <button onClick={() => borrarJoc(joc)} className='btn btn-primary mx-1' title={`Borrar ${joc.titul}`}><i class="bi bi-trash-fill"></i></button>
-                      <Link className='btn btn-secondary' to={`/admin/joc/${joc.id}/editar`} title={`Editar ${joc.titul}`}><i class="bi bi-pencil-square"></i></Link>
+                      <button onClick={() => borrarJoc(joc)} className='btn btn-primary mx-1' title={`Borrar ${joc.titul}`}><i className="bi bi-trash-fill"></i></button>
+                      <Link className='btn btn-secondary' to={`/admin/joc/${joc.id}/editar`} title={`Editar ${joc.titul}`}><i className="bi bi-pencil-square"></i></Link>
                     </td>
                   </tr>
                 )
@@ -121,7 +132,7 @@ const Jocs = () => {
             </tbody>
           </table>
         </div>
-        <div className="col-2"></div>
+        <div className="d-none d-md-block col col-md-2"></div>
       </div>
     </div>
   )

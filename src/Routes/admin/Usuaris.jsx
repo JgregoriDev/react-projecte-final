@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import jwt_decode from "jwt-decode";
 import { useNavigate, Link } from "react-router-dom";
-
+import Dropdown from '../../components/Dropdown'
 const Usuaris = () => {
   const [Usuaris, setUsuaris] = useState("");
   const navigate = useNavigate();
@@ -52,54 +52,20 @@ const Usuaris = () => {
   return (
     <div>
       <h1 className="text-center">Administrar Usuaris</h1>
-      <div className="row">
-        <div className="col-2">
-          <div className="d-flex gap-1 flex-column">
-            <div className="btn-group dropend">
-              <button type="button" className=" btn btn-secondary dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false">
-                Usuaris
-              </button>
-              <ul className="dropdown-menu ">
-                {/* <!-- Dropdown menu links --> */}
-                <li><a className="dropdown-item" href="#">Afegir usuari</a></li>
-                <li><a className="dropdown-item" href="#">Llistar Usuaris</a></li>
-              </ul>
-            </div>
-            <div className="btn-group dropend">
-              <button type="button" className=" btn btn-secondary dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false">
-                Videojoc
-              </button>
-              <ul className="dropdown-menu ">
-                {/* <!-- Dropdown menu links --> */}
-                <li><a className="dropdown-item" href="#">Afegir Videojoc</a></li>
-                <li><a className="dropdown-item" href="#">Llistar Videojocs</a></li>
-              </ul>
-            </div>
-            <div className="btn-group dropend">
-              <button type="button" className=" btn btn-secondary dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false">
-                Generes
-              </button>
-              <ul className="dropdown-menu ">
-                {/* <!-- Dropdown menu links --> */}
-                <li><a className="dropdown-item" href="#">Afegir Geners</a></li>
-                <li><a className="dropdown-item" href="#">Llistar Generes</a></li>
-              </ul>
-            </div>
-            <div className="btn-group dropend">
-              <button type="button" className=" btn btn-secondary dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false">
-                Marques
-              </button>
-              <ul className="dropdown-menu ">
-                {/* <!-- Dropdown menu links --> */}
-                <li><a className="dropdown-item" href="#">Afegir Marques</a></li>
-                <li><a className="dropdown-item" href="#">Llistar Marques</a></li>
-              </ul>
-            </div>
 
+      <div className="row">
+        <div className="d-none d-md-block  col-md-2  my-3">
+          <div className="d-flex mt-2 w-100 gap-2 flex-column">
+            <Dropdown props="Usuaris" links={{ "Nomlink1": "Llistar usuaris", "ToLink1": "/admin", "Nomlink2": "Afegir usuari", "ToLink2": "/" }}></Dropdown>
+            <Dropdown props="Jocs" links={{ "Nomlink1": "Llistar Jocs", "ToLink1": "/admin/jocs", "Nomlink2": "Afegir Joc", "ToLink2": "/admin/joc/nou" }} ></Dropdown>
+            <Dropdown props="Generes" links={{ "Nomlink1": "Llistar Generes", "ToLink1": "/", "Nomlink2": "Afegir genere", "ToLink2": "/" }}></Dropdown>
+            <Dropdown props="Plataformes" links={{ "Nomlink1": "Llistar Plataformes", "ToLink1": "/", "Nomlink2": "Afegir Plataforma", "ToLink2": "/" }}></Dropdown>
           </div>
+
         </div>
-        <div className="col-8">
-        
+        <div className="col col-md-8">
+
+          <Link to={`/admin/jocs`}>Llistar jocs</Link>
           <table className="table table-striped">
             <thead>
               <tr>
@@ -126,7 +92,7 @@ const Usuaris = () => {
             </tbody>
           </table>
         </div>
-        <div className="col-2"></div>
+        <div className="col col-md-2"></div>
       </div>
     </div>
   )

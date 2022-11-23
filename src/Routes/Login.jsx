@@ -32,7 +32,8 @@ const Login = ({title}) => {
 						);
 							// window.location.href="/perfil";
 							// window.location.href='/perfil';
-							navigate('/perfil', { replace: true });
+							// navigate("/");
+							navigate(0);
 					}
 
 				}
