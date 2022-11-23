@@ -25,7 +25,6 @@ const Login = ({title}) => {
 							email: result.email,
 							token: result.token,
 						}
-						console.log();
 						localStorage.setItem(
 							"token",
 							JSON.stringify(token)

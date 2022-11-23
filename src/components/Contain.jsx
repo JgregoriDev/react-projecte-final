@@ -16,6 +16,7 @@ import Carret from '../Routes/Carret';
 import Banejar from '../Routes/admin/Banejar';
 import Index from '../Routes/Index';
 import Login from '../Routes/Login';
+import Registrar from '../Routes/Registrar';
 import PresentarJoc from '../Routes/Presentar-joc';
 import Profile from '../Routes/Profile';
 import Notfound from '../Routes/404';
@@ -191,6 +192,7 @@ const Contain = () => {
           <Route path='/perfil' element={<Profile  title={vosTitle.dashboard}Usuari></Profile>}></Route>
           <Route path='/plataforma/:id' element={<Plataforma title={vosTitle.plataforma}></Plataforma>}></Route>
           <Route path='/login' element={<Login title={vosTitle.login} Usuari></Login>}></Route>
+          <Route path='/registrar' element={<Registrar title={vosTitle.registrar} Usuari></Registrar>}></Route>
           <Route path='*' element={<Notfound title={vosTitle.notfound} />}></Route>
         </Routes>
       <Peu></Peu>

@@ -65,7 +65,7 @@ const Usuaris = () => {
         </div>
         <div className="col col-md-8">
 
-          <Link to={`/admin/jocs`}>Llistar jocs</Link>
+          {/* <Link to={`/admin/jocs`}>Llistar jocs</Link> */}
           <table className="table table-striped">
             <thead>
               <tr>

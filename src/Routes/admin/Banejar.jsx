@@ -28,8 +28,8 @@ const Banejar = () => {
      let bodyContent = JSON.stringify({
        "ban":true
      });
-     
-     let response = await fetch("http://vos.es/api/v1/usuari/3/banejar", { 
+     const id=window.location.pathname.split("/")[2];
+     let response = await fetch(`http://vos.es/api/v1/usuari/${id}/banejar`, { 
        method: "POST",
        body: bodyContent,
        headers: headersList
