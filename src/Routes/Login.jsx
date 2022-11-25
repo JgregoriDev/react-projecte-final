@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useTitle from "../Hooks/useTitle";
-const Login = ({title}) => {
+const Login = ({ title }) => {
 	const [ErrorMessage, setErrorMessage] = useState('');
+	const [isLogin, setIsLogin] = useState(false);
 	useTitle(title)
 	const navigate = useNavigate();
 	const onSubmit = (e) => {
@@ -18,9 +19,9 @@ const Login = ({title}) => {
 				if (result?.Title) {
 					if (result.Title === "Login incocorrecte") {
 						setErrorMessage("Error dades incorrectes");
-					} else {
+					}else if(result?.token) {
 						console.log(result);
-						const token={
+						const token = {
 							id: result.id,
 							email: result.email,
 							token: result.token,
@@ -29,10 +30,9 @@ const Login = ({title}) => {
 							"token",
 							JSON.stringify(token)
 						);
-							// window.location.href="/perfil";
-							// window.location.href='/perfil';
-							// navigate("/");
-							navigate(0);
+						window.location.href = "/perfil";
+						// navigate(0);
+						// navigate("/");
 					}
 
 				}
@@ -42,10 +42,10 @@ const Login = ({title}) => {
 	const login = async (objecte) => {
 		let headersList = {
 			"Accept": "*/*",
-			"User-Agent": "Thunder Client (https://www.thunderclient.com)",
 			"Content-Type": "application/json",
 		};
-
+		// 'Access-Control-Allow-Origin':"*",
+		
 		console.log(objecte);
 		let bodyContent = JSON.stringify({
 			email: objecte.email,
@@ -53,6 +53,7 @@ const Login = ({title}) => {
 		});
 
 		let response = await fetch("http://vos.es/api/login", {
+		// let response = await fetch("http://app.11josep.daw.iesevalorpego.es/api/login", {
 			method: "POST",
 			body: bodyContent,
 			headers: headersList,

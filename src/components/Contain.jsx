@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, NavLink,Link } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, NavLink, Link } from 'react-router-dom'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Logo from "../assets/images/icon64x64.png";
 import Usuaris from "../Routes/admin/Usuaris";
 import Jocs from "../Routes/admin/Jocs";
-import {Peu} from "./peu";
+import { Peu } from "./peu";
 import About from '../Routes/About';
 import Plataforma from '../Routes/Plataforma';
 import Buscar from '../Routes/Buscar';
@@ -26,15 +26,15 @@ import Galletes from "../Routes/Galletes";
 import FiltrePreu from './Filtratge';
 import JocForm from '../Routes/admin/JocForm';
 //Objecte de titols
-const vosTitle={
+const vosTitle = {
   "about": "Vos - Sobre nosaltres",
-  "dashboard":"Vos - Perfil",
+  "dashboard": "Vos - Perfil",
   "login": "Vos - Inici de sesió",
   "carret": "Vos - Carret de la compra",
   "comprar": "Vos - Comprar",
   "admin": "Vos - Panel de administrador",
   "joc": "Vos - Joc",
-  "registrar":"Vos - Registrar usuari",
+  "registrar": "Vos - Registrar usuari",
   "inici": "Vos - Inici",
   "filtratge": "Vos - Filtrar per preu",
   "buscar": "Vos - Buscar per titol",
@@ -51,7 +51,7 @@ const Contain = () => {
   const arrayAux = [];
   const [Carrito, setCarrito] = useState([]);
   const [CarritoTamany, setCarritoTamany] = useState(0);
-  
+
   const modificarTitul = (title) => {
     setTitle(title);
   };
@@ -62,27 +62,32 @@ const Contain = () => {
   const afegirProducteAlCarret = (producte) => {
     Carrito.push(producte);
     setCarrito(Carrito);
-    localStorage.setItem('carrito',JSON.stringify(Carrito));
+    localStorage.setItem('carrito', JSON.stringify(Carrito));
   };
 
 
-  
-
   useEffect(() => {
-    cargarMarques();
-    if (localStorage.getItem("token")) {
+    const email = localStorage.getItem("token");
+    if (email) {
       const email = JSON.parse(localStorage.getItem("token"));
       setEmail(email.email);
     }
+  }, [Email])
+
+
+  useEffect(() => {
+    cargarMarques();
+
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("carrito",JSON.stringify(Carrito));
+    localStorage.setItem("carrito", JSON.stringify(Carrito));
   }, [Carrito])
-  
+
 
   const cargarMarques = async () => {
     const response = await fetch(`http://vos.es/api/v1/marques`);
+    //  const response = await fetch(`http://app.11josep.daw.iesevalorpego.es/api/v1/marques`);
     const resultat = await response.json();
     setMarques(resultat);
   };
@@ -97,14 +102,15 @@ const Contain = () => {
   };
 
   const borrarLS = () => {
+    setEmail("Login");
     localStorage.removeItem("token");
   }
 
 
-  const buidarCarret=()=>{
+  const buidarCarret = () => {
     setCarrito(new Array());
   }
-  const buidar=()=>{
+  const buidar = () => {
     buidarCarret();
   }
 
@@ -147,10 +153,10 @@ const Contain = () => {
                       );
                     })
                     : ""}
-             
+
 
                   <Nav.Link title="Carret" as={NavLink} className="text-white mx-3" to="/carret">
-                  
+
                     <i className="bi bi-cart"></i>
 
                   </Nav.Link>
@@ -177,25 +183,25 @@ const Contain = () => {
           <MenuCookies></MenuCookies>
         </div>
         <Routes>
-          <Route path='/carret' element={<Carret title={vosTitle.carret} buidarCarret={()=>buidarCarret()}/>}></Route>
-          <Route path='/admin' element={<Usuaris title={vosTitle.admin}/>}></Route>
-          <Route path='/admin/jocs' element={<Jocs title={vosTitle.admin}/>}></Route>
-          <Route path='/admin/joc/nou' element={<JocForm title={vosTitle.admin}/>}></Route>
-          <Route path='/usuari/:id/ban' element={<Banejar title={vosTitle.banjejar}/>}></Route>
-          <Route path='/galletes' element={<Galletes title={vosTitle.cookies} props={[Carrito,buidar]}/>}></Route>
+          <Route path='/carret' element={<Carret title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
+          <Route path='/admin' element={<Usuaris title={vosTitle.admin} />}></Route>
+          <Route path='/admin/jocs' element={<Jocs title={vosTitle.admin} />}></Route>
+          <Route path='/admin/joc/nou' element={<JocForm title={vosTitle.admin} />}></Route>
+          <Route path='/usuari/:id/ban' element={<Banejar title={vosTitle.banjejar} />}></Route>
+          <Route path='/galletes' element={<Galletes title={vosTitle.cookies} props={[Carrito, buidar]} />}></Route>
           <Route path='/buscar' element={<Buscar title={vosTitle.buscar} />}></Route>
           <Route path='/buscar/:buscar' element={<Buscar title={vosTitle.buscar} />}></Route>
           <Route path='/filtrar/:min/:max' element={<FiltratgePreu title={vosTitle.filtratge} />}></Route>
           <Route path='/' element={<Index title={vosTitle.inici} afegirProducteAlCarret={afegirProducteAlCarret} />}></Route>
           <Route path='/videojoc/:id' element={<PresentarJoc title={vosTitle.joc} />}></Route>
           <Route path='/sobre-nosotros' element={<About title={vosTitle.about}></About>}></Route>
-          <Route path='/perfil' element={<Profile  title={vosTitle.dashboard}Usuari></Profile>}></Route>
+          <Route path='/perfil' element={<Profile title={vosTitle.dashboard} Usuari></Profile>}></Route>
           <Route path='/plataforma/:id' element={<Plataforma title={vosTitle.plataforma}></Plataforma>}></Route>
           <Route path='/login' element={<Login title={vosTitle.login} Usuari></Login>}></Route>
           <Route path='/registrar' element={<Registrar title={vosTitle.registrar} Usuari></Registrar>}></Route>
           <Route path='*' element={<Notfound title={vosTitle.notfound} />}></Route>
         </Routes>
-      <Peu></Peu>
+        <Peu></Peu>
       </Router>
     </div>
   )

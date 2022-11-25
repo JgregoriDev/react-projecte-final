@@ -13,19 +13,29 @@ const PresentarJoc = ({ title }) => {
 	useTitle(`${title} ${Videojoc.titul ?? ''}`);
 	const [Comentaris, setComentaris] = useState([]);
 	const [NComentaris, setNComentaris] = useState(0);
+	const [Carrito, setCarrito] = useState([]);
 	const [Usuari, setUsuari] = useState(null);
-	const [Joc, setJoc] = useState(0);
 	const [Missatge, setMissatge] = useState('');
 	const [errorMissatge,seterrorMissatge]=useState('');
 	const [errorVotacio,seterrorVotacio]=useState('');
+	const []=useState([])
 	const idJoc = window.location.pathname.split("/")[2];
 	useEffect(() => {
 		getVideojoc();
 		conseguirToken();
 	}, []);
 
-	const conseguirToken = () => {
+	useEffect(() => {
+		const item= localStorage.getItem("carrito");
+		if(item){
+			setCarrito(JSON.parse(item));
+			console.log(Carrito);
+		}
+	
+	}, [])
+	
 
+	const conseguirToken = () => {
 		if (localStorage.getItem("token")) {
 			const token = localStorage.getItem("token");
 			setUsuari(token.email);
@@ -33,7 +43,8 @@ const PresentarJoc = ({ title }) => {
 	};
 
 	const getVideojoc = async () => {
-		const link = `http://vos.es/api/v1/videojoc/titol/${idJoc}`;
+		 const link = `http://vos.es/api/v1/videojoc/titol/${idJoc}`;
+		// const link = `http://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/titol/${idJoc}`;
 		const response = await fetch(link);
 		const videojocObject = await response.json();
 		setVideojoc(videojocObject.Videojoc);
@@ -43,6 +54,7 @@ const PresentarJoc = ({ title }) => {
 
 	const getComentaris = async () => {
 		const link = `http://vos.es/api/v1/videojoc/${Videojoc.id}/comentaris`;
+		// const link = `http://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/${Videojoc.id}/comentaris`;
 		const response = await fetch(link);
 		const comentarisObject = await response.json();
 		setComentaris(comentarisObject);
@@ -57,14 +69,16 @@ const PresentarJoc = ({ title }) => {
 			valor=true;
 			seterrorVotacio("El valor no pot ser major de 5 ni menor de 0");
 		}
+
 		if(e.target[1].value.length<3 || e.target[1].value.length>200){
 			valor=true;
 			seterrorMissatge("No pot ser menor de 3 ni major de 200 caracters")
+		}
+
+		if(!valor){
 			return;
 		}
-		if(valor){
-			return;
-		}
+
 		if (localStorage.getItem("token")) {
 			const resultat = peticion(e);
 			resultat.then((res) => {
@@ -96,6 +110,7 @@ const PresentarJoc = ({ title }) => {
 
 		let response = await fetch(
 			`http://vos.es/api/v1/videojoc/${Videojoc.id}/usuari/${id}/comentari/nou`,
+			// `http://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/${Videojoc.id}/usuari/${id}/comentari/nou`,
 			{
 				method: "POST",
 				body: bodyContent,
@@ -135,6 +150,14 @@ const PresentarJoc = ({ title }) => {
 		);
 	};
 
+	const onClick=()=>{
+		console.log(Videojoc);
+		console.log(Carrito);
+		Carrito.push(Videojoc);
+		setCarrito(Carrito);
+		localStorage.setItem('carrito',JSON.stringify(Carrito));
+	}
+
 	return (
 		<div className="container-fluid">
 			<div className="row">
@@ -171,7 +194,7 @@ const PresentarJoc = ({ title }) => {
 						</div>
 					</div>
 					<div className="d-flex mt-3 justify-content-center">
-						<Button title="Posar en carret " variant="secondary">
+						<Button title="Posar en carret" onClick={()=>onClick(Videojoc)} variant="secondary">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="16"

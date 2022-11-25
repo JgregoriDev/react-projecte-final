@@ -41,6 +41,7 @@ const Usuaris = () => {
     }
 
     let response = await fetch("http://vos.es/api/v1/usuaris", {
+    // let response = await fetch("http://app.11josep.daw.iesevalorpego.es/api/v1/usuaris", {
       method: "GET",
       headers: headersList
     });

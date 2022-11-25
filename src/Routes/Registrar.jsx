@@ -64,7 +64,6 @@ const Registrar = () => {
   const registrarUsuari = async () => {
     let headersList = {
       "Accept": "*/*",
-      "User-Agent": "Thunder Client (https://www.thunderclient.com)",
       "Content-Type": "application/json"
     }
 
@@ -73,7 +72,8 @@ const Registrar = () => {
       "password": Plantilla.password
     });
 
-    let response = await fetch("http://vos.es/api/v1/registrar", {
+   slet response = await fetch("http://vos.es/api/v1/registrar", {
+    //let response = await fetch("http://app.11josep.daw.iesevalorpego.es/api/v1/registrar", {
       method: "POST",
       body: bodyContent,
       headers: headersList

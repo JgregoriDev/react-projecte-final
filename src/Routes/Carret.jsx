@@ -7,21 +7,41 @@ const Carrito = (props) => {
 	useTitle(props.title);
 	const [ArrayCarret, setArrayCarret] = useState([]);
 	const [TamanyCarret, setTamanyCarret] = useState(0);
+	const [Jocs, setJocs] = useState([]);
 	const [PreuTotal, setPreuTotal] = useState(0);
 	const [Show, setShow] = useState(false);
 	useEffect(() => {
 		const items = JSON.parse(localStorage.getItem('carrito'));
-		if (items) {
+		if (items !== Carrito) {
 			setArrayCarret(items);
 			let preu = 0;
-			console.log(items);
 			for (let i = 0; i < items.length; i++) {
 				const item = items[i];
-				preu+=item.preu;
+				preu += item.preu;
 			}
 			setPreuTotal(preu);
 		}
 	}, []);
+
+	useEffect(() => {
+		getVideojocs();
+
+
+	}, [])
+
+	const getVideojocs = async () => {
+
+		let page = `${parseInt(1)}`;
+		let parametro = `parametro=fechaEstreno`;
+		let ordenar = `&sort=DESC`;
+		let results = `&results=3`;
+		//const response = await fetch(`https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?${parametro}${ordenar}${results}`);
+		const response = await fetch(`https://vos.es/api/v1/videojocs?${parametro}${ordenar}${results}`);
+		const videojoscArray = await response.json();
+		setJocs(videojoscArray.Resultat);
+		console.log(Jocs);
+
+	};
 
 	const borrarVideojocCarret = (key) => {
 		console.log(key);
@@ -98,9 +118,10 @@ const Carrito = (props) => {
 
 													<td>
 														<img
+														loading="lazy"
 															className="img-thumbnail w-25 h-auto"
 															src={producte.portada}
-															alt=""
+															alt={producte.titul}
 														/>
 													</td>
 													<td>{producte.titul}</td>
@@ -122,6 +143,7 @@ const Carrito = (props) => {
 										})}
 								</tbody>
 							</table>
+
 						</div>
 						<div className="col-4 d-flex flex-column justify-content-around">
 							<div>
@@ -149,24 +171,24 @@ const Carrito = (props) => {
 								<Link to="" className="btn btn-primary">
 									Comprar
 								</Link>
-								<Link to="/" className="btn btn-secondary mb-3">
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="16"
-										height="16"
-										fillRule="currentColor"
-										className="bi bi-arrow-left"
-										viewBox="0 0 16 16"
-									>
-										<path
-											fillRule="evenodd"
-											d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
-										/>
-									</svg>
-									Volver a la tienda
+								<Link to="/" title="Tornar a la tenda" className="btn btn-secondary mb-3">
+									<i className="bi bi-arrow-left-short"></i>
+									<span className="d-none d-md-inline">Tornar a la tenda</span>
 								</Link>
 								<div className="mb-9">&nbsp;</div>
 							</div>
+						</div>
+						<h4 className="my-3">Tal volta t'interesse algun d'aquests jocs</h4>
+						<div className="d-flex flex-column flex-md-row justify-content-center justify-content-md-between mb-5">
+							{console.log(Jocs.length)}
+							{Jocs.length > 1 ? Jocs.map((joc) => {
+								return (<div key={joc.id} className="w-25">
+									<Link to={`/videojoc/${joc.titul}`}>
+										<img className="w-100 h-auto" loading="lazy" src={`${joc.portada}`} alt={`${joc.titul}`} />
+									</Link>
+									<h5><Link to={`/videojoc/${joc.titul}`}>{joc.titul}</Link></h5>
+									</div>)
+							}) : null}
 						</div>
 					</div>
 				</div>

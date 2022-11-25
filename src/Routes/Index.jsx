@@ -9,7 +9,7 @@ import { Link, useParams } from "react-router-dom";
 import SearchBar from '../components/search';
 import useTitle from "../Hooks/useTitle";
 import Toast from "../components/toast";
-const Index = ({ afegirProducteAlCarret,title }) => {
+const Index = ({ afegirProducteAlCarret, title }) => {
 	useTitle(title);
 	const params = useParams("")
 	const [Videojocs, setVideojocs] = useState([]);
@@ -45,9 +45,9 @@ const Index = ({ afegirProducteAlCarret,title }) => {
 
 		const url = {
 			link1: `http://vos.es/api/v1/videojocs?page=${page}${results}${parametro}${ordenar}`,
-			// "link1":`https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?page=${page}${results}${parametro}${ordenar}`,
+			//"link1":`https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?page=${page}${results}${parametro}${ordenar}`,
 			link2: `http:/vos.es/api/v1/videojocs?page=${page}${results}`,
-			// "link2":`https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?page=${page}${results}`
+			//"link2":`https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?page=${page}${results}`
 		};
 		let link;
 		filtrar && ordenar ? (link = url.link1) : (link = url.link2);

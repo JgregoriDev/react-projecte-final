@@ -6,15 +6,10 @@ const MenuCookies = () => {
   const [Show, setShow]=useState(true);
   useEffect(() => {
     const cookies=localStorage.getItem("cookies");
-  
     if(cookies){
       
       setShow(cookies);
-      // localStorage.setItem("cookies",Show);
     }
-
-    
-  
 
   }, [Show])
   
