@@ -8,12 +8,12 @@ const errorsMissatges = {
   "email": "",
   "password": "",
   "passwordb": "",
-  "respostaServer":""
+  "respostaServer": ""
 }
 const Registrar = () => {
   const [Plantilla, setPlantilla] = useState(plan);
   const [ErrorMissatges, setErrorsMissatges] = useState(errorsMissatges);
-  const [Personalization, setPersonalization]=useState("");
+  const [Personalization, setPersonalization] = useState("");
   const onSubmit = (e) => {
     e.preventDefault();
     setErrorsMissatges(errorsMissatges);
@@ -42,16 +42,16 @@ const Registrar = () => {
       setErrorsMissatges(ErrorMissatges);
       return;
     } else {
-      const data=registrarUsuari();
+      const data = registrarUsuari();
       data.then((result) => {
         console.log(result);
-        if(result.Title==="usuari registrat"){
-          ErrorMissatges.respostaServer=result?.Title;
+        if (result.Title === "usuari registrat") {
+          ErrorMissatges.respostaServer = result?.Title;
           setErrorsMissatges(ErrorMissatges);
           setPersonalization("text-success");
         }
-        if(result.code===500){
-          ErrorMissatges.respostaServer="Aquest correu ja esta en us";
+        if (result.code === 500) {
+          ErrorMissatges.respostaServer = "Aquest correu ja esta en us";
           setErrorsMissatges(ErrorMissatges);
           setPersonalization("text-danger");
         }
@@ -72,8 +72,8 @@ const Registrar = () => {
       "password": Plantilla.password
     });
 
-   slet response = await fetch("http://vos.es/api/v1/registrar", {
-    //let response = await fetch("http://app.11josep.daw.iesevalorpego.es/api/v1/registrar", {
+    let response = await fetch("http://vos.es/api/v1/registrar", {
+      //let response = await fetch("http://app.11josep.daw.iesevalorpego.es/api/v1/registrar", {
       method: "POST",
       body: bodyContent,
       headers: headersList
