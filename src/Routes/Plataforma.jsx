@@ -16,7 +16,8 @@ const Plataforma = ({title}) => {
 	}, [id]);
 	const conseguirJocsPlataforma = async () => {
 		const response = await fetch(
-			`http://vos.es/api/v1/plataforma/${id}`
+			// `http://vos.es/api/v1/plataforma/${id}`
+			`https://app.11josep.daw.iesevalorpego.es/api/v1/plataforma/${id}`
 		);
 		const resultat = await response.json();
 
@@ -24,7 +25,8 @@ const Plataforma = ({title}) => {
 		
 	};
 	const conseguirGeneresPlataforma = async (id) => {
-		const response = await fetch(`http://vos.es/api/v1/generes`);
+		// const response = await fetch(`http://vos.es/api/v1/generes`);
+		const response = await fetch(`https://app.11josep.daw.iesevalorpego.es/api/v1/generes`);
 		const resultat = await response.json();
 		setGeneres(resultat);
 		console.log(resultat);

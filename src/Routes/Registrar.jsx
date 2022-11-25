@@ -73,7 +73,7 @@ const Registrar = () => {
     });
 
     let response = await fetch("http://vos.es/api/v1/registrar", {
-      //let response = await fetch("http://app.11josep.daw.iesevalorpego.es/api/v1/registrar", {
+      //let response = await fetch("https://app.11josep.daw.iesevalorpego.es/api/v1/registrar", {
       method: "POST",
       body: bodyContent,
       headers: headersList

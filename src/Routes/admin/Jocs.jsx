@@ -65,8 +65,8 @@ const Jocs = () => {
 
 
 
-    let response = await fetch(`http://vos.es/api/v1/videojoc/${id}/borrar`, {
-    //let response = await fetch(`http://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/${id}/borrar`, {
+    // let response = await fetch(`http://vos.es/api/v1/videojoc/${id}/borrar`, {
+    let response = await fetch(`https://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/${id}/borrar`, {
       method: "DELETE",
       headers: headersList
     });
@@ -81,8 +81,8 @@ const Jocs = () => {
       "Authorization": `Bearer ${token.token}`
     }
 
-  //  let response = await fetch("http://app.11josep.daw.iesevalorpego.es/api/v1/admin/videojocs", {
-    let response = await fetch("http://vos.es/api/v1/admin/videojocs", {
+   let response = await fetch("https://app.11josep.daw.iesevalorpego.es/api/v1/admin/videojocs", {
+    // let response = await fetch("https://vos.es/api/v1/admin/videojocs", {
       method: "GET",
       headers: headersList
     });

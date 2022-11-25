@@ -17,8 +17,8 @@ function Buscar({title}) {
   console.log(window.location.pathname.split("/")[2]);
   }, [Valor]);
   const buscarPerText=async()=>{
-    const response=await fetch(`http://vos.es/api/v1/videojoc/buscar/${Valor}`);
-    //const response=await fetch(`http://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/buscar/${Valor}`);
+    // const response=await fetch(`http://vos.es/api/v1/videojoc/buscar/${Valor}`);
+    const response=await fetch(`https://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/buscar/${Valor}`);
     const arrayBusqueda=await response.json();
     console.log(arrayBusqueda);
     setArrayVideojocs(arrayBusqueda.Resultat);

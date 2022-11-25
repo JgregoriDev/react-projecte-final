@@ -44,10 +44,10 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 		let results = `&results=12`;
 
 		const url = {
-			link1: `http://vos.es/api/v1/videojocs?page=${page}${results}${parametro}${ordenar}`,
-			//"link1":`https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?page=${page}${results}${parametro}${ordenar}`,
-			link2: `http:/vos.es/api/v1/videojocs?page=${page}${results}`,
-			//"link2":`https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?page=${page}${results}`
+			// link1: `http://vos.es/api/v1/videojocs?page=${page}${results}${parametro}${ordenar}`,
+			"link1":`https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?page=${page}${results}${parametro}${ordenar}`,
+			// link2: `http:/vos.es/api/v1/videojocs?page=${page}${results}`,
+			"link2":`https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?page=${page}${results}`
 		};
 		let link;
 		filtrar && ordenar ? (link = url.link1) : (link = url.link2);

@@ -30,9 +30,9 @@ const Login = ({ title }) => {
 							"token",
 							JSON.stringify(token)
 						);
-						window.location.href = "/perfil";
+						// window.location.href = "/perfil";
 						// navigate(0);
-						// navigate("/");
+						 navigate("/");
 					}
 
 				}
@@ -52,8 +52,8 @@ const Login = ({ title }) => {
 			password: objecte.password,
 		});
 
-		let response = await fetch("http://vos.es/api/login", {
-		// let response = await fetch("http://app.11josep.daw.iesevalorpego.es/api/login", {
+		//let response = await fetch("http://vos.es/api/login", {
+		let response = await fetch("https://app.11josep.daw.iesevalorpego.es/api/login", {
 			method: "POST",
 			body: bodyContent,
 			headers: headersList,

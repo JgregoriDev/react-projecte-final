@@ -43,8 +43,8 @@ const PresentarJoc = ({ title }) => {
 	};
 
 	const getVideojoc = async () => {
-		 const link = `http://vos.es/api/v1/videojoc/titol/${idJoc}`;
-		// const link = `http://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/titol/${idJoc}`;
+		//  const link = `http://vos.es/api/v1/videojoc/titol/${idJoc}`;
+		const link = `https://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/titol/${idJoc}`;
 		const response = await fetch(link);
 		const videojocObject = await response.json();
 		setVideojoc(videojocObject.Videojoc);
@@ -53,8 +53,8 @@ const PresentarJoc = ({ title }) => {
 	};
 
 	const getComentaris = async () => {
-		const link = `http://vos.es/api/v1/videojoc/${Videojoc.id}/comentaris`;
-		// const link = `http://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/${Videojoc.id}/comentaris`;
+		// const link = `http://vos.es/api/v1/videojoc/${Videojoc.id}/comentaris`;
+		const link = `https://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/${Videojoc.id}/comentaris`;
 		const response = await fetch(link);
 		const comentarisObject = await response.json();
 		setComentaris(comentarisObject);
@@ -109,8 +109,8 @@ const PresentarJoc = ({ title }) => {
 		});
 
 		let response = await fetch(
-			`http://vos.es/api/v1/videojoc/${Videojoc.id}/usuari/${id}/comentari/nou`,
-			// `http://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/${Videojoc.id}/usuari/${id}/comentari/nou`,
+			// `http://vos.es/api/v1/videojoc/${Videojoc.id}/usuari/${id}/comentari/nou`,
+			`https://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/${Videojoc.id}/usuari/${id}/comentari/nou`,
 			{
 				method: "POST",
 				body: bodyContent,
