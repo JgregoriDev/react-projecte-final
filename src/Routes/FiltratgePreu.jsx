@@ -23,7 +23,7 @@ const FiltratgePreu = ({title}) => {
 
   const filteredPrice = async (min, max) => {
     // const result = await fetch(`http://vos.es/api/v1/videojoc/filtrar/preu/${min}/${max}`);
-    const result = await fetch(`http://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/filtrar/preu/${min}/${max}`);
+    const result = await fetch(`https://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/filtrar/preu/${min}/${max}`);
     const resultJSON = await result.json();
     return resultJSON;
   }

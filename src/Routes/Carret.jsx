@@ -35,8 +35,8 @@ const Carrito = (props) => {
 		let parametro = `parametro=fechaEstreno`;
 		let ordenar = `&sort=DESC`;
 		let results = `&results=3`;
-		//const response = await fetch(`https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?${parametro}${ordenar}${results}`);
-		const response = await fetch(`https://vos.es/api/v1/videojocs?${parametro}${ordenar}${results}`);
+		const response = await fetch(`https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?${parametro}${ordenar}${results}`);
+		// const response = await fetch(`https://vos.es/api/v1/videojocs?${parametro}${ordenar}${results}`);
 		const videojoscArray = await response.json();
 		setJocs(videojoscArray.Resultat);
 		console.log(Jocs);

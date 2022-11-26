@@ -7,7 +7,6 @@ const Filter = ({props}) => {
 	// useEffect(() => {
 	// 	setActive(`${orden}${orden}`);	
 	// }, [props])
-	
 	// console.log(props.at(-1));
 	// const location = useLocation();
 	// let ordenar = new URLSearchParams(location.search()).get("filtrar");
@@ -54,6 +53,18 @@ const Filter = ({props}) => {
 					Data
 				</Link>
 				<Link
+					className={`btn btn-secondary  ${props.at(-1)==="fechaEstreno" && props.at(-2)==="DESC"?"d-none":""}`}
+					title="Ordenar per data de manera descendent"
+					to={{
+						pathname: path,
+						search: `orden=DESC&filtrar=fechaEstreno`,
+						hash: "#Orden",
+					}}
+				>
+					<i className="bi bi-sort-numeric-down d-inline"></i>
+					Data
+				</Link>
+				{/* <Link
 					className={`btn btn-secondary  ${filtrat==="fechaEstreno"  && props.at(-2)==="DESC"?"d-none":""}`}
 					title="Ordenar per data de manera descendent"
 					to={{
@@ -64,7 +75,7 @@ const Filter = ({props}) => {
 				>
 						<i className="bi bi-sort-numeric-up"></i>
 						Data
-				</Link>
+				</Link> */}
 				</div>
     </div>
   )

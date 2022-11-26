@@ -1,7 +1,7 @@
 import Form from "react-bootstrap/Form";
 import { Link,useNavigate } from "react-router-dom";
 // import { Search } from "";
-const SearchBar = () => {
+const SearchBar = ({width}) => {
 	// const search = useLocation().search;
 	// let page = new URLSearchParams(search).get("pagina") ?? 1;
 	const navigate = useNavigate();
@@ -18,12 +18,12 @@ const SearchBar = () => {
 					method="get"
 				>
 					<input
-						className="form-control w-75 mb-2"
+						className={`form-control ${width} mb-2`}
 						type="text"
 						formMethod="GET"
 						placeholder="Buscar"
 					/>
-					<button type="submit" title="Buscar" title="Buscar" className="btn btn-primary w-75">
+					<button type="submit" title="Buscar" title="Buscar" className={`btn btn-primary ${width}`}>
 				
 						<i className="bi bi-search"></i>
 					</button>

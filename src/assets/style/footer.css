@@ -3,6 +3,7 @@
 }
 .icon:hover{
   color: #d90429 !important;
+  transform: scale(1.2);
 }
 .mt-50vh{
   margin-top: 60vh;

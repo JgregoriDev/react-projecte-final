@@ -43,7 +43,6 @@ const PresentarJoc = ({ title }) => {
 	};
 
 	const getVideojoc = async () => {
-		//  const link = `http://vos.es/api/v1/videojoc/titol/${idJoc}`;
 		const link = `https://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/titol/${idJoc}`;
 		const response = await fetch(link);
 		const videojocObject = await response.json();
@@ -62,20 +61,27 @@ const PresentarJoc = ({ title }) => {
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		let valor=false;
+		let enviar=true;
 		seterrorVotacio("");
 		seterrorMissatge("");
-		if(e.target[0].value<0 || e.target[0].value.length>5){
-			valor=true;
+		const numero=parseInt(e.target[0].value);
+		console.log("🚀 ~ file: Presentar-joc.jsx ~ line 69 ~ onSubmit ~ isNaN(numero)", Number.isInteger(numero))
+		if(!Number.isInteger(numero)){
+			enviar=false;
+			seterrorVotacio("El valor de la votacio no pot ser text");
+		}
+
+		if(numero<0 || numero>5){
+			enviar=false;
 			seterrorVotacio("El valor no pot ser major de 5 ni menor de 0");
 		}
 
 		if(e.target[1].value.length<3 || e.target[1].value.length>200){
-			valor=true;
+			enviar=false;
 			seterrorMissatge("No pot ser menor de 3 ni major de 200 caracters")
 		}
 
-		if(!valor){
+		if(!enviar){
 			return;
 		}
 
@@ -133,26 +139,24 @@ const PresentarJoc = ({ title }) => {
 					name="votacio"
 					id="votacio"
 				/>
-				<small className="text-danger">{errorVotacio}</small>
+				<p><small className="text-danger">{errorVotacio}</small></p>
 				<textarea
 					className="form-control"
 					placeholder="Comenta el videojoc"
 					id="floatingTextarea"
 				></textarea>
-				<small className="text-danger">{errorMissatge}</small>
+			<p>	<small className="text-danger">{errorMissatge}</small></p>
 				<button className="btn btn-primary my-2" type="submit">
 					Enviar Comentari
 				</button>
-				<small className="text-danger">
+			<p>	<small className="text-danger">
 					{Missatge}
-				</small>
+				</small></p>
 			</form>
 		);
 	};
 
 	const onClick=()=>{
-		console.log(Videojoc);
-		console.log(Carrito);
 		Carrito.push(Videojoc);
 		setCarrito(Carrito);
 		localStorage.setItem('carrito',JSON.stringify(Carrito));

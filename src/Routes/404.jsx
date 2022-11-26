@@ -3,7 +3,9 @@ import useTitle from "../Hooks/useTitle";
 const Notfound = ({title}) => {
   useTitle(title);
   return (
-    <div>Notfound</div>
+    <div className=''>
+      <span className='notFound'>404 - Ruta no trobada</span>
+      </div>
   )
 }
 

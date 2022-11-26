@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import { useLocation } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import { Link, useParams } from "react-router-dom";
+
 import Filter from "../components/Filter";
 import FilterPreu from "../components/Filtratge";
 import Diapositives from "../components/diapositives";
-import Button from "react-bootstrap/Button";
-import { Link, useParams } from "react-router-dom";
 import SearchBar from '../components/search';
 import useTitle from "../Hooks/useTitle";
 import Toast from "../components/toast";
@@ -45,9 +46,9 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 
 		const url = {
 			// link1: `http://vos.es/api/v1/videojocs?page=${page}${results}${parametro}${ordenar}`,
-			"link1":`https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?page=${page}${results}${parametro}${ordenar}`,
+			"link1": `https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?page=${page}${results}${parametro}${ordenar}`,
 			// link2: `http:/vos.es/api/v1/videojocs?page=${page}${results}`,
-			"link2":`https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?page=${page}${results}`
+			"link2": `https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?page=${page}${results}`
 		};
 		let link;
 		filtrar && ordenar ? (link = url.link1) : (link = url.link2);
@@ -94,18 +95,16 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 
 	for (let i = 1; i <= TotalPages; i++) {
 		numero.push(
-			<li key={i} className="page-item">
-				<Link
-					className={`page-link ${page === i ? "active" : ""}`}
-					onClick={() => scrollToTop()}
-					to={{
-						pathname: "",
-						search: `pagina=${i}${filt}${ord}`,
-					}}
-				>
-					{i}
-				</Link>
-			</li>
+			<Link
+				className={`page-link ${page === i ? "active" : ""}`}
+				onClick={() => scrollToTop()}
+				to={{
+					pathname: "",
+					search: `pagina=${i}${filt}${ord}`,
+				}}
+			>
+				{i}
+			</Link>
 		);
 	}
 
@@ -113,7 +112,7 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 		<div>
 			<div className="container-fluid">
 				<div className="row">
-					<div className="col-12">
+					<div className="d-none d-lg-block col-12">
 						{page > 1 || page === undefined ? (
 							""
 						) : (
@@ -127,12 +126,13 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 					<div className="d-none d-lg-block col col-lg-2"></div>
 					<div className="col col-lg-8">
 						<div className="row">
-							<div className="row">
-								<div className="col-6">
-									<Filter props={[`/`, orden, filtrar]}></Filter>
-								</div>
-
+							<div className="d-block d-lg-none">
+								<SearchBar width={`w-100`}></SearchBar>
+								<FilterPreu width={`w-100`} />
 							</div>
+								<Filter props={[`/`, orden, filtrar]}></Filter>
+
+
 							<h1 id="Ancora">Videojocs Pàgina {page}</h1>
 							{Videojocs.length < 1 ? infiniteSpinner() : ""}
 							{Videojocs &&
@@ -191,14 +191,14 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 													<path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
 												</svg>
 											</Button>{" "}
-											<Button title="Comprar ya" variant="primary">
-												Comprar ya
+											<Button title="Comprar jaa" variant="primary">
+												Comprar ja
 											</Button>{" "}
 										</div>
 									</div>
 								))}
 							{Show ? (
-								<Toast message={`Has afegit un producte\n al carret`}></Toast>
+								<Toast message={`Has afegit un producte al carret`}></Toast>
 							) : (
 								""
 							)}
@@ -210,8 +210,8 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 						</div>
 					</div>
 					<div className="d-none d-lg-flex flex-column col col-lg-2">
-						<SearchBar></SearchBar>
-						<FilterPreu />
+						<SearchBar width={`w-75`}></SearchBar>
+						<FilterPreu width={`w-75`} />
 					</div>
 				</div>
 			</div>

@@ -155,14 +155,14 @@ const Contain = () => {
                     : ""}
 
 
-                  <Nav.Link title="Carret" as={NavLink} className="text-white mx-3" to="/carret">
+                  <Nav.Link title="Carret" as={NavLink} className="text-white mx-lg-3" to="/carret">
 
                     <i className="bi bi-cart"></i>
 
                   </Nav.Link>
                 </Nav>
                 <Nav>
-                  <i className="bi mt-1 bi-person-circle text-white"></i>
+                  <i className="d-none d-lg-inline bi mt-1 bi-person-circle text-white"></i>
                   <NavDropdown
                     className="text-white"
                     title={Email}
