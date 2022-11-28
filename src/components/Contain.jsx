@@ -5,8 +5,11 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 import Logo from "../assets/images/icon64x64.png";
 import Usuaris from "../Routes/admin/Usuaris";
+import PagoRealitzat from "../Routes/PagoRealitzat";
+import PagoRechazat from "../Routes/PagoRechazat";
 import Jocs from "../Routes/admin/Jocs";
 import { Peu } from "./peu";
 import About from '../Routes/About';
@@ -184,6 +187,8 @@ const Contain = () => {
         </div>
         <Routes>
           <Route path='/carret' element={<Carret title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
+          <Route path='/pago-realitzat' element={<PagoRealitzat title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
+          <Route path='/pago-rechazat' element={<PagoRechazat title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
           <Route path='/admin' element={<Usuaris title={vosTitle.admin} />}></Route>
           <Route path='/admin/jocs' element={<Jocs title={vosTitle.admin} />}></Route>
           <Route path='/admin/joc/nou' element={<JocForm title={vosTitle.admin} />}></Route>

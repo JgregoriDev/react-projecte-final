@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
-import useTitle from "../Hooks/useTitle";
 import { Link } from 'react-router-dom';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import "../assets/style/badge.css";
 import {useNavigate } from 'react-router-dom'
+
+import "../assets/style/badge.css";
+import useTitle from "../Hooks/useTitle";
 
 const PresentarJoc = ({ title }) => {
 	const navigate= useNavigate('');

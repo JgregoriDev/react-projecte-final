@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+
 import useTitle from "../Hooks/useTitle";
 import Toast from "../components/toast";
+import ContainerRecomanacio from "../components/ContainerRecomanacio";
 const Carrito = (props) => {
-	const { carrito, buidar, title } = props;
+	// const { carrito, buidar, title } = props;
 	useTitle(props.title);
 	const [ArrayCarret, setArrayCarret] = useState([]);
-	const [TamanyCarret, setTamanyCarret] = useState(0);
-	const [Jocs, setJocs] = useState([]);
+	const [ArrayCarretTractat, setArrayCarretTractat] = useState('');
 	const [PreuTotal, setPreuTotal] = useState(0);
 	const [Show, setShow] = useState(false);
+	let n=[];
 	useEffect(() => {
 		const items = JSON.parse(localStorage.getItem('carrito'));
 		if (items !== Carrito) {
@@ -20,28 +22,21 @@ const Carrito = (props) => {
 				preu += item.preu;
 			}
 			setPreuTotal(preu);
+		
 		}
 	}, []);
-
 	useEffect(() => {
-		getVideojocs();
-
-
-	}, [])
-
-	const getVideojocs = async () => {
-
-		let page = `${parseInt(1)}`;
-		let parametro = `parametro=fechaEstreno`;
-		let ordenar = `&sort=DESC`;
-		let results = `&results=3`;
-		const response = await fetch(`https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?${parametro}${ordenar}${results}`);
-		// const response = await fetch(`https://vos.es/api/v1/videojocs?${parametro}${ordenar}${results}`);
-		const videojoscArray = await response.json();
-		setJocs(videojoscArray.Resultat);
-		console.log(Jocs);
-
-	};
+		let n=[];
+		for (const iterator of ArrayCarret) {
+			n.push(`Preu joc:${iterator.preu} Nom: ${iterator.titul}`);
+		}
+		let string=n.join(',\n');
+		setArrayCarretTractat(n);
+		console.log(ArrayCarretTractat);
+	
+	
+	}, [ArrayCarret])
+	
 
 	const borrarVideojocCarret = (key) => {
 		console.log(key);
@@ -66,7 +61,7 @@ const Carrito = (props) => {
 			setShow(false);
 		}, 1300);
 	};
-
+	
 	const espai = () => {
 		return (
 			<div>
@@ -85,10 +80,38 @@ const Carrito = (props) => {
 	return (
 		<div className="container">
 			<div className="row">
-				<div className="col-2"></div>
-				<div className="co -8">
+				<div className="col col-lg-2"></div>
+				<div className="co-8">
 					<div className="row">
-						<div className="col-8">
+						<div className="col col-lg-8">
+						<div className="my-2 d-block d-lg-none flex-column gap-3">
+								<div className="d-block d-lg-none">
+								<p>
+									<b>Detalls</b>
+								</p>
+								<p>
+									<b>
+										Total productes:{" "}
+										{ArrayCarret !== undefined ? `${ArrayCarret.length}` : ""}
+									</b>
+								</p>
+								<p>
+									<b>Preu:</b> {PreuTotal}
+								</p>
+								</div>
+								<form className="w-100" action="http://vos.es/api/v1/pago" method="POST">
+									<input type="hidden" name="productes" value={JSON.stringify(ArrayCarretTractat)} />
+									<input type="hidden" name="preu" value={PreuTotal} />
+									<button className="btn btn-primary w-100" type="submit">
+										Pagar
+									</button>
+								</form>
+								<Link to="/" title="Tornar a la tenda" className="w-100 my-2 btn btn-secondary mb-3">
+									<i className="bi bi-arrow-left-short"></i>
+									<span className="d-none d-md-inline">Tornar a la tenda</span>
+								</Link>
+								<div className="mb-9">&nbsp;</div>
+							</div>
 							<div className="my-3">
 								<button className="btn-primary btn" onClick={() => { onClick() }}>
 									Borrar
@@ -98,7 +121,7 @@ const Carrito = (props) => {
 								<thead>
 									<tr>
 										<th>Id</th>
-										<th>Portada</th>
+										<th className="d-none d-lg-table-cell">Portada</th>
 										<th>Titul</th>
 										<th>Preu</th>
 										{/* <th>Cantitat</th> */}
@@ -116,9 +139,9 @@ const Carrito = (props) => {
 
 													<th scope="row">{producte.id}</th>
 
-													<td>
+													<td className="d-none d-lg-table-cell">
 														<img
-														loading="lazy"
+															loading="lazy"
 															className="img-thumbnail w-25 h-auto"
 															src={producte.portada}
 															alt={producte.titul}
@@ -145,7 +168,7 @@ const Carrito = (props) => {
 							</table>
 
 						</div>
-						<div className="col-4 d-flex flex-column justify-content-around">
+						<div className="col-4 d-none d-lg-flex flex-column justify-content-around">
 							<div>
 								<p>
 									<b>Detalls</b>
@@ -167,10 +190,17 @@ const Carrito = (props) => {
 							) : (
 								""
 							)}
-							<div className="d-flex flex-column gap-3">
-								<Link to="" className="btn btn-primary">
+							<div className="d-none d-lg-flex flex-column gap-3">
+								{/* <Link to="" className="btn btn-primary">
 									Comprar
-								</Link>
+								</Link> */}
+								<form className="w-100" action="http://vos.es/api/v1/pago" method="POST">
+									<input type="hidden" name="productes" value={JSON.stringify(ArrayCarretTractat)} />
+									<input type="hidden" name="preu" value={PreuTotal} />
+									<button className="btn btn-primary w-100" type="submit">
+										Pagar
+									</button>
+								</form>
 								<Link to="/" title="Tornar a la tenda" className="btn btn-secondary mb-3">
 									<i className="bi bi-arrow-left-short"></i>
 									<span className="d-none d-md-inline">Tornar a la tenda</span>
@@ -178,21 +208,10 @@ const Carrito = (props) => {
 								<div className="mb-9">&nbsp;</div>
 							</div>
 						</div>
-						<h4 className="my-3">Tal volta t'interesse algun d'aquests jocs</h4>
-						<div className="d-flex flex-column flex-md-row justify-content-center justify-content-md-between mb-5">
-							{console.log(Jocs.length)}
-							{Jocs.length > 1 ? Jocs.map((joc) => {
-								return (<div key={joc.id} className="w-25">
-									<Link to={`/videojoc/${joc.titul}`}>
-										<img className="w-100 h-auto" loading="lazy" src={`${joc.portada}`} alt={`${joc.titul}`} />
-									</Link>
-									<h5><Link to={`/videojoc/${joc.titul}`}>{joc.titul}</Link></h5>
-									</div>)
-							}) : null}
-						</div>
+						<ContainerRecomanacio width={`w-100`} />
 					</div>
 				</div>
-				<div className="col-2"></div>
+				<div className="col col-2"></div>
 			</div>
 
 		</div>

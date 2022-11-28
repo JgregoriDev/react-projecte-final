@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+
 import "../assets/style/targeta.css";
 import useTitle from "../Hooks/useTitle";
 const FiltratgePreu = ({title}) => {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link,useParams } from "react-router-dom";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+
 import useTitle from "../Hooks/useTitle";
 
 const Plataforma = ({title}) => {

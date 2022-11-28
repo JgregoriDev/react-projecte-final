@@ -1,5 +1,6 @@
 import React from "react";
 import Scrollspy from "react-scrollspy";
+
 import "../assets/style/scrollspy.css";
 import useTitle from "../Hooks/useTitle";
 const About = ({title}) => {
@@ -16,19 +17,19 @@ const About = ({title}) => {
 							currentClassName="isCurrent"
 						>
 							<li>
-								<a href="#Información">Información que es recogida</a>
+								<a className="nav-link" href="#Información">Información que es recogida</a>
 							</li>
 							<li>
-								<a href="#Uso">Uso de la información recogida</a>
+								<a className="nav-link" href="#Uso">Uso de la información recogida</a>
 							</li>
 							<li>
-								<a href="#Cookies">Cookies</a>
+								<a className="nav-link" href="#Cookies">Cookies</a>
 							</li>
 							<li>
-								<a href="#Enlaces">Enlaces a Terceros</a>
+								<a className="nav-link" href="#Enlaces">Enlaces a Terceros</a>
 							</li>
 							<li>
-								<a href="#Control">Control de su información personal</a>
+								<a className="nav-link" href="#Control">Control de su información personal</a>
 							</li>
 						</Scrollspy>
 					</div>

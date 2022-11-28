@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import { useLocation } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import { Link, useParams } from "react-router-dom";
 
+import { Link, useParams } from "react-router-dom";
 import Filter from "../components/Filter";
 import FilterPreu from "../components/Filtratge";
 import Diapositives from "../components/diapositives";
@@ -110,7 +110,9 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 
 	return (
 		<div>
+			{/* Diapositives */}
 			<div className="container-fluid">
+				
 				<div className="row">
 					<div className="d-none d-lg-block col-12">
 						{page > 1 || page === undefined ? (
@@ -121,11 +123,12 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 					</div>
 				</div>
 			</div>
-			<div className="mt-9 container-fluid">
+			<div className="mt-5 container-fluid">
 				<div className="row">
 					<div className="d-none d-lg-block col col-lg-2"></div>
 					<div className="col col-lg-8">
 						<div className="row">
+							{/* Blog de busqueda i filtratge per preu només sera visible en mobil */}
 							<div className="d-block d-lg-none">
 								<SearchBar width={`w-100`}></SearchBar>
 								<FilterPreu width={`w-100`} />
@@ -135,6 +138,7 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 
 							<h1 id="Ancora">Videojocs Pàgina {page}</h1>
 							{Videojocs.length < 1 ? infiniteSpinner() : ""}
+							<div className="row">
 							{Videojocs &&
 								Videojocs.map((joc, index) => (
 									<div
@@ -202,6 +206,7 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 							) : (
 								""
 							)}
+							</div>
 							<div className=" mb-9 d-flex justify-content-center">
 								<nav aria-label="Page navigation example">
 									<ul className="pagination d-flex m-0">{numero}</ul>
@@ -210,6 +215,7 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 						</div>
 					</div>
 					<div className="d-none d-lg-flex flex-column col col-lg-2">
+						{/* Blog de busqueda i filtratge per preu només sera visible en tamany tablet */}
 						<SearchBar width={`w-75`}></SearchBar>
 						<FilterPreu width={`w-75`} />
 					</div>

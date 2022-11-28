@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation,Link } from "react-router-dom";
+
 import useTitle from "../Hooks/useTitle";
 function Buscar({title}) {
   useTitle(title);
