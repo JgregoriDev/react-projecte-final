@@ -7,7 +7,7 @@ export const Peu = () => {
 			<div className="row">
 				<div className="d-none d-lg-block col col-lg-3"></div>
 				
-				<div className="d-block pt-5 my-4 my-lg-0 col col-lg-3 justify-content-center">
+				<div className="d-flex justify-content-center pt-5 gap-3 my-lg-0 col-12 col-lg-3 justify-content-center">
 					<nav className="d-block d-lg-flex justify-content-center flex-column align-items-center">
 						<Link
 							to="/sobre-nosotros"
