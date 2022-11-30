@@ -96,6 +96,7 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 	for (let i = 1; i <= TotalPages; i++) {
 		numero.push(
 			<Link
+				key={i}
 				className={`page-link ${page === i ? "active" : ""}`}
 				onClick={() => scrollToTop()}
 				to={{

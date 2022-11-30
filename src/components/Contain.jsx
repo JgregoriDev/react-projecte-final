@@ -27,6 +27,7 @@ import FiltratgePreu from '../Routes/FiltratgePreu';
 import MenuCookies from "../components/MenuCookies";
 import Galletes from "../Routes/Galletes";
 import FiltrePreu from './Filtratge';
+import FAQ from '../Routes/FAQ';
 import JocForm from '../Routes/admin/JocForm';
 //Objecte de titols
 const vosTitle = {
@@ -187,6 +188,7 @@ const Contain = () => {
         </div>
         <Routes>
           <Route path='/carret' element={<Carret title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
+          <Route path='/FAQ' element={<FAQ />}></Route>
           <Route path='/pago-realitzat' element={<PagoRealitzat title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
           <Route path='/pago-rechazat' element={<PagoRechazat title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
           <Route path='/admin' element={<Usuaris title={vosTitle.admin} />}></Route>

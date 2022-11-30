@@ -10,6 +10,8 @@ const Carrito = (props) => {
 	const [ArrayCarret, setArrayCarret] = useState([]);
 	const [ArrayCarretTractat, setArrayCarretTractat] = useState('');
 	const [PreuTotal, setPreuTotal] = useState(0);
+	const [Login, setLogin] = useState(false);
+
 	const [Show, setShow] = useState(false);
 	let n=[];
 	useEffect(() => {
@@ -37,6 +39,15 @@ const Carrito = (props) => {
 	
 	}, [ArrayCarret])
 	
+	useEffect(() => {
+		const token= localStorage.getItem("token");
+		if(token){
+			setLogin(true);
+		}	
+	
+	
+	}, [])
+	
 
 	const borrarVideojocCarret = (key) => {
 		console.log(key);
@@ -62,6 +73,13 @@ const Carrito = (props) => {
 		}, 1300);
 	};
 	
+	const desactivarBoto=()=>{
+		if(PreuTotal<1)
+			return "disabled";
+		else
+		  return "";
+	}
+
 	const espai = () => {
 		return (
 			<div>
@@ -99,10 +117,10 @@ const Carrito = (props) => {
 									<b>Preu:</b> {PreuTotal}
 								</p>
 								</div>
-								<form className="w-100" action="http://vos.es/api/v1/pago" method="POST">
+								<form className={`w-100  ${!Login?'d-none':''}`} action="http://vos.es/api/v1/pago" method="POST">
 									<input type="hidden" name="productes" value={JSON.stringify(ArrayCarretTractat)} />
 									<input type="hidden" name="preu" value={PreuTotal} />
-									<button className="btn btn-primary w-100" type="submit">
+									<button {...(ArrayCarret.length===0 ? {disabled: 'true'} : {})} className="btn btn-primary w-100" type="submit">
 										Pagar
 									</button>
 								</form>
@@ -194,10 +212,12 @@ const Carrito = (props) => {
 								{/* <Link to="" className="btn btn-primary">
 									Comprar
 								</Link> */}
-								<form className="w-100" action="http://vos.es/api/v1/pago" method="POST">
+
+								<form  className={`w-100 ${!Login?'d-none':''}`} action="http://vos.es/api/v1/pago" method="POST">
+									<input type="hidden" name="arrayProductes" value={JSON.stringify(ArrayCarret)} />
 									<input type="hidden" name="productes" value={JSON.stringify(ArrayCarretTractat)} />
 									<input type="hidden" name="preu" value={PreuTotal} />
-									<button className="btn btn-primary w-100" type="submit">
+									<button className="btn btn-primary w-100"{...(ArrayCarret.length===0 ? {disabled: 'true'} : {})} type="submit">
 										Pagar
 									</button>
 								</form>

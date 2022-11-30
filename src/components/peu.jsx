@@ -23,6 +23,13 @@ export const Peu = () => {
 						>
 							Sobre les galletes
 						</Link>
+						<Link
+							to="/FAQ"
+							className="icon d-block nav-link"
+							title="Preguntes i respostes de com treballem"
+						>
+							FAQ
+						</Link>
 					</nav>
 				</div>			
 				<div className="d-flex d-lg-flex pt-5  col col-lg-3   justify-content-between align-items-center">

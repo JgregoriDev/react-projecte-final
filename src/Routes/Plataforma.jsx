@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Link,useParams } from "react-router-dom";
+import { Link,useParams,useLocation } from "react-router-dom";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 import useTitle from "../Hooks/useTitle";
 
 const Plataforma = ({title}) => {
 	const {id}=useParams();
+	const queryParameters = new URLSearchParams(window.location.search)
+	const param=window.location.pathname.split("/")[2];
+  const type = queryParameters.get("genere")
 	const [Jocs, setJocs] = useState([]);
 	const [Marca, setMarca] = useState([]);
 	const [Generes, setGeneres] = useState([]);
@@ -15,6 +18,10 @@ const Plataforma = ({title}) => {
 		conseguirJocsPlataforma();
 		conseguirGeneresPlataforma();
 	}, [id]);
+
+	useEffect(()=>{
+		console.log(type,param);
+	},[type])
 	const conseguirJocsPlataforma = async () => {
 		const response = await fetch(
 			// `http://vos.es/api/v1/plataforma/${id}`
@@ -82,7 +89,10 @@ const Plataforma = ({title}) => {
 						? Generes.map((Genere) => {
 							return (
 								<div className="mb-3 ms-3" key={Genere.id}>
-									<Link to={``}>{Genere.genere}</Link>
+									<Link to={{
+						pathname: "",
+						search: `genere=${Genere.id}`,
+					}}>{Genere.genere}</Link>
 								</div>
 							);
 						})
