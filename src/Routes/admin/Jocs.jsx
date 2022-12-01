@@ -76,6 +76,7 @@ const Jocs = () => {
   }
 
   const conseguirLlistatJocs = async () => {
+    token = JSON.parse(localStorage.getItem("token"));
     let headersList = {
       "Accept": "*/*",
       "Authorization": `Bearer ${token.token}`
@@ -109,7 +110,7 @@ const Jocs = () => {
           <Link to={`/admin/joc/nou`} className="btn btn-primary"><i className="bi bi-plus-circle-fill mx-1"></i><span className="d-none d-lg-inline">Videojoc nou</span></Link>
 
           </div>
-      <Link to={`/admin`}>Llistar usuaris</Link>
+      {/* <Link to={`/admin`}>Llistar usuaris</Link> */}
           <table className="table table-striped">
             <thead>
               <tr>

@@ -8,20 +8,19 @@ const Plataforma = ({title}) => {
 	const {id}=useParams();
 	const queryParameters = new URLSearchParams(window.location.search)
 	const param=window.location.pathname.split("/")[2];
-  const type = queryParameters.get("genere")
+  const genere = queryParameters.get("genere")
 	const [Jocs, setJocs] = useState([]);
 	const [Marca, setMarca] = useState([]);
 	const [Generes, setGeneres] = useState([]);
 	useTitle(title);
 	useEffect(() => {
-		console.log(id);
+		// console.log(id);
 		conseguirJocsPlataforma();
 		conseguirGeneresPlataforma();
 	}, [id]);
 
 	useEffect(()=>{
-		console.log(type,param);
-	},[type])
+	},[genere])
 	const conseguirJocsPlataforma = async () => {
 		const response = await fetch(
 			// `http://vos.es/api/v1/plataforma/${id}`
@@ -37,14 +36,14 @@ const Plataforma = ({title}) => {
 		const response = await fetch(`https://app.11josep.daw.iesevalorpego.es/api/v1/generes`);
 		const resultat = await response.json();
 		setGeneres(resultat);
-		console.log(resultat);
+		// console.log(resultat);
 	};
 
 	return (
 		<div className="container-fluis">
 			<div className="row">
-				<div className="col-2"></div>
-				<div className="col-8">
+				<div className="d-none d-lg-block col-2"></div>
+				<div className="col-12 col-lg-8">
 					<div className="row mt-5 mb-5">
 						<Breadcrumb>
 							<Breadcrumb.Item href="/">Inici</Breadcrumb.Item>
@@ -56,6 +55,7 @@ const Plataforma = ({title}) => {
 						<h1>Plataforma amb id {`${id}`}</h1>
 						{Jocs && Jocs.length > 0
 							? Jocs.map((Joc) => {
+								// console.log(Joc);
 								return (
 									<div key={Joc.id} className="col gap-5 col-lg-4">
 										<Link to={`/videojoc/${Joc.titul}`}>
@@ -71,7 +71,10 @@ const Plataforma = ({title}) => {
 												{Joc.id} - {Joc.titul}
 											</Link>
 										</h4>
-
+										<p>Generes: {Joc.generes.map((genere)=>{
+											return (<span className="badge rounded-pill text-bg-primary">{genere.genere}</span>);
+										})}</p> 
+										<p><span className="badge rounded-pill text-bg-primary">{Joc.genere}</span></p>
 										<p>{`${Joc.descripcio.split(".")[0]}.${Joc.descripcio.split(".")[1]}...`}</p>
 									</div>
 								);
@@ -80,7 +83,7 @@ const Plataforma = ({title}) => {
 					</div>
 					<div className="mb-3"></div>
 				</div>
-				<div className="col-2">
+				<div className="d-none d-lg-block col-2">
 					<div className='my-4'>
 						&nbsp;
 					</div>

@@ -128,7 +128,6 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 				<div className="row">
 					<div className="d-none d-lg-block col col-lg-2"></div>
 					<div className="col col-lg-8">
-						<div className="row">
 							{/* Blog de busqueda i filtratge per preu només sera visible en mobil */}
 							<div className="d-block d-lg-none">
 								<SearchBar width={`w-100`}></SearchBar>
@@ -143,7 +142,7 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 							{Videojocs &&
 								Videojocs.map((joc, index) => (
 									<div
-										className="col col-lg-4 justify-content-center border-2 my-3 gap-9"
+										className="col-12 col-md-6 col-lg-4 justify-content-center border-2 my-3 gap-9"
 										key={joc.id}
 									>
 										<Link to={`/videojoc/${joc.titul}`}>
@@ -214,15 +213,15 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 								</nav>
 							</div>
 						</div>
-					</div>
-					<div className="d-none d-lg-flex flex-column col col-lg-2">
+						<div className="d-none d-lg-flex flex-column col col-lg-2">
 						{/* Blog de busqueda i filtratge per preu només sera visible en tamany tablet */}
 						<SearchBar width={`w-75`}></SearchBar>
 						<FilterPreu width={`w-75`} />
 					</div>
+					</div>
+				
 				</div>
 			</div>
-		</div>
 	);
 };
 

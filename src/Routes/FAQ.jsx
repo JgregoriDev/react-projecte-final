@@ -86,9 +86,10 @@ const FAQ = () => {
             <Collapse className='my-4' in={open4}>
               <div id="example-collapse-text">
 
-                Tots els nostres productes seminous compten amb un any de garantia per fallada de funcionament des del moment de lliurament, tant si s'han adquirit en vos.es o en una de les nostres botigues físiques.
-
-                Totes les nostres consoles semius inclouen el cablejat essencial per al seu correcte funcionament, així com el disc dur que marca la referència del producte.
+              En primer lloc, comprova que el producte es troba llistat en la factura. Si és així, posa't en contacte amb el nostre servei d'Atenció 
+              al Client per a solucionar la incidència.
+              Una vegada el nostre equip haja fet les comprovacions oportunes, procedirem a l'enviament de la mercaderia que manca sempre que sigui possible.
+               És important que tinguis en compte que el termini per a comunicar una comanda incompleta és de 48 hores des de la seva recepció.
               </div>
             </Collapse>
           </div>

@@ -3,7 +3,7 @@ import "../assets/style/footer.css";
 import { Link } from "react-router-dom";
 export const Peu = () => {
 	return (
-		<div className="container-fluid bg-dark footer">
+		<div className="h-25 container-fluid bg-dark footer">
 			<div className="row">
 				<div className="d-none d-lg-block col col-lg-3"></div>
 				
@@ -32,7 +32,7 @@ export const Peu = () => {
 						</Link>
 					</nav>
 				</div>			
-				<div className="d-flex d-lg-flex pt-5  col col-lg-3   justify-content-between align-items-center">
+				<div className="d-flex d-lg-flex pt-5  col-12 col-lg-3   justify-content-between align-items-center">
 					<a
 						href="https://www.twitter.com"
 						title="Twitter vos"
