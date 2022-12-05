@@ -3,7 +3,11 @@ import jwt_decode from "jwt-decode";
 import { useNavigate, Link } from "react-router-dom";
 import Dropdown from '../../components/Dropdown'
 import HeaderAdminResponsive from '../../components/HeaderAdminResponsive';
-const Usuaris = () => {
+import useTitle from '../../Hooks/useTitle';
+
+const Usuaris = ({title}) => {
+    useTitle(title);
+
   const [Usuaris, setUsuaris] = useState("");
   const navigate = useNavigate();
   let token;
@@ -75,7 +79,7 @@ const Usuaris = () => {
           </div>
 
         </div>
-        <div className="col col-md-8">
+        <div className="col-12 col-md-8">
         <HeaderAdminResponsive></HeaderAdminResponsive>
         <h1 className="text-center">Administrar Usuaris</h1>
           {/* <Link to={`/admin/jocs`}>Llistar jocs</Link> */}
@@ -84,7 +88,7 @@ const Usuaris = () => {
               <tr>
                 <th  className='d-none d-md-table-cell'>id</th>
                 <th className='d-table-cell'>Nom</th>
-                <th className='d-table-cell'>Rol</th>
+                <th className='d-none d-md-table-cell'>Rol</th>
                 <th className='d-table-cell'>Banejat </th>
                 <th className='d-table-cell'>Accions</th>
               </tr>
@@ -93,9 +97,9 @@ const Usuaris = () => {
               {Usuaris && Usuaris.map((usuari, index) => {
                 return (
                   <tr key={usuari.id}>
-                    <td className='d-table-cell'>{index + 1}</td>
+                    <td className='d-none d-md-table-cell'>{index + 1}</td>
                     <td className='d-table-cell'>{usuari.email}</td>
-                    <td className='d-table-cell'>{usuari.roles.join(", ")}</td>
+                    <td className='d-none d-md-table-cell'>{usuari.roles.join(", ")}</td>
                     <td className='d-table-cell'>{usuari.ban ? "Si" : "No"}</td>
                     <td className='d-table-cell'><Link to={`/usuari/${usuari.id}/ban`}>{usuari.ban ? "Desbanejar" : "Banejar"}</Link></td>
                   </tr>

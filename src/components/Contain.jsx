@@ -37,6 +37,7 @@ const vosTitle = {
   "carret": "Vos - Carret de la compra",
   "comprar": "Vos - Comprar",
   "admin": "Vos - Panel de administrador",
+  "adminNou": "Vos - Afegir joc",
   "joc": "Vos - Joc",
   "registrar": "Vos - Registrar usuari",
   "inici": "Vos - Inici",
@@ -193,7 +194,7 @@ const Contain = () => {
           <Route path='/pago-rechazat' element={<PagoRechazat title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
           <Route path='/admin' element={<Usuaris title={vosTitle.admin} />}></Route>
           <Route path='/admin/jocs' element={<Jocs title={vosTitle.admin} />}></Route>
-          <Route path='/admin/joc/nou' element={<JocForm title={vosTitle.admin} />}></Route>
+          <Route path='/admin/joc/nou' element={<JocForm title={vosTitle.adminNou} />}></Route>
           <Route path='/usuari/:id/ban' element={<Banejar title={vosTitle.banjejar} />}></Route>
           <Route path='/galletes' element={<Galletes title={vosTitle.cookies} props={[Carrito, buidar]} />}></Route>
           <Route path='/buscar' element={<Buscar title={vosTitle.buscar} />}></Route>

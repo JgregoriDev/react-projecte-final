@@ -46,8 +46,10 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 
 		const url = {
 			// link1: `http://vos.es/api/v1/videojocs?page=${page}${results}${parametro}${ordenar}`,
+			// link1: `http://vos.es/api/v1/video?page=${page}${results}${parametro}${ordenar}`,
 			"link1": `https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?page=${page}${results}${parametro}${ordenar}`,
 			// link2: `http:/vos.es/api/v1/videojocs?page=${page}${results}`,
+			// link2: `http:/vos.es/api/v1/video?page=${page}${results}`,
 			"link2": `https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?page=${page}${results}`
 		};
 		let link;
@@ -207,7 +209,7 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 								""
 							)}
 							</div>
-							<div className=" mb-9 d-flex justify-content-center">
+							<div className="py-3 d-flex justify-content-center">
 								<nav aria-label="Page navigation example">
 									<ul className="pagination d-flex m-0">{numero}</ul>
 								</nav>

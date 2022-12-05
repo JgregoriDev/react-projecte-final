@@ -5,7 +5,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Dropdown from '../../components/Dropdown';
-const Jocs = () => {
+import HeaderAdminResponsive from '../../components/HeaderAdminResponsive';
+import useTitle from '../../Hooks/useTitle';
+const Jocs = ({title}) => {
+  useTitle(title)
   const [Jocs, setJocs] = useState([]);
   const navigate = useNavigate();
   let token;
@@ -22,13 +25,23 @@ const Jocs = () => {
   }, [])
 
 
-
-
-
-
   useEffect(() => {
-       conseguirLlistatJocs();
-  }, [Jocs]);
+    conseguirLlistatJocs()
+    .then((result) => {
+      if(Array.isArray(result.Jocs)){
+        setJocs(result.Jocs);
+      }
+    }).catch((err) => {
+      console.error(err);
+    });
+    
+    
+  }, [])
+  
+
+
+
+
   
 
   const borrarJoc =  (joc) => {
@@ -83,14 +96,14 @@ const Jocs = () => {
     }
 
    let response = await fetch("https://app.11josep.daw.iesevalorpego.es/api/v1/admin/videojocs", {
-    // let response = await fetch("https://vos.es/api/v1/admin/videojocs", {
+    // let response = await fetch("http://vos.es/api/v1/admin/videojocs", {
       method: "GET",
       headers: headersList
     });
 
     let data = await response.json();
-    setJocs(data.Jocs)
-    console.log(data.Jocs);
+    return data;
+    // console.log(data.Jocs);
     // setJocs()
   }
   return (
@@ -104,8 +117,9 @@ const Jocs = () => {
             <Dropdown props="Plataformes" links={{"Nomlink1":"Llistar Plataformes","ToLink1":"/","Nomlink2":"Afegir Plataforma","ToLink2":"/"}}></Dropdown>
           </div>
         </div>
-        <div className="col col-md-8">
-          <h1>Llista Jocs</h1>
+        <div className="col-12 col-md-8">
+        <HeaderAdminResponsive></HeaderAdminResponsive>
+          <h1 className='text-center'>Llista Jocs</h1>
           <div className="text-end">
           <Link to={`/admin/joc/nou`} className="btn btn-primary"><i className="bi bi-plus-circle-fill mx-1"></i><span className="d-none d-lg-inline">Videojoc nou</span></Link>
 

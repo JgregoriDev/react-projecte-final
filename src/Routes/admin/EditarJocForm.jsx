@@ -88,9 +88,8 @@ const JocForm = ( props ) => {
     let headersList = {
       "Accept": "*/*",
     }
-
-    // let response = await fetch("http://vos.es/api/v1/plataformes", {
-    let response = await fetch("https://app.11josep.daw.iesevalorpego.es/api/v1/plataformes", {
+     // let response = await fetch("https://app.11josep.daw.iesevalorpego.es/api/v1/plataformes",{
+    let response = await fetch("http://vos.es/api/v1/plataformes", {
       method: "GET",
       headers: headersList
     });
@@ -104,8 +103,8 @@ const JocForm = ( props ) => {
       "Accept": "*/*",
     }
 
-    // let response = await fetch("https://vos.es/api/v1/generes", {
-      let response = await fetch("https://app.11josep.daw.iesevalorpego.es/api/v1/generes", {
+    let response = await fetch("https://vos.es/api/v1/generes", {
+      // let response = await fetch("https://app.11josep.daw.iesevalorpego.es/api/v1/generes", {
       method: "GET",
       headers: headersList
     });

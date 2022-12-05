@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link,useParams,useLocation } from "react-router-dom";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import Spinner from "react-bootstrap/Spinner";
 
 import useTitle from "../Hooks/useTitle";
 
@@ -10,27 +11,55 @@ const Plataforma = ({title}) => {
 	const param=window.location.pathname.split("/")[2];
   const genere = queryParameters.get("genere")
 	const [Jocs, setJocs] = useState([]);
+	const [Error, setError] = useState('');
+	const [IsLoading, setIsLoading] = useState(false);
 	const [Marca, setMarca] = useState([]);
 	const [Generes, setGeneres] = useState([]);
 	useTitle(title);
 	useEffect(() => {
 		// console.log(id);
-		conseguirJocsPlataforma();
+		conseguirJocsPlataforma()
+		.then((result) => {
+			if(Array.isArray(result.plataforma_videojocs)){
+				setJocs(result.plataforma_videojocs);
+				setIsLoading(true);
+			}else{
+				setTimeout(() => {
+					setError("Ha hagut un error no s'ha pogut carregar les dades");
+				}, 500);
+			}
+		}).catch((err) => {
+			console.error(err);
+		});
 		conseguirGeneresPlataforma();
 	}, [id]);
 
-	useEffect(()=>{
-	},[genere])
+	
 	const conseguirJocsPlataforma = async () => {
 		const response = await fetch(
 			// `http://vos.es/api/v1/plataforma/${id}`
 			`https://app.11josep.daw.iesevalorpego.es/api/v1/plataforma/${id}`
 		);
 		const resultat = await response.json();
-
-		setJocs(resultat.plataforma_videojocs);
+		return resultat;
+		// setJocs(resultat.plataforma_videojocs);
 		
 	};
+
+	const spinner=()=>{
+		return(
+			<>
+			<Spinner animation="border" role="status">
+			<span className="visually-hidden">Carregant jocs...</span>
+			</Spinner>
+			<p>
+				<span className="text-danger">
+				
+				</span>
+			</p>
+			</>
+		)
+	}
 	const conseguirGeneresPlataforma = async (id) => {
 		// const response = await fetch(`http://vos.es/api/v1/generes`);
 		const response = await fetch(`https://app.11josep.daw.iesevalorpego.es/api/v1/generes`);
@@ -53,8 +82,8 @@ const Plataforma = ({title}) => {
 							<Breadcrumb.Item active>Plataforma  {`${id}`}</Breadcrumb.Item>
 						</Breadcrumb>
 						<h1>Plataforma amb id {`${id}`}</h1>
-						{Jocs && Jocs.length > 0
-							? Jocs.map((Joc) => {
+						{!IsLoading 
+							? (spinner()):Jocs.map((Joc) => {
 								// console.log(Joc);
 								return (
 									<div key={Joc.id} className="col gap-5 col-lg-4">
@@ -79,7 +108,7 @@ const Plataforma = ({title}) => {
 									</div>
 								);
 							})
-							: <p>No hi han jocs amb aquesta plataforma</p>}
+							}
 					</div>
 					<div className="mb-3"></div>
 				</div>
