@@ -1,0 +1,4 @@
+.img-responsive{
+  height: auto;
+  width: clamp(50%, 250px,80%);
+}

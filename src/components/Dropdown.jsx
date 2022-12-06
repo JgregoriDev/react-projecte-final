@@ -9,13 +9,9 @@ const Dropdown = ({ props,links }) => {
     <div className="dropdown w-100">
       <button className="btn btn-primary dropbtn w-100">{props}</button>
       <div className="dropdown-content">
-        <Link to={`${links.ToLink1}`} >{links.Nomlink1}</Link>
-        <Link to={`${links.ToLink2}`} >{links.Nomlink2}</Link>
+        <Link to={`${links.ToLink1}`} title={links.Nomlink1}>{links.Nomlink1}</Link>
+        <Link to={`${links.ToLink2}`} title={links.Nomlink2}>{links.Nomlink2}</Link>
       </div>
-      {/* <div className="dropdown-content">
-        <Link to={`${links.ToLink1}`} >{links.Nomlink1}</Link>
-        <Link to={`${links.ToLink2}`} >{links.Nomlink2}</Link>
-      </div> */}
     </div>
   )
 }

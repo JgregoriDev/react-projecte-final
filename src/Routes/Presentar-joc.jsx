@@ -3,13 +3,13 @@ import Button from "react-bootstrap/Button";
 import { Link } from 'react-router-dom';
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import {useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import "../assets/style/badge.css";
 import useTitle from "../Hooks/useTitle";
 
 const PresentarJoc = ({ title }) => {
-	const navigate= useNavigate('');
+	const navigate = useNavigate('');
 	const [Videojoc, setVideojoc] = useState({});
 	useTitle(`${title} ${Videojoc.titul ?? ''}`);
 	const [Comentaris, setComentaris] = useState([]);
@@ -17,9 +17,9 @@ const PresentarJoc = ({ title }) => {
 	const [Carrito, setCarrito] = useState([]);
 	const [Usuari, setUsuari] = useState(null);
 	const [Missatge, setMissatge] = useState('');
-	const [errorMissatge,seterrorMissatge]=useState('');
-	const [errorVotacio,seterrorVotacio]=useState('');
-	const []=useState([])
+	const [errorMissatge, seterrorMissatge] = useState('');
+	const [errorVotacio, seterrorVotacio] = useState('');
+	const [] = useState([])
 	const idJoc = window.location.pathname.split("/")[2];
 	useEffect(() => {
 		getVideojoc();
@@ -27,14 +27,14 @@ const PresentarJoc = ({ title }) => {
 	}, []);
 
 	useEffect(() => {
-		const item= localStorage.getItem("carrito");
-		if(item){
+		const item = localStorage.getItem("carrito");
+		if (item) {
 			setCarrito(JSON.parse(item));
 			console.log(Carrito);
 		}
-	
+
 	}, [])
-	
+
 
 	const conseguirToken = () => {
 		if (localStorage.getItem("token")) {
@@ -62,37 +62,37 @@ const PresentarJoc = ({ title }) => {
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		let enviar=true;
+		let enviar = true;
 		seterrorVotacio("");
 		seterrorMissatge("");
-		const numero=parseInt(e.target[0].value);
+		const numero = parseInt(e.target[0].value);
 		console.log("🚀 ~ file: Presentar-joc.jsx ~ line 69 ~ onSubmit ~ isNaN(numero)", Number.isInteger(numero))
-		if(!Number.isInteger(numero)){
-			enviar=false;
+		if (!Number.isInteger(numero)) {
+			enviar = false;
 			seterrorVotacio("El valor de la votacio no pot ser text");
 		}
 
-		if(numero<0 || numero>5){
-			enviar=false;
+		if (numero < 0 || numero > 5) {
+			enviar = false;
 			seterrorVotacio("El valor no pot ser major de 5 ni menor de 0");
 		}
 
-		if(e.target[1].value.length<3 || e.target[1].value.length>200){
-			enviar=false;
+		if (e.target[1].value.length < 3 || e.target[1].value.length > 200) {
+			enviar = false;
 			seterrorMissatge("No pot ser menor de 3 ni major de 200 caracters")
 		}
 
-		if(!enviar){
+		if (!enviar) {
 			return;
 		}
 
 		if (localStorage.getItem("token")) {
 			const resultat = peticion(e);
 			resultat.then((res) => {
-				if(res.title){
+				if (res.title) {
 					setMissatge(res.title);
 				}
-				if(res.Title){
+				if (res.Title) {
 					setMissatge(res.Title);
 					navigate(0);
 				}
@@ -132,35 +132,48 @@ const PresentarJoc = ({ title }) => {
 	const formComentari = () => {
 		return (
 			<form onSubmit={(evt) => onSubmit(evt)} method="post">
-				<label htmlFor="votacio">Votacio</label>
-				<input
-					type="number"
-					className="form-control my-3"
-					placeholder="Votacio"
-					name="votacio"
-					id="votacio"
-				/>
-				<p><small className="text-danger">{errorVotacio}</small></p>
-				<textarea
-					className="form-control"
-					placeholder="Comenta el videojoc"
-					id="floatingTextarea"
-				></textarea>
-			<p>	<small className="text-danger">{errorMissatge}</small></p>
+				<div className="mb-3">
+					<label htmlFor="votacio">Votacio</label>
+					{/* <input
+						type="number"
+						className="form-control my-3"
+						placeholder="Votacio"
+						name="votacio"
+						id="votacio"
+					/> */}
+					<select name="votacio" className="form-control" id="votacio">
+
+						<option default value="0">0</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					</select>
+				</div>
+				<div className="mb-3">
+					<p><small className="text-danger">{errorVotacio}</small></p>
+					<textarea
+						className="form-control"
+						placeholder="Comenta el videojoc"
+						id="floatingTextarea"
+					></textarea>
+				</div>
+				<p>	<small className="text-danger">{errorMissatge}</small></p>
 				<button className="btn btn-primary my-2" type="submit">
 					Enviar Comentari
 				</button>
-			<p>	<small className="text-danger">
+				<p>	<small className="text-danger">
 					{Missatge}
 				</small></p>
 			</form>
 		);
 	};
 
-	const onClick=()=>{
+	const onClick = () => {
 		Carrito.push(Videojoc);
 		setCarrito(Carrito);
-		localStorage.setItem('carrito',JSON.stringify(Carrito));
+		localStorage.setItem('carrito', JSON.stringify(Carrito));
 	}
 
 	return (
@@ -179,9 +192,9 @@ const PresentarJoc = ({ title }) => {
 
 						</div>
 						<div className="w-100">
-							<p><b>Generes: </b>{Videojoc.generes && Videojoc.generes.map((genere)=>{
-								return(
-									<span key={genere.id} className="badge rounded-pill  text-bg-primary">
+							<p><b>Generes: </b>{Videojoc.generes && Videojoc.generes.map((genere) => {
+								return (
+									<span key={genere.id} className="badge rounded-pill ms-2 text-bg-primary">
 										<Link className="text-white" to={``}>{genere.genere}
 										</Link></span>
 								)
@@ -199,7 +212,7 @@ const PresentarJoc = ({ title }) => {
 						</div>
 					</div>
 					<div className="d-flex mt-3 justify-content-center">
-						<Button title="Posar en carret" onClick={()=>onClick(Videojoc)} variant="secondary">
+						<Button title="Posar en carret" onClick={() => onClick(Videojoc)} variant="secondary">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								width="16"
@@ -222,7 +235,10 @@ const PresentarJoc = ({ title }) => {
 							{/* <ChatLeft className="mx-3"></ChatLeft> */}
 							{NComentaris > 0
 								? `Comentaris (${NComentaris})`
-								: `No hi han comentaris`}
+								: (<>
+								{`No hi han comentaris`}
+								<div className="mb-5">&nbsp;</div>
+								</>)}
 						</h3>
 						<button
 							className={`btn btn-primary ${NComentaris === 0 ? "d-none" : ""}`}

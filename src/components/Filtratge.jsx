@@ -1,13 +1,26 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { useNavigate } from "react-router-dom";
 const Filtratge = ({width}) => {
 
-
+  const [errorMissatge,seterrorMissatge]=useState("");
   const navigate=useNavigate();
   const onSubmit = (e)=> {
     e.preventDefault();
+    const min=e.target[0].value;
+    const max=e.target[1].value;
+    if(isNaN(min) || isNaN(max)){
+      seterrorMissatge("Error no pots insertar una cadena");
+      return;
+    }
+
+    if(min<0){
+      min=0;
+    }
+    if(max>300){
+      max=300;
+    }
     console.log("submit");
-    navigate(`/filtrar/${e.target[0].value}/${e.target[1].value}`)
+    navigate(`/filtrar/${min}/${max}`)
 
   }
 
@@ -43,7 +56,9 @@ const Filtratge = ({width}) => {
           <option value={250}>250</option>
           <option value={300}>300</option>
         </select> 
-
+        <div className="my-3 text-danger">
+        {errorMissatge}
+        </div>
         <button className={`btn btn-primary ${width} `} type="submit"  title="Filtrar per preu"><i className="bi bi-cash-coin"></i></button>
       </form>
     </div>

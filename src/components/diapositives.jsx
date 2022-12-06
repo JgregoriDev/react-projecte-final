@@ -36,8 +36,9 @@ const Diapositives = () => {
           <Carousel.Item key={joc.id} to={`/videojuegos/${joc.id}`}>
           <img
             loading='lazy'
-            className="w-100 h-50 rounded-2"
+            className="d-block w-100"
             src={joc.portada}
+            style={{height: '60vh'}}
             alt={`${joc.titol}`}
           />
   

@@ -20,8 +20,8 @@ const HeaderAdminResponsive = () => {
             </Button>
             <Collapse className='my-4' in={open}>
               <div id="example-collapse-text">
-                <Link className='d-block ms-2' to="">Llistar Usuaris</Link>
-                <Link className='d-block ms-2' to="">Afegir usuari</Link>
+                <Link className='d-block ms-2' title="Llistar Usuaris" to="">Llistar Usuaris</Link>
+                <Link className='d-block ms-2' title="Afegir usuari" to="">Afegir usuari</Link>
               </div>
             </Collapse>
           </div>
@@ -36,8 +36,8 @@ const HeaderAdminResponsive = () => {
             </Button>
             <Collapse className='my-4' in={open2}>
               <div id="example-collapse-text">
-                <Link className='d-block ms-2' to="">Llistar Jocs</Link>
-                <Link className='d-block ms-2' to="">Afegir joc</Link>
+                <Link className='d-block ms-2' title="Llistar Jocs" to="">Llistar Jocs</Link>
+                <Link className='d-block ms-2' title="Afegir joc" to="">Afegir joc</Link>
               </div>
             </Collapse>
           </div>
@@ -54,8 +54,8 @@ const HeaderAdminResponsive = () => {
             </Button>
             <Collapse className='my-4' in={open3}>
               <div id="example-collapse-text">
-                <Link className='d-block ms-2' to="">Llistar generes</Link>
-                <Link className='d-block ms-2' to="">Afegir genere</Link>
+                <Link className='d-block ms-2' title='Llistar generes' to="">Llistar generes</Link>
+                <Link className='d-block ms-2' title='Afegir genere' to="">Afegir genere</Link>
               </div>
             </Collapse>
           </div>

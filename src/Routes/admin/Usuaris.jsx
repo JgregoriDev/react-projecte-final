@@ -113,6 +113,7 @@ const Usuaris = ({title}) => {
           <div className="mb-5">&nbsp;</div>
           <div className="mb-5">&nbsp;</div>
           <div className="mb-5">&nbsp;</div>
+          <div className="mb-5">&nbsp;</div>
         </div>
         <div className="col col-md-2"></div>
       </div>

@@ -24,7 +24,7 @@ const SignupSchema = yup.object().shape({
     .integer(),
   preu: yup
     .number()
-    .max(1000, "El valor màxim del camp preu  es 1000")
+    .max(300, "El valor màxim del camp preu  es 1000")
     .required()
     .positive("El camp preu ha de ser un valor positiu").integer(),
 });
@@ -36,7 +36,9 @@ const JocForm = ( props ) => {
   useTitle(title);
   const navigate = useNavigate();
   const [plataformes, setplataformes] = useState([]);
+  const [valorId,setValorId]=useState(0);
   const [Log, setLog] = useState("");
+  const [Show, setShow] = useState(false);
   const [generes, setgeneres] = useState([]);
   const [ErrorMessageGeneres,setErrorMessageGeneres] = useState('');
   const {
@@ -139,9 +141,14 @@ const JocForm = ( props ) => {
     const resultat = insertarJoc(token.token, data);
     resultat
       .then((result) => {
-        result.Title === "Videojoc pujat de manera satisfactoria" ?
-          setLog(result.Title) :
+        if(result?.Title === "Videojoc pujat de manera satisfactoria"){
+          setLog(result?.Title);
+          setValorId(result?.Videjoc?.titul);
+          setShow(true);
+        }else{
+
           setLog("No s'ha pogut pujar de manera satistactoria.");
+        }
 
       }).catch((err) => {
 
@@ -209,8 +216,8 @@ const JocForm = ( props ) => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-2"></div>
-        <div className="col-8">
+        <div className="col-12 col-lg-2"></div>
+        <div className="col-12 col-lg-8">
           <h1>Insertar Joc</h1>
           <form action="" onSubmit={handleSubmit(onSubmit)} method="post">
             <div className="mb-3">
@@ -281,9 +288,17 @@ const JocForm = ( props ) => {
             </div>
 
             <div className="d-flex justify-content-center my-3 gap-1 g">
-              {Log !== "" ? <Link className='btn btn-primary' to={`/`}>
+              {Log !== "" ? (
+                <>
+              <Link title='Inici' className='btn btn-primary' to={`/`}>
                 Inici
-              </Link> : ""}
+              </Link>
+              <Link title='Visualitzar videojoc' className={`btn btn-primary ${!Show?"d-none":""}`} to={`/videojoc/${valorId}`}>
+                <i className="bi bi-eye-fill"></i>
+                Visualitzar videojoc
+              </Link>
+              </>
+              ) : ""}
               <Link to={`/admin/jocs`} title="llistar jocs" className={`btn btn-secondary`}><i className="bi bi-list"></i></Link>
               <input type="submit" className='btn-primary btn' value="Enviar" />
             </div>
@@ -294,7 +309,7 @@ const JocForm = ( props ) => {
             </div>
           </form>
         </div>
-        <div className="col-2"></div>
+        <div className="col-12 col-lg-2"></div>
       </div>
     </div >
   )

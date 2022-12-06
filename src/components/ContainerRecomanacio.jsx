@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from 'react'
 import { Link } from "react-router-dom";
-
+import "../assets/style/ContainerRecomanacio.css"
 const ContainerRecomanacio = ({width}) => {
 	const [Jocs, setJocs] = useState([]);
 
@@ -27,9 +27,9 @@ const ContainerRecomanacio = ({width}) => {
   return (
     <div>
       	<h4 className="my-3">Tal volta t'interesse algun d'aquests jocs</h4>
-						<div className={`d-flex flex-column flex-lg-row gap-9 gap-lg-5 justify-content-center justify-content-md-between mb-5`}>
+						<div className={`row`}>
 							{Jocs.length > 1 ? Jocs.map((joc) => {
-								return (<div key={joc.id} className="">
+								return (<div key={joc.id} className="col-12 col-lg-3">
 									<Link to={`/videojoc/${joc.titul}`}>
 										<img className={`h-auto ${width}`} loading="lazy" src={`${joc.portada}`} alt={`${joc.titul}`} />
 									</Link>
