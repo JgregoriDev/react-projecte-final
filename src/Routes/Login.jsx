@@ -19,6 +19,8 @@ const Login = ({ title }) => {
 				if (result?.Title) {
 					if (result.Title === "Login incocorrecte") {
 						setErrorMessage("Error dades incorrectes");
+					}else if(result.Title === "Usuari banejat"){
+						setErrorMessage("Error usuari banejat");
 					}else if(result?.token) {
 						console.log(result);
 						const token = {

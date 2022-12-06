@@ -38,6 +38,7 @@ const JocForm = ( props ) => {
   const [plataformes, setplataformes] = useState([]);
   const [Log, setLog] = useState("");
   const [generes, setgeneres] = useState([]);
+  const [ErrorMessageGeneres,setErrorMessageGeneres] = useState('');
   const {
     register,
     handleSubmit,
@@ -123,8 +124,17 @@ const JocForm = ( props ) => {
     data.generes = auxGeneres;
     data.videojoc_plataforma = auxPlataformes;
     token = JSON.parse(localStorage.getItem("token"));
+    let error=false;
+    data.generes.forEach(g => {
+      const n=generes.findIndex(genere=>genere.id===g.id);
+      if(n===-1)
+        error=true;
 
-
+    });
+    const gen=generes.findIndex(genere=>data.generes[0].id);
+    if(error){
+      setErrorMessageGeneres("genere no trobat");
+    }else{
 
     const resultat = insertarJoc(token.token, data);
     resultat
@@ -136,6 +146,7 @@ const JocForm = ( props ) => {
       }).catch((err) => {
 
       });
+    }
   };
 
 
@@ -150,17 +161,15 @@ const JocForm = ( props ) => {
     bodyContent.append("titul", valor.titul);
     bodyContent.append("descripcio", valor.descripcio);
     bodyContent.append("cantitat", valor.cantitat);
-    bodyContent.append("portada", valor.portada[0]);
-
+    bodyContent.append("portada", valor.portada[0]??'');
     bodyContent.append("fechaEstreno", valor.fechaEstreno);
     bodyContent.append("portada", null);
     bodyContent.append("preu", valor.preu);
-    console.log(valor.plataforma);
     // bodyContent.append(".append("portada", valor.portada);
-    //  bodyContent.append("generes", valor.generes);
-    //  bodyContent.append("videojoc_plataforma", valor.videojoc_plataforma);
-    // let response = await fetch("https://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/nou", {
-    let response = await fetch("http://vos.es/api/v1/videojoc/nou", {
+     bodyContent.append("generes", JSON.stringify(valor.generes));
+     bodyContent.append("videojoc_plataforma", JSON.stringify(valor.videojoc_plataforma));
+    let response = await fetch("https://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/nou", {
+    // let response = await fetch("http://vos.es/api/v1/videojoc/nou", {
       method: "POST",
       body: bodyContent,
       headers: headersList
@@ -179,7 +188,7 @@ const JocForm = ( props ) => {
         GeneresJoc.add(item);
 
       }
-      setGeneresJoc(new Set(GeneresJoc));
+      // setGeneresJoc(new Set(GeneresJoc));
 
       console.log(GeneresJoc);
     }
@@ -257,6 +266,7 @@ const JocForm = ( props ) => {
                   return <option key={plataforma.id} onClick={(e) => onClick(e, plataforma)} value={plataforma.id}>{plataforma.plataforma}</option>
                 })}
               </select>
+              <span className="text-danger">{ErrorMessageGeneres}</span>
             </div>
             <div className="mb-3">
               <label className="form-label" htmlFor="generes">Generes:</label>

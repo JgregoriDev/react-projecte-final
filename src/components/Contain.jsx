@@ -29,6 +29,7 @@ import Galletes from "../Routes/Galletes";
 import FiltrePreu from './Filtratge';
 import FAQ from '../Routes/FAQ';
 import JocForm from '../Routes/admin/JocForm';
+import EditarJocForm from '../Routes/admin/EditarJocForm';
 //Objecte de titols
 const vosTitle = {
   "about": "Vos - Sobre nosaltres",
@@ -38,6 +39,7 @@ const vosTitle = {
   "comprar": "Vos - Comprar",
   "admin": "Vos - Panel de administrador",
   "adminNou": "Vos - Afegir joc",
+  "adminEditar": "Vos - Editar joc",
   "joc": "Vos - Joc",
   "registrar": "Vos - Registrar usuari",
   "inici": "Vos - Inici",
@@ -195,6 +197,7 @@ const Contain = () => {
           <Route path='/admin' element={<Usuaris title={vosTitle.admin} />}></Route>
           <Route path='/admin/jocs' element={<Jocs title={vosTitle.admin} />}></Route>
           <Route path='/admin/joc/nou' element={<JocForm title={vosTitle.adminNou} />}></Route>
+          <Route path='/admin/joc/:id/editar' element={<EditarJocForm title={vosTitle.adminEditar} />}></Route>
           <Route path='/usuari/:id/ban' element={<Banejar title={vosTitle.banjejar} />}></Route>
           <Route path='/galletes' element={<Galletes title={vosTitle.cookies} props={[Carrito, buidar]} />}></Route>
           <Route path='/buscar' element={<Buscar title={vosTitle.buscar} />}></Route>
