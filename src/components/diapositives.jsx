@@ -39,15 +39,15 @@ const Diapositives = () => {
             className="d-block w-100"
             src={joc.portada}
             style={{height: '60vh'}}
-            alt={`${joc.titol}`}
+            alt={`${joc.titul}`}
           />
   
           <Carousel.Caption>
-            <p>{joc.title}</p>
+            <p>{joc.titul}</p>
             <p>
               {joc.descripcio}
             </p>
-            <Link className="btn btn-primary" to={`/videojoc/${joc.id}`}>Conseguir ara</Link>
+            <Link title={`Conseguir ara ${joc.titul}`} className="btn btn-primary" to={`/videojoc/${joc.id}`}>Conseguir ara</Link>
           </Carousel.Caption>
         </Carousel.Item>
         )})}

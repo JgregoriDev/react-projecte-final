@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Link,useParams,useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import Spinner from "react-bootstrap/Spinner";
 
 import useTitle from "../Hooks/useTitle";
 
-const Plataforma = ({title}) => {
-	const {id}=useParams();
-	const queryParameters = new URLSearchParams(window.location.search)
-	const param=window.location.pathname.split("/")[2];
-  const genere = queryParameters.get("genere")
+const Plataforma = ({ title }) => {
+	const { id } = useParams();
+	const search = useLocation().search;
+	let genere = new URLSearchParams(search).get("genere") ?? 0;
+	console.log(genere);
 	const [Jocs, setJocs] = useState([]);
 	const [Error, setError] = useState('');
 	const [IsLoading, setIsLoading] = useState(false);
@@ -19,22 +20,67 @@ const Plataforma = ({title}) => {
 	useEffect(() => {
 		// console.log(id);
 		conseguirJocsPlataforma()
-		.then((result) => {
-			if(Array.isArray(result.plataforma_videojocs)){
-				setJocs(result.plataforma_videojocs);
-				setIsLoading(true);
-			}else{
-				setTimeout(() => {
-					setError("Ha hagut un error no s'ha pogut carregar les dades");
-				}, 500);
-			}
-		}).catch((err) => {
-			console.error(err);
-		});
+			.then((result) => {
+				if (Array.isArray(result.plataforma_videojocs)) {
+					setJocs(result.plataforma_videojocs);
+					setIsLoading(true);
+				} else {
+					setTimeout(() => {
+						setError("Ha hagut un error no s'ha pogut carregar les dades");
+					}, 500);
+				}
+			}).catch((err) => {
+				console.error(err);
+			});
 		conseguirGeneresPlataforma();
 	}, [id]);
+	useEffect(() => {
+		genere = new URLSearchParams(search).get("genere") ?? 0;
+		if (genere === 0) {
+			setIsLoading(false);
+			conseguirJocsPlataforma()
+				.then((result) => {
+					if (Array.isArray(result.plataforma_videojocs)) {
+						setJocs(result.plataforma_videojocs);
+						setIsLoading(true);
+					} else {
+						setTimeout(() => {
+							setError("Ha hagut un error no s'ha pogut carregar les dades");
+						}, 500);
+					}
+				}).catch((err) => {
+					console.error(err);
+				});
+		} else {
+			console.log("Genere cambiat"+ genere);
+			
+						setIsLoading(false);
+			conseguirJocsPlataformaGenere()
+				.then((result) => {
+					if (Array.isArray(result?.Resultat)) {
+						console.log(result?.Resultat);
+						setIsLoading(true);
+						
+						setJocs(result?.Resultat);
+					} else {
+						setTimeout(() => {
+							setError("Ha hagut un error no s'ha pogut carregar les dades");
+						}, 500);
+					}
+				}).catch((err) => {
+					console.error(err);
+				});
+		}
+		console.log(genere);
+	}, [genere]);
 
-	
+	const conseguirJocsPlataformaGenere= async()=>{
+		const response = await fetch(
+			`https://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/plataforma/${id}?genere=${genere}`
+		);
+		const resultat = await response.json();
+		return resultat;
+	}
 	const conseguirJocsPlataforma = async () => {
 		const response = await fetch(
 			// `http://vos.es/api/v1/plataforma/${id}`
@@ -42,21 +88,19 @@ const Plataforma = ({title}) => {
 		);
 		const resultat = await response.json();
 		return resultat;
-		// setJocs(resultat.plataforma_videojocs);
-		
 	};
 
-	const spinner=()=>{
-		return(
+	const spinner = () => {
+		return (
 			<>
-			<Spinner animation="border" role="status">
-			<span className="visually-hidden">Carregant jocs...</span>
-			</Spinner>
-			<p>
-				<span className="text-danger">
-				
-				</span>
-			</p>
+				<Spinner animation="border" role="status">
+					<span className="visually-hidden">Carregant jocs...</span>
+				</Spinner>
+				<p>
+					<span className="text-danger">
+
+					</span>
+				</p>
 			</>
 		)
 	}
@@ -82,8 +126,8 @@ const Plataforma = ({title}) => {
 							<Breadcrumb.Item active>Plataforma  {`${id}`}</Breadcrumb.Item>
 						</Breadcrumb>
 						<h1>Plataforma amb id {`${id}`}</h1>
-						{!IsLoading 
-							? (spinner()):Jocs.map((Joc) => {
+						{IsLoading===false
+							? (spinner()) :  Jocs.length>0? Jocs.map((Joc) => {
 								// console.log(Joc);
 								return (
 									<div key={Joc.id} className="col gap-5 col-lg-4">
@@ -100,15 +144,17 @@ const Plataforma = ({title}) => {
 												{Joc.id} - {Joc.titul}
 											</Link>
 										</h4>
-										<p>Generes: {Joc.generes.map((genere)=>{
+										<p>Generes: {Joc.generes.map((genere) => {
 											return (<span className="badge rounded-pill text-bg-primary">{genere.genere}</span>);
-										})}</p> 
+										})}</p>
 										<p><span className="badge rounded-pill text-bg-primary">{Joc.genere}</span></p>
 										<p>{`${Joc.descripcio.split(".")[0]}.${Joc.descripcio.split(".")[1]}...`}</p>
 									</div>
 								);
-							})
-							}
+							}):<>
+								<h2>El genere {genere} no té videojocs disponibles</h2>
+							</>
+						}
 					</div>
 					<div className="mb-3"></div>
 				</div>
@@ -116,19 +162,28 @@ const Plataforma = ({title}) => {
 					<div className='my-4'>
 						&nbsp;
 					</div>
-					<h5>Generes</h5>
-					{Generes
-						? Generes.map((Genere) => {
-							return (
-								<div className="mb-3 ms-3" key={Genere.id}>
-									<Link to={{
-						pathname: "",
-						search: `genere=${Genere.id}`,
-					}}>{Genere.genere}</Link>
-								</div>
-							);
-						})
-						: ""}
+					<div>
+
+
+						<h5>Generes</h5>
+						{genere !== 0 ? <div className="ms-3 mb-3">
+							<Link className="btn btn-primary w-25" title="Llevar filtros" to={{ pathname: "", search: `` }}>x</Link>
+
+						</div> : null}
+
+						{Generes
+							? Generes.map((Genere) => {
+								return (
+									<div className="mb-3 ms-3" key={Genere.id}>
+										<Link to={{
+											pathname: "",
+											search: `genere=${Genere.id}`,
+										}}>{Genere.genere}</Link>
+									</div>
+								);
+							})
+							: ""}
+					</div>
 					{Jocs && Jocs.length < 1 ?
 						<div className='my-3'>
 							&nbsp;
