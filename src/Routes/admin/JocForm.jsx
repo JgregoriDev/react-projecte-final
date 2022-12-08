@@ -214,7 +214,7 @@ const JocForm = ( props ) => {
   }
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className="row">
         <div className="col-12 col-lg-2"></div>
         <div className="col-12 col-lg-8">

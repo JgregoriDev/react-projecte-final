@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,createContext } from 'react'
 import { BrowserRouter as Router, Routes, Route, NavLink, Link } from 'react-router-dom'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -50,6 +50,7 @@ const vosTitle = {
   "perfil": "Vos - Perfil",
   "cookies": "Vos - Avis de galletes",
 }
+export const isLogged = createContext(false);
 const Contain = () => {
   const [title, setTitle] = useState("");
   const [Usuari, setUsuari] = useState({});
@@ -205,7 +206,7 @@ const Contain = () => {
           <Route path='/filtrar/:min/:max' element={<FiltratgePreu title={vosTitle.filtratge} />}></Route>
           <Route path='/' element={<Index title={vosTitle.inici} afegirProducteAlCarret={afegirProducteAlCarret} />}></Route>
           <Route path='/videojoc/:id' element={<PresentarJoc title={vosTitle.joc} />}></Route>
-          <Route path='/sobre-nosotros' element={<About title={vosTitle.about}></About>}></Route>
+          <Route path='/sobre-nosaltres' element={<About title={vosTitle.about}></About>}></Route>
           <Route path='/perfil' element={<Profile title={vosTitle.dashboard} Usuari></Profile>}></Route>
           <Route path='/plataforma/:id' element={<Plataforma title={vosTitle.plataforma}></Plataforma>}></Route>
           <Route path='/login' element={<Login title={vosTitle.login} Usuari></Login>}></Route>

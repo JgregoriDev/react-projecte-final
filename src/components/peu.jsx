@@ -10,7 +10,7 @@ export const Peu = () => {
 				<div className="d-flex justify-content-center py-5 gap-3 my-lg-0 col-12 col-lg-3 justify-content-center">
 					<nav className="d-block d-lg-flex justify-content-center flex-column align-items-center">
 						<Link
-							to="/sobre-nosotros"
+							to="/sobre-nosaltres"
 							className="icon d-block nav-link"
 							title="Sobre nosaltres"
 						>

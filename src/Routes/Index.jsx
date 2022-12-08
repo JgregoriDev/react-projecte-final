@@ -10,10 +10,13 @@ import Diapositives from "../components/diapositives";
 import SearchBar from '../components/search';
 import useTitle from "../Hooks/useTitle";
 import Toast from "../components/toast";
+import "../assets/style/thumbnails.css";
+import BackToTop from "../components/ButtonScrollToTop";
 const Index = ({ afegirProducteAlCarret, title }) => {
 	useTitle(title);
 	const params = useParams("");
 	const [Videojocs, setVideojocs] = useState([]);
+	
 	const [Show, setShow] = useState();
 	const [TotalPages, setTotalPages] = useState(1);
 	const numero = [];
@@ -28,6 +31,7 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 	let ord = `&orden=${orden}` ?? "";
 	let min = new URLSearchParams(search).get("filtrarMin") ?? '';
 	let max = new URLSearchParams(search).get("filtrarMax") ?? '';
+	
 	useEffect(() => {
 		getVideojocsFromServer();
 	}, [pagina]);
@@ -144,7 +148,7 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 							{Videojocs &&
 								Videojocs.map((joc, index) => (
 									<div
-										className="col-12 col-md-6 col-lg-4 justify-content-center border-2 my-3 gap-9"
+										className="col-12 col-md-6 border-2 gap-1 col-lg-4 justify-content-center border-2 my-3 gap-9"
 										key={joc.id}
 									>
 										<Link to={`/videojoc/${joc.titul}`}>
@@ -152,7 +156,7 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 												loading="lazy"
 												src={joc.portada}
 												title={`${joc.titul}"`}
-												className={`w-100 h-auto`}
+												className={`thumbnails`}
 												alt=""
 											/>
 										</Link>
@@ -226,8 +230,8 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 						<FilterPreu width={`w-75`} />
 					</div>
 					</div>
-				
 				</div>
+				<BackToTop></BackToTop>
 			</div>
 	);
 };

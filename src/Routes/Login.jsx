@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import useTitle from "../Hooks/useTitle";
+import { isLogged } from "../components/Contain";
 const Login = ({ title }) => {
+	const { setIsLogged, logged } = useContext(isLogged);
 	const [ErrorMessage, setErrorMessage] = useState('');
 	const [isLogin, setIsLogin] = useState(false);
 	useTitle(title)
@@ -32,6 +34,7 @@ const Login = ({ title }) => {
 							"token",
 							JSON.stringify(token)
 						);
+						setIsLogged(!logged);
 						window.location.href = "/";
 						// navigate(0);
 						//  navigate("/");

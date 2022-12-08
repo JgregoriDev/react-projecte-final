@@ -27,6 +27,7 @@ const SignupSchema = yup.object().shape({
     .max(1000, "El valor màxim del camp preu  es 300")
     // .required()
     .positive("El camp preu ha de ser un valor positiu").integer(),
+  
 });
 
 
@@ -156,26 +157,27 @@ const JocForm = (props) => {
 
   const onSubmit = (data) => {
     console.log(data);
-    const auxGeneres = [...GeneresJoc];
-    const auxPlataformes = [...PlataformesJoc];
+    // const auxGeneres = [...GeneresJoc];
+    // const auxPlataformes = [...PlataformesJoc];
 
-    console.log(auxGeneres);
-    data.generes = auxGeneres;
-    data.videojoc_plataforma = auxPlataformes;
+    // console.log(auxGeneres);
+    // data.generes = auxGeneres;
+    // data.videojoc_plataforma = auxPlataformes;
     token = JSON.parse(localStorage.getItem("token"));
 
+    // console.log(data.generes);
 
 
-     const resultat = editarJoc(token.token, data);
-     resultat
-       .then((result) => {
-         result.Title === "Videojoc pujat de manera satisfactoria" ?
-           setLog(result.Title) :
-           setLog("No s'ha pogut pujar de manera satistactoria.");
+    //  const resultat = editarJoc(token.token, data);
+    //  resultat
+    //    .then((result) => {
+    //      result.Title === "Videojoc pujat de manera satisfactoria" ?
+    //        setLog(result.Title) :
+    //        setLog("No s'ha pogut pujar de manera satistactoria.");
 
-       }).catch((err) => {
+    //    }).catch((err) => {
 
-       });
+    //    });
   };
 
 
@@ -308,7 +310,18 @@ const JocForm = (props) => {
 
 
             <div className="mb-3 form-floating">
-              <textarea className="form-control" value={Descripcio} placeholder="Deixa una descripcio" id="descripcio"  {...register("descripcio")} ></textarea>
+              <textarea className="form-control" value={Descripcio} placeholder="Deixa una descripcio" id="descripcio"  
+               {...register("descripcio",{
+                onChange: (e) => {
+                  // console.log(e.target.value);
+                  setDescripcio(e.target.value);
+                },
+                onBlur: (e) => {
+                  // console.log(e.target.value);
+                  setDescripcio(e.target.value);
+                },
+              })}
+               ></textarea>
               <label htmlFor="descripcio">Descripcio</label>
               {errors.descripcio && <small className='text-danger'>{errors.descripcio.message}</small>}
             </div>
@@ -322,7 +335,7 @@ const JocForm = (props) => {
             </div>
             <div className="mb-3">
               <label className="form-label" htmlFor="plataformes">Plataformes:</label>
-              <select className='form-control' id="plataformes" multiple type="text" >
+              <select  className='form-control' {...register("plataformes")}  id="plataformes" multiple type="text" >
                 {plataformes && plataformes.length > 0 && plataformes.map((plataforma) => {
                   return <option key={plataforma.id} onClick={(e) => onClick(e, plataforma)} value={plataforma.id}>{plataforma.plataforma}</option>
                 })}
@@ -330,7 +343,7 @@ const JocForm = (props) => {
             </div>
             <div className="mb-3">
               <label className="form-label" htmlFor="generes">Generes:</label>
-              <select className='form-control' id="generes" multiple type="text" >
+              <select {...register("generes")} className='form-control' id="generes" multiple type="text" >
 
                 {generes && generes.length > 0 && generes.map((genere) => {
 
