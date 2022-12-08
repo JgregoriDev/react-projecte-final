@@ -167,7 +167,9 @@ const Plataforma = ({ title }) => {
 
 						<h5>Generes</h5>
 						{genere !== 0 ? <div className="ms-3 mb-3">
-							<Link className="btn btn-primary w-25" title="Llevar filtros" to={{ pathname: "", search: `` }}>x</Link>
+							<Link className="btn btn-primary w-25" title="Llevar filtros" to={{ pathname: "", search: `` }}>
+							<i className="bi bi-x-circle"></i>
+							</Link>
 
 						</div> : null}
 

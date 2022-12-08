@@ -148,14 +148,14 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 							{Videojocs &&
 								Videojocs.map((joc, index) => (
 									<div
-										className="col-12 col-md-6 border-2 gap-1 col-lg-4 justify-content-center border-2 my-3 gap-9"
+										className="col-12 col-md-6 border border-1 col-lg-4 justify-content-center border-2 my-3 gap-9"
 										key={joc.id}
 									>
-										<Link to={`/videojoc/${joc.titul}`}>
+										<Link className="d-blockw-100 h-auto" to={`/videojoc/${joc.titul}`}>
 											<img
 												loading="lazy"
 												src={joc.portada}
-												title={`${joc.titul}"`}
+												title={`${joc.titul}`}
 												className={`thumbnails`}
 												alt=""
 											/>
@@ -181,13 +181,13 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 											Fecha Estreno:{" "}
 											{new Date(joc.fechaEstreno).toLocaleDateString()}
 										</p>
-										<div className="d-flex justify-content-around">
+										<div className="d-flex justify-content-around my-2 py-2">
 											<Button
 												onClick={() => {
 													mostrar();
 													afegirAlCarret(joc);
 												}}
-												title="Posar en  carret"
+												title="Posar videojoc en  carret"
 												variant="secondary"
 											>
 												<svg
@@ -205,7 +205,7 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 											<input type="hidden" name="arrayProductes" value={JSON.stringify({"nom":joc.titul, "preu":joc.preu})} />
 											<input type="hidden" name="productes" value={JSON.stringify({"nom":joc.titul, "preu":joc.preu})} />
 											<input type="hidden" name="preu" value={joc.preu} />
-											<button className="btn btn-primary mx-2"  type="submit">
+											<button className="btn btn-primary mx-2" title="Comprar videojoc ja"  type="submit">
 												Comprar ja
 											</button>
 										</form>

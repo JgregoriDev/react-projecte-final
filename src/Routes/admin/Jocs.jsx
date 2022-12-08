@@ -142,6 +142,7 @@ const Jocs = ({title}) => {
                     <td>
                       <button onClick={() => borrarJoc(joc)} className='btn btn-primary mx-1' title={`Borrar ${joc.titul}`}><i className="bi bi-trash-fill"></i></button>
                       <Link className='btn btn-secondary' to={`/admin/joc/${joc.id}/editar`} title={`Editar ${joc.titul}`}><i className="bi bi-pencil-square"></i></Link>
+                      <Link className='btn btn-secondary mx-1' to={`/videojoc/${joc.titul}`} title={`Visualitzar ${joc.titul}`}><i className="bi bi-eye"></i></Link>
                     </td>
                   </tr>
                 )

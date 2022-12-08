@@ -239,10 +239,10 @@ const JocForm = (props) => {
   }
   const handleChange = (e) => { setJoc({ "titol": e.target.value }); }
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className="row">
-        <div className="col-2"></div>
-        <div className="col-8">
+        <div className="col-12 col-lg-2"></div>
+        <div className="col-12 col-lg-8">
           <h1>Editar joc</h1>
           <form action="" onSubmit={handleSubmit(onSubmit)} method="post">
             <div className="mb-3">
@@ -369,7 +369,7 @@ const JocForm = (props) => {
             </div>
           </form>
         </div>
-        <div className="col-2"></div>
+        <div className="col-12 col-lg-2"></div>
       </div>
     </div >
   )

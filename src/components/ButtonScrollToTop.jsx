@@ -24,7 +24,7 @@ const ButtonScrollToTop = ({showInSize=300}) => {
   return (
     <div> {showButton && (
       <button onClick={scrollToTop} title="Volver arriba" className="back-to-top btn-primary ">
-        <i class="bi bi-arrow-up"></i>
+        <i className="bi bi-arrow-up"></i>
       </button>
     )}</div>
   )

@@ -1,6 +1,7 @@
 .thumbnails{
   margin-top: 5px;
-  width: clamp(80%,250px,90%);
+  min-width:100%; 
+  max-width:100%; 
   margin-left: auto;
   margin-right: auto;
   height: auto;
