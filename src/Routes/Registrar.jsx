@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 const plan = {
   "email": "",
   "password": "",
@@ -15,6 +15,16 @@ const Registrar = () => {
   const [Plantilla, setPlantilla] = useState(plan);
   const [ErrorMissatges, setErrorsMissatges] = useState(errorsMissatges);
   const [Personalization, setPersonalization] = useState("");
+  let token;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    token = JSON.parse(localStorage.getItem("token"));
+    if (token) {
+      navigate(`/`);
+    }
+  }, [])
+
   const onSubmit = (e) => {
     e.preventDefault();
     setErrorsMissatges(errorsMissatges);
@@ -74,7 +84,7 @@ const Registrar = () => {
     });
 
     // let response = await fetch("http://vos.es/api/v1/registrar", {
-      let response = await fetch("https://app.11josep.daw.iesevalorpego.es/api/v1/registrar", {
+    let response = await fetch(`${process.env.REACT_APP_DOMAIN_API}registrar`, {
       method: "POST",
       body: bodyContent,
       headers: headersList
@@ -125,6 +135,21 @@ const Registrar = () => {
               {ErrorMissatges.respostaServer}
             </div>
           </form>
+            <div className="mb-5">
+              &nbsp;
+            </div>
+            <div className="mb-5">
+              &nbsp;
+            </div>
+            <div className="mb-5">
+              &nbsp;
+            </div>
+            <div className="mb-5">
+              &nbsp;
+            </div>
+            <div className="mb-5">
+              &nbsp;
+            </div>
         </div>
         <div className="col-2"></div>
       </div>

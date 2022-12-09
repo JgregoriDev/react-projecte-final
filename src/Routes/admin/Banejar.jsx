@@ -30,7 +30,7 @@ const Banejar = () => {
     });
     const id = window.location.pathname.split("/")[2];
     //  let response = await fetch(`http://vos.es/api/v1/usuari/${id}/banejar`, { 
-    let response = await fetch(`https://app.11josep.daw.iesevalorpego.es/api/v1/usuari/${id}/banejar`, {
+    let response = await fetch(`${process.env.REACT_APP_DOMAIN_API}usuari/${id}/banejar`, {
       method: "POST",
       body: bodyContent,
       headers: headersList

@@ -58,9 +58,13 @@ const JocForm = ( props ) => {
     // console.log();
     if (token) {
       var decoded = jwt_decode(token.token);
+      console.log();
       if (!decoded.roles.includes("ROLE_ADMIN")) {
         navigate(`/`);
       }
+
+    }else{
+      navigate(`/`);
 
     }
   }, [])
@@ -93,7 +97,7 @@ const JocForm = ( props ) => {
     }
 
     // let response = await fetch("http://vos.es/api/v1/plataformes", {
-    let response = await fetch("https://app.11josep.daw.iesevalorpego.es/api/v1/plataformes", {
+    let response = await fetch(`${process.env.REACT_APP_DOMAIN_API}plataformes`, {
       method: "GET",
       headers: headersList
     });
@@ -108,7 +112,7 @@ const JocForm = ( props ) => {
     }
 
     // let response = await fetch("https://vos.es/api/v1/generes", {
-      let response = await fetch("https://app.11josep.daw.iesevalorpego.es/api/v1/generes", {
+      let response = await fetch(`${process.env.REACT_APP_DOMAIN_API}generes`, {
       method: "GET",
       headers: headersList
     });
@@ -119,16 +123,18 @@ const JocForm = ( props ) => {
   }
 
   const onSubmit = (data) => {
-    const auxGeneres = [...GeneresJoc];
-    const auxPlataformes = [...PlataformesJoc];
+    // const auxGeneres = [...GeneresJoc];
+    // const auxPlataformes = [...PlataformesJoc];
 
-    console.log(auxGeneres);
-    data.generes = auxGeneres;
-    data.videojoc_plataforma = auxPlataformes;
+    // console.log(auxGeneres);
+    // data.generes = auxGeneres;
+    // data.videojoc_plataforma = auxPlataformes;
     token = JSON.parse(localStorage.getItem("token"));
     let error=false;
+    console.log(data);
     data.generes.forEach(g => {
-      const n=generes.findIndex(genere=>genere.id===g.id);
+      const n=generes.findIndex(genere=>genere.id===g);
+      console.log(n);
       if(n===-1)
         error=true;
 
@@ -137,22 +143,29 @@ const JocForm = ( props ) => {
     if(error){
       setErrorMessageGeneres("genere no trobat");
     }else{
+      
+      // data.plataforma.foreach(p=>{
+      //   const finded=plataformes.findIndex(plataforma=>plataforma.plataforma===p.plataforma);
+      //   if(finded===-1){
 
-    const resultat = insertarJoc(token.token, data);
-    resultat
-      .then((result) => {
-        if(result?.Title === "Videojoc pujat de manera satisfactoria"){
-          setLog(result?.Title);
-          setValorId(result?.Videjoc?.titul);
-          setShow(true);
-        }else{
+      //   }
+      // });
+    
+    // const resultat = insertarJoc(token.token, data);
+    // resultat
+    //   .then((result) => {
+    //     if(result?.Title === "Videojoc pujat de manera satisfactoria"){
+    //       setLog(result?.Title);
+    //       setValorId(result?.Videjoc?.titul);
+    //       setShow(true);
+    //     }else{
 
-          setLog("No s'ha pogut pujar de manera satistactoria.");
-        }
+    //       setLog("No s'ha pogut pujar de manera satistactoria.");
+    //     }
 
-      }).catch((err) => {
+    //   }).catch((err) => {
 
-      });
+    //   });
     }
   };
 
@@ -175,7 +188,7 @@ const JocForm = ( props ) => {
     // bodyContent.append(".append("portada", valor.portada);
      bodyContent.append("generes", JSON.stringify(valor.generes));
      bodyContent.append("videojoc_plataforma", JSON.stringify(valor.videojoc_plataforma));
-    let response = await fetch("https://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/nou", {
+    let response = await fetch(`${process.env.REACT_APP_DOMAIN_API}videojoc/nou`, {
     // let response = await fetch("http://vos.es/api/v1/videojoc/nou", {
       method: "POST",
       body: bodyContent,
@@ -268,7 +281,7 @@ const JocForm = ( props ) => {
             </div>
             <div className="mb-3">
               <label className="form-label" htmlFor="plataformes">Plataformes:</label>
-              <select className='form-control' id="plataformes" multiple type="text" >
+              <select  {...register("plataforma")}  className='form-control'  multiple type="text" >
                 {plataformes && plataformes.length > 0 && plataformes.map((plataforma) => {
                   return <option key={plataforma.id} onClick={(e) => onClick(e, plataforma)} value={plataforma.id}>{plataforma.plataforma}</option>
                 })}
@@ -277,7 +290,7 @@ const JocForm = ( props ) => {
             </div>
             <div className="mb-3">
               <label className="form-label" htmlFor="generes">Generes:</label>
-              <select className='form-control' id="generes" multiple type="text" >
+              <select  {...register("generes")}  className='form-control' id="generes" multiple type="text" >
 
                 {generes && generes.length > 0 && generes.map((genere) => {
 

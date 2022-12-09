@@ -14,14 +14,19 @@ const Jocs = ({title}) => {
   let token;
   useEffect(() => {
     token = JSON.parse(localStorage.getItem("token"));
-    console.log();
+    // console.log();
     if (token) {
       var decoded = jwt_decode(token.token);
+      console.log();
       if (!decoded.roles.includes("ROLE_ADMIN")) {
         navigate(`/`);
       }
 
+    }else{
+      navigate(`/`);
+
     }
+    
   }, [])
 
 
@@ -79,7 +84,7 @@ const Jocs = ({title}) => {
 
 
     // let response = await fetch(`http://vos.es/api/v1/videojoc/${id}/borrar`, {
-    let response = await fetch(`https://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/${id}/borrar`, {
+    let response = await fetch(`${process.env.REACT_APP_DOMAIN_API}videojoc/${id}/borrar`, {
       method: "DELETE",
       headers: headersList
     });
@@ -95,7 +100,7 @@ const Jocs = ({title}) => {
       "Authorization": `Bearer ${token.token}`
     }
 
-   let response = await fetch("https://app.11josep.daw.iesevalorpego.es/api/v1/admin/videojocs", {
+   let response = await fetch(`${process.env.REACT_APP_DOMAIN_API}admin/videojocs`, {
     // let response = await fetch("http://vos.es/api/v1/admin/videojocs", {
       method: "GET",
       headers: headersList

@@ -51,10 +51,10 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 		const url = {
 			// link1: `http://vos.es/api/v1/videojocs?page=${page}${results}${parametro}${ordenar}`,
 			// link1: `http://vos.es/api/v1/video?page=${page}${results}${parametro}${ordenar}`,
-			"link1": `https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?page=${page}${results}${parametro}${ordenar}`,
+			"link1": `${process.env.REACT_APP_DOMAIN_API}videojocs?page=${page}${results}${parametro}${ordenar}`,
 			// link2: `http:/vos.es/api/v1/videojocs?page=${page}${results}`,
 			// link2: `http:/vos.es/api/v1/video?page=${page}${results}`,
-			"link2": `https://app.11josep.daw.iesevalorpego.es/api/v1/videojocs?page=${page}${results}`
+			"link2": `${process.env.REACT_APP_DOMAIN_API}videojocs?page=${page}${results}`
 		};
 		let link;
 		filtrar && ordenar ? (link = url.link1) : (link = url.link2);
@@ -201,7 +201,7 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 													<path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
 												</svg>
 											</Button>{" "}
-											<form  className={`w-100 ${false?'d-none':''}`} action="http://vos.es/api/v1/pago" method="POST">
+											<form  className={`w-100 ${false?'d-none':''}`} action={`http://vos.es/api/v1/pago`} method="POST">
 											<input type="hidden" name="arrayProductes" value={JSON.stringify({"nom":joc.titul, "preu":joc.preu})} />
 											<input type="hidden" name="productes" value={JSON.stringify({"nom":joc.titul, "preu":joc.preu})} />
 											<input type="hidden" name="preu" value={joc.preu} />

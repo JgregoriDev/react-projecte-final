@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation,Link } from "react-router-dom";
-
+import "../assets/style/Space.css"
 import useTitle from "../Hooks/useTitle";
 function Buscar({title}) {
   useTitle(title);
@@ -19,7 +19,7 @@ function Buscar({title}) {
   }, [Valor]);
   const buscarPerText=async()=>{
     // const response=await fetch(`http://vos.es/api/v1/videojoc/buscar/${Valor}`);
-    const response=await fetch(`https://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/buscar/${Valor}`);
+    const response=await fetch(`${process.env.REACT_APP_DOMAIN_API}videojoc/buscar/${Valor}`);
     const arrayBusqueda=await response.json();
     console.log(arrayBusqueda);
     setArrayVideojocs(arrayBusqueda.Resultat);
@@ -27,8 +27,8 @@ function Buscar({title}) {
   
   return (
     <div className='row'>
-      <div className="col-2"></div>
-      <div className="col-8">
+      <div className="col-12 col-lg-2"></div>
+      <div className="col-12 col-lg-8  h-75-vh">
         <h1>Buscar videojoc amb titol {Valor}</h1>
         <h3>{ArrayVideojocs && ArrayVideojocs.length>0?"Resultats de busqueda":"No s'han trobat resultats"}</h3>
         {ArrayVideojocs && ArrayVideojocs.map((joc)=>{
@@ -42,7 +42,7 @@ function Buscar({title}) {
           )
         })}
       </div>
-      <div className="col-2"></div>
+      <div className="col-12 col-lg-2"></div>
     </div>
   )
 }

@@ -1,13 +1,22 @@
-import React, { useState,useContext } from "react";
+import React, { useState,useContext,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useTitle from "../Hooks/useTitle";
+import jwt_decode from "jwt-decode";
 import { isLogged } from "../components/Contain";
 const Login = ({ title }) => {
 	const { setIsLogged, logged } = useContext(isLogged);
 	const [ErrorMessage, setErrorMessage] = useState('');
 	const [isLogin, setIsLogin] = useState(false);
 	useTitle(title)
-	const navigate = useNavigate();
+  let token;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    token = JSON.parse(localStorage.getItem("token"));
+    if (token) {
+      navigate(`/`);
+    }
+  }, [])
 	const onSubmit = (e) => {
 		e.preventDefault();
 		const objecteDadesLogin = {
@@ -17,14 +26,14 @@ const Login = ({ title }) => {
 		const result = login(objecteDadesLogin);
 		result
 			.then((result) => {
-				console.log(result);
+				// console.log(result);
 				if (result?.Title) {
 					if (result.Title === "Login incocorrecte") {
 						setErrorMessage("Error dades incorrectes");
 					}else if(result.Title === "Usuari banejat"){
 						setErrorMessage("Error usuari banejat");
 					}else if(result?.token) {
-						console.log(result);
+						// console.log(result);
 						const token = {
 							id: result.id,
 							email: result.email,
@@ -34,7 +43,7 @@ const Login = ({ title }) => {
 							"token",
 							JSON.stringify(token)
 						);
-						setIsLogged(!logged);
+						// setIsLogged(!logged);
 						window.location.href = "/";
 						// navigate(0);
 						//  navigate("/");

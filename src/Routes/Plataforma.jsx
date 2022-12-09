@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import Spinner from "react-bootstrap/Spinner";
-
+import "../assets/style/Space.css"
 import useTitle from "../Hooks/useTitle";
 
 const Plataforma = ({ title }) => {
@@ -76,7 +76,7 @@ const Plataforma = ({ title }) => {
 
 	const conseguirJocsPlataformaGenere= async()=>{
 		const response = await fetch(
-			`https://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/plataforma/${id}?genere=${genere}`
+			`${process.env.REACT_APP_DOMAIN_API}videojoc/plataforma/${id}?genere=${genere}`
 		);
 		const resultat = await response.json();
 		return resultat;
@@ -84,7 +84,7 @@ const Plataforma = ({ title }) => {
 	const conseguirJocsPlataforma = async () => {
 		const response = await fetch(
 			// `http://vos.es/api/v1/plataforma/${id}`
-			`https://app.11josep.daw.iesevalorpego.es/api/v1/plataforma/${id}`
+			`${process.env.REACT_APP_DOMAIN_API}plataforma/${id}`
 		);
 		const resultat = await response.json();
 		return resultat;
@@ -106,14 +106,14 @@ const Plataforma = ({ title }) => {
 	}
 	const conseguirGeneresPlataforma = async (id) => {
 		// const response = await fetch(`http://vos.es/api/v1/generes`);
-		const response = await fetch(`https://app.11josep.daw.iesevalorpego.es/api/v1/generes`);
+		const response = await fetch(`${process.env.REACT_APP_DOMAIN_API}generes`);
 		const resultat = await response.json();
 		setGeneres(resultat);
 		// console.log(resultat);
 	};
 
 	return (
-		<div className="container-fluis">
+		<div className="container-fluid h-75-vh">
 			<div className="row">
 				<div className="d-none d-lg-block col-2"></div>
 				<div className="col-12 col-lg-8">

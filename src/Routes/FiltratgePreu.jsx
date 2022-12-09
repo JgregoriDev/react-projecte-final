@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-
+import "../assets/style/Space.css"
 import "../assets/style/targeta.css";
 import useTitle from "../Hooks/useTitle";
 const FiltratgePreu = ({title}) => {
@@ -24,7 +24,7 @@ const FiltratgePreu = ({title}) => {
 
   const filteredPrice = async (min, max) => {
     // const result = await fetch(`http://vos.es/api/v1/videojoc/filtrar/preu/${min}/${max}`);
-    const result = await fetch(`https://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/filtrar/preu/${min}/${max}`);
+    const result = await fetch(`${process.env.REACT_APP_DOMAIN_API}videojoc/filtrar/preu/${min}/${max}`);
     const resultJSON = await result.json();
     return resultJSON;
   }
@@ -32,7 +32,7 @@ const FiltratgePreu = ({title}) => {
     <div>
       <div className='row'>
         <div className="col-2"></div>
-        <div className="col-8">
+        <div className="col-8 h-75-vh">
 
           <h1>{Titol}</h1>
           <div className="row">

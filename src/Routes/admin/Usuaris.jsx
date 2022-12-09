@@ -13,7 +13,6 @@ const Usuaris = ({title}) => {
   let token;
   useEffect(() => {
     token = JSON.parse(localStorage.getItem("token"));
-    console.log();
     if (token) {
       var decoded = jwt_decode(token.token);
       if (!decoded.roles.includes("ROLE_ADMIN")) {
@@ -53,7 +52,7 @@ const Usuaris = ({title}) => {
     }
 
     // let response = await fetch("http://vos.es/api/v1/usuaris", {
-    let response = await fetch("https://app.11josep.daw.iesevalorpego.es/api/v1/usuaris", {
+    let response = await fetch(`${process.env.REACT_APP_DOMAIN_API}usuaris`, {
       method: "GET",
       headers: headersList
     });

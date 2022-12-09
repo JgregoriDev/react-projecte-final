@@ -95,7 +95,7 @@ const Contain = () => {
 
   const cargarMarques = async () => {
     // const response = await fetch(`http://vos.es/api/v1/marques`);
-    const response = await fetch(`https://app.11josep.daw.iesevalorpego.es/api/v1/marques`);
+    const response = await fetch(`${process.env.REACT_APP_DOMAIN_API}marques`);
     const resultat = await response.json();
     setMarques(resultat);
   };

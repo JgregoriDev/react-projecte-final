@@ -6,20 +6,26 @@ const Filtratge = ({width}) => {
   const navigate=useNavigate();
   const onSubmit = (e)=> {
     e.preventDefault();
-    const min=e.target[0].value;
-    const max=e.target[1].value;
+    const min=  Number.parseInt(e.target[0].value);
+    const max=Number.parseInt(e.target[1].value);
+  
     if(isNaN(min) || isNaN(max)){
       seterrorMissatge("Error no pots insertar una cadena");
       return;
     }
-
+    
     if(min<0){
       min=0;
     }
     if(max>300){
       max=300;
     }
-    console.log("submit");
+    
+    if(min>=max){
+      seterrorMissatge("Error el primer camp no pot ser major o igual al 2on camp");
+      return;
+
+    }
     navigate(`/filtrar/${min}/${max}`)
 
   }
@@ -38,7 +44,7 @@ const Filtratge = ({width}) => {
         <label>Desde</label>
         {/* <input type="text" placeholder='min' className='form-control w-75 my-2 me-1' name="filtrarMin" id="filtrarMin" /> */}
         <select defaultValue={0} onChange={onChange} className={`form-control form-select ${width}`} name="filtrarMin" id="filtrarMin">
-          <option>0</option>
+          <option value={0}>0</option>
           <option value={50}>50</option>
           <option value={100}>100</option>
           <option value={150}>150</option>

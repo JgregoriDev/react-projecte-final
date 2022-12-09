@@ -117,13 +117,14 @@ const Carrito = (props) => {
 									<b>Preu:</b> {PreuTotal}
 								</p>
 								</div>
-								<form className={`w-100  ${!Login?'d-none':''}`} action="http://vos.es/api/v1/pago" method="POST">
+									<form className={`w-100  ${!Login?'d-none':''}`} action="http://vos.es/api/v1/pago" method="POST">
 									<input type="hidden" name="productes" value={JSON.stringify(ArrayCarretTractat)} />
 									<input type="hidden" name="preu" value={PreuTotal} />
 									<button {...(ArrayCarret.length===0 ? {disabled: 'true'} : {})} className="btn btn-primary w-100" type="submit">
 										Pagar
 									</button>
 								</form>
+							
 								<Link to="/" title="Tornar a la tenda" className="w-100 my-2 btn btn-secondary mb-3">
 									<i className="bi bi-arrow-left-short"></i>
 									<span className="d-none d-md-inline">Tornar a la tenda</span>
@@ -192,10 +193,13 @@ const Carrito = (props) => {
 									<b>Detalls</b>
 								</p>
 								<p>
+									{ArrayCarret.length>0?<>
 									<b>
 										Total productes:{" "}
-										{ArrayCarret !== undefined ? `${ArrayCarret.length}` : ""}
 									</b>
+									</>:<p className="text-danger">No hi han productes en la llista</p>}
+										{/* {ArrayCarret !== undefined ? `${ArrayCarret.length}` : ""} */}
+									
 								</p>
 								<p>
 									<b>Preu:</b> {PreuTotal}
@@ -213,7 +217,7 @@ const Carrito = (props) => {
 									Comprar
 								</Link> */}
 
-								<form  className={`w-100 ${!Login?'d-none':''}`} action="http://vos.es/api/v1/pago" method="POST">
+								<form  className={`w-100 ${!Login?'d-none':''}`} action={`${process.env.REACT_APP_DOMAIN_PAYMENT}`} method="POST">
 									<input type="hidden" name="arrayProductes" value={JSON.stringify(ArrayCarret)} />
 									<input type="hidden" name="productes" value={JSON.stringify(ArrayCarretTractat)} />
 									<input type="hidden" name="preu" value={PreuTotal} />
@@ -229,6 +233,8 @@ const Carrito = (props) => {
 							</div>
 						</div>
 						<ContainerRecomanacio width={`w-100`} />
+						<div className="my-5">&nbsp;</div>
+						<div className="my-5">&nbsp;</div>
 					</div>
 				</div>
 				<div className="col col-2"></div>

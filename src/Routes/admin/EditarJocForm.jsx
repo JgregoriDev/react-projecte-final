@@ -70,7 +70,7 @@ const JocForm = (props) => {
     }
 
     // let response = await fetch(`https://vos.es/api/v1/videojoc/${id}`, {
-    let response = await fetch(`https://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/${id}`, {
+    let response = await fetch(`${process.env.REACT_APP_DOMAIN_API}videojoc/${id}`, {
       method: "GET",
       headers: headersList
     });
@@ -129,7 +129,7 @@ const JocForm = (props) => {
     let headersList = {
       "Accept": "*/*",
     }
-    let response = await fetch("https://app.11josep.daw.iesevalorpego.es/api/v1/plataformes", {
+    let response = await fetch(`${process.env.REACT_APP_DOMAIN_API}plataformes`, {
       // let response = await fetch("http://vos.es/api/v1/plataformes", {
       method: "GET",
       headers: headersList
@@ -145,7 +145,7 @@ const JocForm = (props) => {
     }
 
     // let response = await fetch("https://vos.es/api/v1/generes", {
-    let response = await fetch("https://app.11josep.daw.iesevalorpego.es/api/v1/generes", {
+    let response = await fetch(`${process.env.REACT_APP_DOMAIN_API}generes`, {
       method: "GET",
       headers: headersList
     });
@@ -164,7 +164,19 @@ const JocForm = (props) => {
     // data.generes = auxGeneres;
     // data.videojoc_plataforma = auxPlataformes;
     token = JSON.parse(localStorage.getItem("token"));
+    // console.log();
+    if (token) {
+      var decoded = jwt_decode(token.token);
+      console.log();
+      if (!decoded.roles.includes("ROLE_ADMIN")) {
+        navigate(`/`);
+      }
 
+    }else{
+      navigate(`/`);
+
+    }
+    
     // console.log(data.generes);
 
 
@@ -200,7 +212,7 @@ const JocForm = (props) => {
     bodyContent.append("portada", null);
     bodyContent.append("preu", valor.preu);
     console.log(bodyContent);
-    let response = await fetch(`https://app.11josep.daw.iesevalorpego.es/api/v1/videojoc/${id}/editar`, {
+    let response = await fetch(`${process.env.REACT_APP_DOMAIN_API}videojoc/${id}/editar`, {
     // let response = await fetch(`http://vos.es/api/v1/videojoc/${id}/editar`, {
       method: "PUT",
       body: bodyContent,
