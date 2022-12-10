@@ -7,6 +7,8 @@ import * as yup from "yup";
 import Dropdown from '../../components/Dropdown';
 import HeaderAdminResponsive from '../../components/HeaderAdminResponsive';
 import useTitle from '../../Hooks/useTitle';
+import "../../assets/style/Space.css"
+
 const Jocs = ({title}) => {
   useTitle(title)
   const [Jocs, setJocs] = useState([]);
@@ -112,7 +114,7 @@ const Jocs = ({title}) => {
     // setJocs()
   }
   return (
-    <div className='container-fluid'>
+    <div className='container-fluid h-75-vh'>
       <div className="row">
         <div className="d-none d-md-block col col-md-2">
           <div className="d-flex mt-2 w-100 gap-2 flex-column">

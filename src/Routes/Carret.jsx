@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import useTitle from "../Hooks/useTitle";
 import Toast from "../components/toast";
+import  "../assets/style/Space.css";
 import ContainerRecomanacio from "../components/ContainerRecomanacio";
 const Carrito = (props) => {
 	// const { carrito, buidar, title } = props;
@@ -11,7 +12,7 @@ const Carrito = (props) => {
 	const [ArrayCarretTractat, setArrayCarretTractat] = useState('');
 	const [PreuTotal, setPreuTotal] = useState(0);
 	const [Login, setLogin] = useState(false);
-
+	let token;
 	const [Show, setShow] = useState(false);
 	let n=[];
 	useEffect(() => {
@@ -24,8 +25,12 @@ const Carrito = (props) => {
 				preu += item.preu;
 			}
 			setPreuTotal(preu);
-		
 		}
+		token=localStorage.getItem("token");
+		if(!token){
+			
+		}
+
 	}, []);
 	useEffect(() => {
 		let n=[];
@@ -34,7 +39,6 @@ const Carrito = (props) => {
 		}
 		let string=n.join(',\n');
 		setArrayCarretTractat(n);
-		console.log(ArrayCarretTractat);
 	
 	
 	}, [ArrayCarret])
@@ -43,26 +47,24 @@ const Carrito = (props) => {
 		const token= localStorage.getItem("token");
 		if(token){
 			setLogin(true);
-		}	
+		}
 	
 	
 	}, [])
 	
 
-	const borrarVideojocCarret = (key) => {
-		console.log(key);
-		const carro = JSON.parse(localStorage.getItem("carrito"));
-		const index = carro.findIndex((producte) => {
-			return key === producte.id;
-		});
-		let help = ArrayCarret.splice(carro[index], 1);
-		// console.log(help);
+	const borrarVideojocCarret = ({id,titul,preu}) => {
+		// console.log(id,titul,preu)
+		let n=ArrayCarret.findIndex((joc)=>joc.id===id);
+		const auxPreu=PreuTotal-preu;
+		const arrayAux=ArrayCarret.splice(n,1);
 		setArrayCarret(ArrayCarret);
-
 		localStorage.setItem("carrito", JSON.stringify(ArrayCarret));
+		setPreuTotal(auxPreu);
 	};
 	const onClick = () => {
 		props.buidarCarret();
+		setPreuTotal(0);
 		localStorage.removeItem("carrito");
 		setArrayCarret([]);
 	};
@@ -80,23 +82,9 @@ const Carrito = (props) => {
 		  return "";
 	}
 
-	const espai = () => {
-		return (
-			<div>
-				<div className="mb-9">&nbsp;</div>
-				<div className="mb-9">&nbsp;</div>
-				<div className="mb-9">&nbsp;</div>
-				<div className="mb-9">&nbsp;</div>
-				<div className="mb-9">&nbsp;</div>
-				<div className="mb-9">&nbsp;</div>
-				<div className="mb-9">&nbsp;</div>
-				<div className="mb-9">&nbsp;</div>
-			</div>
-		);
-	}
 
 	return (
-		<div className="container-fluid">
+		<div className="container-fluid h-75-vh">
 			<div className="row">
 				<div className="col-12 col-lg-2"></div>
 				<div className="col-8">
@@ -120,7 +108,7 @@ const Carrito = (props) => {
 									<form className={`w-100  ${!Login?'d-none':''}`} action="http://vos.es/api/v1/pago" method="POST">
 									<input type="hidden" name="productes" value={JSON.stringify(ArrayCarretTractat)} />
 									<input type="hidden" name="preu" value={PreuTotal} />
-									<button {...(ArrayCarret.length===0 ? {disabled: 'true'} : {})} className="btn btn-primary w-100" type="submit">
+									<button {...(ArrayCarret.length===0 ? {disabled: true} : {})} className="btn btn-primary w-100" type="submit">
 										Pagar
 									</button>
 								</form>
@@ -132,7 +120,7 @@ const Carrito = (props) => {
 								<div className="mb-9">&nbsp;</div>
 							</div>
 							<div className="my-3">
-								<button className="btn-primary btn" onClick={() => { onClick() }}>
+								<button className="btn-primary btn" title="borrar" onClick={() => { onClick() }}>
 									Borrar
 								</button>
 							</div>
@@ -168,13 +156,15 @@ const Carrito = (props) => {
 													</td>
 													<td>{producte.titul}</td>
 													{/* <td>{producte.cantitat}</td> */}
-													<td>{producte.preu} $</td>
+													<td>{producte.preu} €</td>
 													<td className="">
 														<button
+															title="borrar"
 															className="btn btn-primary text-white"
 															onClick={() => {
+																// console.log(producte);
 																modificarVista();
-																borrarVideojocCarret(producte.id);
+																borrarVideojocCarret(producte);
 															}}
 														>
 															<i className="bi bi-trash"></i>
@@ -197,31 +187,29 @@ const Carrito = (props) => {
 									<b>
 										Total productes:{" "}
 									</b>
-									</>:<p className="text-danger">No hi han productes en la llista</p>}
+									</>:<><p className="text-danger">No hi han productes en la llista</p></>}
 										{/* {ArrayCarret !== undefined ? `${ArrayCarret.length}` : ""} */}
 									
 								</p>
 								<p>
-									<b>Preu:</b> {PreuTotal}
+									<b>Preu:</b> {PreuTotal} €
 								</p>
 							</div>
 							{Show ? (
 								<Toast
-									message={`Has borrat un producte\n de la pàgina `}
+									message={`Has borrat un  producte\n de la pàgina `}
 								></Toast>
 							) : (
 								""
 							)}
 							<div className="d-none d-lg-flex flex-column gap-3">
-								{/* <Link to="" className="btn btn-primary">
-									Comprar
-								</Link> */}
-
-								<form  className={`w-100 ${!Login?'d-none':''}`} action={`${process.env.REACT_APP_DOMAIN_PAYMENT}`} method="POST">
+								{Login?
+								<>
+										<form  className={`w-100 ${!Login?'d-none':''}`} action={`${process.env.REACT_APP_DOMAIN_PAYMENT}`} method="POST">
 									<input type="hidden" name="arrayProductes" value={JSON.stringify(ArrayCarret)} />
 									<input type="hidden" name="productes" value={JSON.stringify(ArrayCarretTractat)} />
 									<input type="hidden" name="preu" value={PreuTotal} />
-									<button className="btn btn-primary w-100"{...(ArrayCarret.length===0 ? {disabled: 'true'} : {})} type="submit">
+									<button className="btn btn-primary w-100"{...(ArrayCarret.length===0 || PreuTotal===0 ? {"disabled": true} : {})} type="submit">
 										Pagar
 									</button>
 								</form>
@@ -229,12 +217,14 @@ const Carrito = (props) => {
 									<i className="bi bi-arrow-left-short"></i>
 									<span className="d-none d-md-inline">Tornar a la tenda</span>
 								</Link>
+								</>:<>
+								<p className="text-danger">Has de fer login per a poder comprar</p>
+								</>}
 								<div className="mb-9">&nbsp;</div>
 							</div>
 						</div>
 						<ContainerRecomanacio width={`w-100`} />
-						<div className="my-5">&nbsp;</div>
-						<div className="my-5">&nbsp;</div>
+						
 					</div>
 				</div>
 				<div className="col col-2"></div>

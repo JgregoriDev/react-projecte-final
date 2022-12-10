@@ -152,7 +152,7 @@ const Plataforma = ({ title }) => {
 									</div>
 								);
 							}):<>
-								<h2>El genere {genere} no té videojocs disponibles</h2>
+								<h2>{genere!==0?`El gènere ${genere} no disposa de videojocs disponibles`: `La plataforma seleccionada no disposa de jocs`}</h2>
 							</>
 						}
 					</div>

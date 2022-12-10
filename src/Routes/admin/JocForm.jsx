@@ -6,6 +6,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link } from 'react-router-dom'
 import useTitle from "../../Hooks/useTitle";
+import "../../assets/style/Space.css"
+
 const SignupSchema = yup.object().shape({
   titul: yup
     .string()
@@ -30,17 +32,18 @@ const SignupSchema = yup.object().shape({
 });
 
 
-const JocForm = ( props ) => {
-  const {title} = props;
+const JocForm = (props) => {
+  const { title } = props;
   let token;
   useTitle(title);
   const navigate = useNavigate();
   const [plataformes, setplataformes] = useState([]);
-  const [valorId,setValorId]=useState(0);
-  const [Log, setLog] = useState("");
+  const [FeedbackServer, setFeedbackServer] = useState("");
+  const [valorId, setValorId] = useState(0);
   const [Show, setShow] = useState(false);
   const [generes, setgeneres] = useState([]);
-  const [ErrorMessageGeneres,setErrorMessageGeneres] = useState('');
+  const [ErrorMessageGeneres, setErrorMessageGeneres] = useState('');
+  const [ErrorMessagePlataformes, setErrorMessagePlataformes] = useState('');
   const {
     register,
     handleSubmit,
@@ -58,12 +61,11 @@ const JocForm = ( props ) => {
     // console.log();
     if (token) {
       var decoded = jwt_decode(token.token);
-      console.log();
       if (!decoded.roles.includes("ROLE_ADMIN")) {
         navigate(`/`);
       }
 
-    }else{
+    } else {
       navigate(`/`);
 
     }
@@ -73,7 +75,6 @@ const JocForm = ( props ) => {
     const generes = conseguirGeneres();
     generes
       .then((result) => {
-        // console.log(result);
         setgeneres(result);
       }).catch((err) => {
 
@@ -112,7 +113,7 @@ const JocForm = ( props ) => {
     }
 
     // let response = await fetch("https://vos.es/api/v1/generes", {
-      let response = await fetch(`${process.env.REACT_APP_DOMAIN_API}generes`, {
+    let response = await fetch(`${process.env.REACT_APP_DOMAIN_API}generes`, {
       method: "GET",
       headers: headersList
     });
@@ -123,55 +124,69 @@ const JocForm = ( props ) => {
   }
 
   const onSubmit = (data) => {
+    setFeedbackServer("");
     // const auxGeneres = [...GeneresJoc];
     // const auxPlataformes = [...PlataformesJoc];
 
     // console.log(auxGeneres);
     // data.generes = auxGeneres;
     // data.videojoc_plataforma = auxPlataformes;
-    token = JSON.parse(localStorage.getItem("token"));
-    let error=false;
-    console.log(data);
+  
+    let errorGenere = false;
+    let errorPlataforma = false;
     data.generes.forEach(g => {
-      const n=generes.findIndex(genere=>genere.id===g);
-      console.log(n);
-      if(n===-1)
-        error=true;
+
+      const n = generes.findIndex(genere => genere.genere === g);
+      if (n === -1){
+        errorGenere = true;
+        return;
+      }
+        
 
     });
-    const gen=generes.findIndex(genere=>data.generes[0].id);
-    if(error){
-      setErrorMessageGeneres("genere no trobat");
-    }else{
-      
-      // data.plataforma.foreach(p=>{
-      //   const finded=plataformes.findIndex(plataforma=>plataforma.plataforma===p.plataforma);
-      //   if(finded===-1){
+    data.plataforma.forEach(p => {
 
-      //   }
+      const n = plataformes.findIndex(plataforma => plataforma.plataforma === p);
+      if (n === -1){
+        errorPlataforma = true;
+        return;
+      }
+        
+
+    });
+    if (errorGenere) {
+      setErrorMessageGeneres("Genere no trobat");
+    }
+    if(errorPlataforma){
+      setErrorMessagePlataformes("Plataforma no trobada");
+    }
+    if(!errorPlataforma && !errorGenere){
+      token = JSON.parse(localStorage.getItem("token"));
+      console.log(data);
+      const insertat=insertarJoc(token,data);
+      insertat.then(result => {
+        if(result?.Title==="Videojoc pujat de manera satisfactoria"){
+          setFeedbackServer(<p className='text-success'>{`Videojoc insertat de manera correcta`}</p>);
+        }
+        if(result?.Title==="Error"){
+          setFeedbackServer(<p className='text-error'>{`Error`}</p>);
+
+        }
+        
+      }).catch((err) => {
+        console.error("🚀 ~ file: JocForm.jsx:170 ~ insertat..then ~ err", err)
+        
+      });
+      // insertat.then((result) => {
+      //   console.log(result);
+      // }).catch((err) => {
+        
       // });
-    
-    // const resultat = insertarJoc(token.token, data);
-    // resultat
-    //   .then((result) => {
-    //     if(result?.Title === "Videojoc pujat de manera satisfactoria"){
-    //       setLog(result?.Title);
-    //       setValorId(result?.Videjoc?.titul);
-    //       setShow(true);
-    //     }else{
-
-    //       setLog("No s'ha pogut pujar de manera satistactoria.");
-    //     }
-
-    //   }).catch((err) => {
-
-    //   });
     }
   };
 
 
   const insertarJoc = async (token, valor) => {
-    console.log(valor.portada[0].name);
     let headersList = {
       "Accept": "*/*",
       "Authorization": `Bearer ${token}`
@@ -181,15 +196,15 @@ const JocForm = ( props ) => {
     bodyContent.append("titul", valor.titul);
     bodyContent.append("descripcio", valor.descripcio);
     bodyContent.append("cantitat", valor.cantitat);
-    bodyContent.append("portada", valor.portada[0]??'');
+    bodyContent.append("portada", valor.portada[0] ?? '');
     bodyContent.append("fechaEstreno", valor.fechaEstreno);
     bodyContent.append("portada", null);
     bodyContent.append("preu", valor.preu);
     // bodyContent.append(".append("portada", valor.portada);
-     bodyContent.append("generes", JSON.stringify(valor.generes));
-     bodyContent.append("videojoc_plataforma", JSON.stringify(valor.videojoc_plataforma));
+    bodyContent.append("generes", JSON.stringify(valor.generes));
+    bodyContent.append("videojoc_plataforma", JSON.stringify(valor.plataforma));
     let response = await fetch(`${process.env.REACT_APP_DOMAIN_API}videojoc/nou`, {
-    // let response = await fetch("http://vos.es/api/v1/videojoc/nou", {
+      // let response = await fetch("http://vos.es/api/v1/videojoc/nou", {
       method: "POST",
       body: bodyContent,
       headers: headersList
@@ -227,7 +242,7 @@ const JocForm = ( props ) => {
   }
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid h-75-vh">
       <div className="row">
         <div className="col-12 col-lg-2"></div>
         <div className="col-12 col-lg-8">
@@ -254,7 +269,7 @@ const JocForm = ( props ) => {
               <input className='form-control' id='cantitat' type="number"
                 {...register("cantitat")}
               />
-              {errors.preu && <small className='text-danger'>{errors.preu.message}</small>}
+              {errors.cantitat && <small className='text-danger'>{errors.cantitat.message}</small>}
             </div>
 
             <div className="mb-3">
@@ -281,42 +296,43 @@ const JocForm = ( props ) => {
             </div>
             <div className="mb-3">
               <label className="form-label" htmlFor="plataformes">Plataformes:</label>
-              <select  {...register("plataforma")}  className='form-control'  multiple type="text" >
+              <select  {...register("plataforma")} className='form-control' multiple type="text" >
                 {plataformes && plataformes.length > 0 && plataformes.map((plataforma) => {
-                  return <option key={plataforma.id} onClick={(e) => onClick(e, plataforma)} value={plataforma.id}>{plataforma.plataforma}</option>
+                  return <option key={plataforma.id} value={plataforma.plataforma}>{plataforma.plataforma}</option>
                 })}
               </select>
-              <span className="text-danger">{ErrorMessageGeneres}</span>
             </div>
             <div className="mb-3">
               <label className="form-label" htmlFor="generes">Generes:</label>
-              <select  {...register("generes")}  className='form-control' id="generes" multiple type="text" >
+              <select  {...register("generes")} className='form-control' id="generes" multiple type="text" >
 
                 {generes && generes.length > 0 && generes.map((genere) => {
 
-                  return <option key={genere.id} onClick={(e) => onClick(e, genere)} value={genere.id}>{genere.genere}</option>
+                  return <option key={genere.id}
+                  value={genere.genere}>{genere.genere}</option>
                 })}
               </select>
+              <span className="text-danger">{ErrorMessageGeneres}</span>
 
             </div>
 
             <div className="d-flex justify-content-center my-3 gap-1 g">
-              {Log !== "" ? (
+              {FeedbackServer !== "" ? (
                 <>
-              <Link title='Inici' className='btn btn-primary' to={`/`}>
-                Inici
-              </Link>
-              <Link title='Visualitzar videojoc' className={`btn btn-primary ${!Show?"d-none":""}`} to={`/videojoc/${valorId}`}>
-                <i className="bi bi-eye-fill"></i>
-                Visualitzar videojoc
-              </Link>
-              </>
+                  <Link title='Inici' className='btn btn-primary' to={`/`}>
+                    Inici
+                  </Link>
+                  <Link title='Visualitzar videojoc' className={`btn btn-primary ${!Show ? "d-none" : ""}`} to={`/videojoc/${valorId}`}>
+                    <i className="bi bi-eye-fill"></i>
+                    Visualitzar videojoc
+                  </Link>
+                </>
               ) : ""}
               <Link to={`/admin/jocs`} title="llistar jocs" className={`btn btn-secondary`}><i className="bi bi-list"></i></Link>
               <input type="submit" className='btn-primary btn' value="Enviar" />
             </div>
             <div className="text-center my-3 gap-1 g">
-              {Log !== "" ? <small className='text-success'>{Log}</small> : ""}
+                <p> {FeedbackServer}</p>
 
 
             </div>

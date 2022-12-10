@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import Dropdown from '../../components/Dropdown'
 import HeaderAdminResponsive from '../../components/HeaderAdminResponsive';
 import useTitle from '../../Hooks/useTitle';
-
+import "../../assets/style/Space.css"
 const Usuaris = ({title}) => {
     useTitle(title);
 
@@ -29,7 +29,6 @@ const Usuaris = ({title}) => {
     const users = conseguirLlistatUsuaris();
     users.then((result) => {
       if (result) {
-        console.log("per a©i passe");
         if(result.message==="Expired JWT Token"){
           console.log("pero no entre");
           localStorage.removeItem("token");
@@ -62,7 +61,7 @@ const Usuaris = ({title}) => {
     return data;
   }
   return (
-    <div>
+    <div className='h-75-vh'>
       
     
 

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { NavItem } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'
+import "../../assets/style/Space.css"
 
 const Banejar = () => {
   let token = '';
@@ -42,7 +43,16 @@ const Banejar = () => {
   }
 
   return (
-    <div>Banejar</div>
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-12 col-lg-2"></div>
+        <div className="col-12 col-lg-8">
+          <div className='h-75-vh'>Banejar</div>
+
+        </div>
+        <div className="col-12 col-lg-2"></div>
+      </div>
+    </div>
   )
 }
 

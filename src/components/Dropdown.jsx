@@ -3,8 +3,6 @@ import "../assets/style/dropdown.css";
 import { Link } from 'react-router-dom'
 
 const Dropdown = ({ props,links }) => {
-  console.log(links);
-  console.log();
   return (
     <div className="dropdown w-100">
       <button className="btn btn-primary dropbtn w-100">{props}</button>

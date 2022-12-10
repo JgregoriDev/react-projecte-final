@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link } from 'react-router-dom'
+import "../../assets/style/Space.css";
 import useTitle from "../../Hooks/useTitle";
 const SignupSchema = yup.object().shape({
   titul: yup
@@ -27,7 +28,7 @@ const SignupSchema = yup.object().shape({
     .max(1000, "El valor màxim del camp preu  es 300")
     // .required()
     .positive("El camp preu ha de ser un valor positiu").integer(),
-  
+
 });
 
 
@@ -35,7 +36,6 @@ const JocForm = (props) => {
 
   const { title } = props;
   const id = window.location.pathname.split("/")[3];
-  console.log(id);
   let token;
   useTitle(title);
   const navigate = useNavigate();
@@ -45,6 +45,14 @@ const JocForm = (props) => {
   const [Titul, setTitul] = useState([]);
   const [Preu, setPreu] = useState(0);
   const [Descripcio, setDescripcio] = useState('');
+  const [GenereNotFound, setGenereNotFound] = useState({
+    "genereNotFound": false,
+    "missatge": ""
+  });
+  const [PlataformaNotFound, setPlataformaNotFound] = useState({
+    "plataformaNotFound": false,
+    "missatge": ""
+  });
   const [Cantitat, setCantitat] = useState(0);
   const {
     register,
@@ -55,10 +63,12 @@ const JocForm = (props) => {
   });
   const [GeneresJoc, setGeneresJoc] = useState(new Set());
   const [PlataformesJoc, setPlataformesJoc] = useState(new Set());
+
   const [Joc, setJoc] = useState({
     "titul": "",
     "fechaEstreno": new Date(),
     "generes": [{ "id": 0, "generes": "" }],
+    "plataforma": [{ "id": 0, "plataforma": "" }],
     "preu": 0,
     "cantitat": 0,
 
@@ -159,37 +169,84 @@ const JocForm = (props) => {
     console.log(data);
     // const auxGeneres = [...GeneresJoc];
     // const auxPlataformes = [...PlataformesJoc];
+    setGenereNotFound({ "missatge": "", "genereNotFound": false });
+    setPlataformaNotFound({ "missatge": "", "plataformaNotFound": false });
+
+    let genereNoTrobat = false;
+    let plataformaNoTrobada = false;
+
+    for (const gen in data.generes) {
+      const iterador = data.generes[gen];
+
+      const genereTrobat = generes.find(gene => gene.genere === iterador);
+      if (genereTrobat === undefined) {
+        genereNoTrobat = true;
+      }
+    }
+    if (genereNoTrobat) {
+      setGenereNotFound({ "missatge": "Genere no trobat", "genereNotFound": true });
+      return;
+    } else {
+
+    }
+    for (const plataforma in data.videojoc_plataforma) {
+      const iterador = data.videojoc_plataforma[plataforma];
+
+      const plataformaTrobada = plataformes.find(plat => plat.plataforma === iterador);
+      if (plataformaTrobada === undefined) {
+        plataformaNoTrobada = true;
+      }
+    }
+    if (plataformaNoTrobada) {
+      setPlataformaNotFound({ "missatge": "Plataforma no trobada", "plataformaNotFound": true });
+      return;
+    }
+
+    if (!plataformaNoTrobada && !genereNoTrobat) {
+      token = JSON.parse(localStorage.getItem("token"));
+      if (token) {
+        var decoded = jwt_decode(token.token);
+        console.log();
+        if (!decoded.roles.includes("ROLE_ADMIN")) {
+          navigate(`/`);
+        }
+
+      } else {
+        navigate(`/`);
+
+      }
+      const resultat = editarJoc(token.token, data);
+      resultat
+        .then((result) => {
+          result.Title === "Videojoc pujat de manera satisfactoria" ?
+            setLog(result.Title) :
+            setLog("No s'ha pogut pujar de manera satistactoria.");
+
+        }).catch((err) => {
+
+        });
+    }
 
     // console.log(auxGeneres);
     // data.generes = auxGeneres;
     // data.videojoc_plataforma = auxPlataformes;
-    token = JSON.parse(localStorage.getItem("token"));
+    // token = JSON.parse(localStorage.getItem("token"));
     // console.log();
-    if (token) {
-      var decoded = jwt_decode(token.token);
-      console.log();
-      if (!decoded.roles.includes("ROLE_ADMIN")) {
-        navigate(`/`);
-      }
 
-    }else{
-      navigate(`/`);
 
-    }
-    
     // console.log(data.generes);
 
 
-    //  const resultat = editarJoc(token.token, data);
-    //  resultat
-    //    .then((result) => {
-    //      result.Title === "Videojoc pujat de manera satisfactoria" ?
-    //        setLog(result.Title) :
-    //        setLog("No s'ha pogut pujar de manera satistactoria.");
+    // const resultat = editarJoc(token.token, data);
+    // resultat
+    //   .then((result) => {
+    //     result.Title === "Videojoc pujat de manera satisfactoria" ?
+    //       setLog(result.Title) :
+    //       setLog("No s'ha pogut pujar de manera satistactoria.");
 
-    //    }).catch((err) => {
+    //   }).catch((err) => {
 
-    //    });
+      // });
   };
 
 
@@ -205,7 +262,7 @@ const JocForm = (props) => {
     bodyContent.append("titul", valor.titul);
     bodyContent.append("descripcio", valor.descripcio);
     bodyContent.append("cantitat", valor.cantitat);
-    bodyContent.append("portada", valor.portada[0]??'');
+    bodyContent.append("portada", valor.portada[0] ?? '');
     bodyContent.append("fechaEstreno", valor.fechaEstreno);
     bodyContent.append("generes", JSON.stringify(valor.generes));
     bodyContent.append("videojoc_plataforma", JSON.stringify(valor.videojoc_plataforma));
@@ -213,7 +270,7 @@ const JocForm = (props) => {
     bodyContent.append("preu", valor.preu);
     console.log(bodyContent);
     let response = await fetch(`${process.env.REACT_APP_DOMAIN_API}videojoc/${id}/editar`, {
-    // let response = await fetch(`http://vos.es/api/v1/videojoc/${id}/editar`, {
+      // let response = await fetch(`http://vos.es/api/v1/videojoc/${id}/editar`, {
       method: "PUT",
       body: bodyContent,
       headers: headersList
@@ -224,31 +281,7 @@ const JocForm = (props) => {
 
   }
 
-  const onClick = (e, item) => {
-    if (item?.genere) {
-      if (GeneresJoc.has(item)) {
-        GeneresJoc.delete(item);
-      } else {
-        GeneresJoc.add(item);
 
-      }
-      setGeneresJoc(new Set(GeneresJoc));
-
-      // console.log(GeneresJoc);
-    }
-
-    if (item?.plataforma) {
-      if (PlataformesJoc.has(item)) {
-        PlataformesJoc.delete(item);
-      } else {
-        PlataformesJoc.add(item);
-
-      }
-      setPlataformesJoc(new Set(PlataformesJoc));
-
-      // console.log(PlataformesJoc);
-    }
-  }
   const handleChange = (e) => { setJoc({ "titol": e.target.value }); }
   return (
     <div className="container-fluid">
@@ -262,12 +295,12 @@ const JocForm = (props) => {
               >Titol</label>
               <input className='form-control' value={Titul} id='titul' type="text"
                 // onChange={(e) =>setTitul(e.target.value)}
-              {...register("titul",{
-                onChange: (e) => {
-                  // console.log(e.target.value);
-                  setTitul(e.target.value);
-                },
-              })}
+                {...register("titul", {
+                  onChange: (e) => {
+                    // console.log(e.target.value);
+                    setTitul(e.target.value);
+                  },
+                })}
               />
               {errors.titul && <small className='text-danger'>{errors.titul.message}</small>}
             </div>
@@ -275,8 +308,8 @@ const JocForm = (props) => {
               <label className="form-label" htmlFor="preu">preu</label>
               <input className='form-control' id='preu' type="number"
                 value={Preu}
-                onChange={(e) => { setJoc({ "preu": e.target.value }); }}
-                {...register("preu",{
+                // onChange={(e) => { setJoc({ "preu": e.target.value }); }}
+                {...register("preu", {
                   onChange: (e) => {
                     setPreu(e.target.value);
                   },
@@ -292,7 +325,7 @@ const JocForm = (props) => {
               <label className="form-label" htmlFor="cantitat">cantitat</label>
               <input className='form-control' id='cantitat' type="number"
                 value={Cantitat}
-                {...register("cantitat",{
+                {...register("cantitat", {
                   onChange: (e) => {
                     // console.log(e.target.value);
                     setCantitat(e.target.value);
@@ -322,18 +355,18 @@ const JocForm = (props) => {
 
 
             <div className="mb-3 form-floating">
-              <textarea className="form-control" value={Descripcio} placeholder="Deixa una descripcio" id="descripcio"  
-               {...register("descripcio",{
-                onChange: (e) => {
-                  // console.log(e.target.value);
-                  setDescripcio(e.target.value);
-                },
-                onBlur: (e) => {
-                  // console.log(e.target.value);
-                  setDescripcio(e.target.value);
-                },
-              })}
-               ></textarea>
+              <textarea className="form-control" value={Descripcio} placeholder="Deixa una descripcio" id="descripcio"
+                {...register("descripcio", {
+                  onChange: (e) => {
+                    // console.log(e.target.value);
+                    setDescripcio(e.target.value);
+                  },
+                  onBlur: (e) => {
+                    // console.log(e.target.value);
+                    setDescripcio(e.target.value);
+                  },
+                })}
+              ></textarea>
               <label htmlFor="descripcio">Descripcio</label>
               {errors.descripcio && <small className='text-danger'>{errors.descripcio.message}</small>}
             </div>
@@ -347,24 +380,23 @@ const JocForm = (props) => {
             </div>
             <div className="mb-3">
               <label className="form-label" htmlFor="plataformes">Plataformes:</label>
-              <select  className='form-control' {...register("plataformes")}  id="plataformes" multiple type="text" >
+              <select className={`form-control ${GenereNotFound.genereNotFound ? 'border-danger' : ''}`} {...register("videojoc_plataforma")} multiple type="text" >
+                {/* return <option key={plataforma.id} value={plataforma.id}>{plataforma.plataforma}</option> */}
                 {plataformes && plataformes.length > 0 && plataformes.map((plataforma) => {
-                  return <option key={plataforma.id} onClick={(e) => onClick(e, plataforma)} value={plataforma.id}>{plataforma.plataforma}</option>
+                  return <option key={plataforma.id} value={plataforma.plataforma}>{plataforma.plataforma}</option>
                 })}
               </select>
             </div>
             <div className="mb-3">
               <label className="form-label" htmlFor="generes">Generes:</label>
-              <select {...register("generes")} className='form-control' id="generes" multiple type="text" >
+              <select {...register("generes")} className={`form-control ${PlataformaNotFound.plataformaNotFound ? "border-danger" : ""}`} id="generes" multiple type="text" >
 
                 {generes && generes.length > 0 && generes.map((genere) => {
 
-                  return <option key={genere.id} onClick={(e) => onClick(e, genere)}
-                    {...(genere.id === Joc.generes[0].id ? { selected: 'true' } : {})}
-                    defaultValue={genere.id}>{genere.genere}</option>
+                  return <option key={genere.id} value={genere.genere}>{genere.genere}</option>
                 })}
               </select>
-
+              {GenereNotFound.missatge}
             </div>
 
             <div className="d-flex justify-content-center my-3 gap-1 g">
@@ -375,7 +407,7 @@ const JocForm = (props) => {
               <input type="submit" className='btn-primary btn' value="Enviar" />
             </div>
             <div className="text-center my-3 gap-1 g">
-              {Log !== "" ? <small className={` text-success ${Log.includes(`No`)?"text-danger":""}`}>{Log}</small> : ""}
+              {Log !== "" ? <small className={` text-success ${Log.includes(`No`) ? "text-danger" : ""}`}>{Log}</small> : ""}
 
 
             </div>
