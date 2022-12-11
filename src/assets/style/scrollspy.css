@@ -6,6 +6,9 @@
   background-color:#2b2d42;
   top: 25vh;
 }
+.scrollspy:hover{
+  color:royalblue;
+}
 
 ul {
   list-style: none;

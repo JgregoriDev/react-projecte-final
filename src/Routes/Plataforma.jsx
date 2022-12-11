@@ -14,16 +14,21 @@ const Plataforma = ({ title }) => {
 	const [Jocs, setJocs] = useState([]);
 	const [Error, setError] = useState('');
 	const [IsLoading, setIsLoading] = useState(false);
+	const [Plataforma, setPlataforma] = useState("");
 	const [Marca, setMarca] = useState([]);
 	const [Generes, setGeneres] = useState([]);
 	useTitle(title);
 	useEffect(() => {
 		// console.log(id);
+		
 		conseguirJocsPlataforma()
 			.then((result) => {
 				if (Array.isArray(result.plataforma_videojocs)) {
 					setJocs(result.plataforma_videojocs);
 					setIsLoading(true);
+					if(result?.plataforma){
+						setPlataforma(result.plataforma);
+					}
 				} else {
 					setTimeout(() => {
 						setError("Ha hagut un error no s'ha pogut carregar les dades");
@@ -41,6 +46,9 @@ const Plataforma = ({ title }) => {
 			conseguirJocsPlataforma()
 				.then((result) => {
 					if (Array.isArray(result.plataforma_videojocs)) {
+						if(result?.plataforma){
+							setPlataforma(result.plataforma);
+						}
 						setJocs(result.plataforma_videojocs);
 						setIsLoading(true);
 					} else {
@@ -58,9 +66,9 @@ const Plataforma = ({ title }) => {
 			conseguirJocsPlataformaGenere()
 				.then((result) => {
 					if (Array.isArray(result?.Resultat)) {
-						console.log(result?.Resultat);
+						// console.log(result?.Resultat);
 						setIsLoading(true);
-						
+	
 						setJocs(result?.Resultat);
 					} else {
 						setTimeout(() => {
@@ -105,11 +113,9 @@ const Plataforma = ({ title }) => {
 		)
 	}
 	const conseguirGeneresPlataforma = async (id) => {
-		// const response = await fetch(`http://vos.es/api/v1/generes`);
 		const response = await fetch(`${process.env.REACT_APP_DOMAIN_API}generes`);
 		const resultat = await response.json();
 		setGeneres(resultat);
-		// console.log(resultat);
 	};
 
 	return (
@@ -123,9 +129,9 @@ const Plataforma = ({ title }) => {
 							<Breadcrumb.Item active>
 								Marca
 							</Breadcrumb.Item>
-							<Breadcrumb.Item active>Plataforma  {`${id}`}</Breadcrumb.Item>
+							<Breadcrumb.Item active>Plataforma  {`${id} ${Plataforma}`}</Breadcrumb.Item>
 						</Breadcrumb>
-						<h1>Plataforma amb id {`${id}`}</h1>
+						<h1>Plataforma amb id {`${id} - ${Plataforma}`}</h1>
 						{IsLoading===false
 							? (spinner()) :  Jocs.length>0? Jocs.map((Joc) => {
 								// console.log(Joc);

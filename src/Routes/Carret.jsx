@@ -105,7 +105,7 @@ const Carrito = (props) => {
 									<b>Preu:</b> {PreuTotal}
 								</p>
 								</div>
-									<form className={`w-100  ${!Login?'d-none':''}`} action="http://vos.es/api/v1/pago" method="POST">
+									<form className={`w-100  ${!Login?'d-none':''}`} action="https://app.11josep.daw.iesevalorpego.es/api/v1/pago" method="POST">
 									<input type="hidden" name="productes" value={JSON.stringify(ArrayCarretTractat)} />
 									<input type="hidden" name="preu" value={PreuTotal} />
 									<button {...(ArrayCarret.length===0 ? {disabled: true} : {})} className="btn btn-primary w-100" type="submit">

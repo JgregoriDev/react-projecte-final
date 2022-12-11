@@ -4,7 +4,9 @@ import { useNavigate, Link } from "react-router-dom";
 import Dropdown from '../../components/Dropdown'
 import HeaderAdminResponsive from '../../components/HeaderAdminResponsive';
 import useTitle from '../../Hooks/useTitle';
-import "../../assets/style/Space.css"
+import "../../assets/style/Space.css";
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+
 const Usuaris = ({title}) => {
     useTitle(title);
 
@@ -61,12 +63,12 @@ const Usuaris = ({title}) => {
     return data;
   }
   return (
-    <div className='h-75-vh'>
+    <div className='container-fluid h-75-vh'>
       
     
 
       <div className="row">
-        <div className=" d-lg-block  col-md-2  my-3">
+        <div className=" d-lg-block  col-lg-2  my-3">
           <div className='d-none d-lg-block'>
           <div className="d-flex mt-2 w-100 gap-2 flex-column">
             <Dropdown className="d-none d-lg-inline" props="Usuaris" links={{ "Nomlink1": "Llistar usuaris", "ToLink1": "/admin", "Nomlink2": "Afegir usuari", "ToLink2": "/" }}></Dropdown>
@@ -99,21 +101,18 @@ const Usuaris = ({title}) => {
                     <td className='d-table-cell'>{usuari.email}</td>
                     <td className='d-none d-md-table-cell'>{usuari.roles.join(", ")}</td>
                     <td className='d-table-cell'>{usuari.ban ? "Si" : "No"}</td>
-                    <td className='d-table-cell'><Link to={`/usuari/${usuari.id}/ban`}>{usuari.ban ? "Desbanejar" : "Banejar"}</Link></td>
+                    <td className='d-table-cell'>
+                      {usuari.email!=="admin"?<Link onClick={(e)=>window.confirm(`Estas segur de ${usuari.ban===false?"banejar":"desbanejar"} l'usuari ${usuari?.email}`)===false? e.preventDefault():""} to={`/usuari/${usuari.id}/ban`}>{usuari.ban ? "Desbanejar" : "Banejar"}</Link>:""}
+                    </td>
                   </tr>
                 )
 
               })}
             </tbody>
           </table>
-          <div className="mb-5">&nbsp;</div>
-          <div className="mb-5">&nbsp;</div>
-          <div className="mb-5">&nbsp;</div>
-          <div className="mb-5">&nbsp;</div>
-          <div className="mb-5">&nbsp;</div>
-          <div className="mb-5">&nbsp;</div>
+      
         </div>
-        <div className="col col-md-2"></div>
+        <div className="col col-lg-2"></div>
       </div>
     </div>
   )

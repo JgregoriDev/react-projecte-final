@@ -11,6 +11,7 @@ import SearchBar from '../components/search';
 import useTitle from "../Hooks/useTitle";
 import Toast from "../components/toast";
 import "../assets/style/thumbnails.css";
+import "../assets/style/Space.css";
 import BackToTop from "../components/ButtonScrollToTop";
 const Index = ({ afegirProducteAlCarret, title }) => {
 	useTitle(title);
@@ -92,7 +93,7 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 
 	const onSubmit = (e) => {
 		// e.preventDefault();
-		console.log(e.target.value);
+		// console.log(e.target.value);
 	};
 
 	const scrollToTop = () => {
@@ -124,7 +125,7 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 	}
 
 	return (
-		<div>
+		<div className="h-75-vh">
 			{/* Diapositives */}
 			<div className="container-fluid">
 				
@@ -138,7 +139,7 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 					</div>
 				</div>
 			</div>
-			<div className="mt-5 container-fluid">
+			<div className="mt-5 container-fluid ">
 				<div className="row">
 					<div className="d-none d-lg-block col col-lg-2"></div>
 					<div className="col col-lg-8">
@@ -201,7 +202,7 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 												<i className="bi bi-cart"></i>
 											
 											</Button>{" "}
-											<form  className={`w-100 ${false?'d-none':''}`} action={`http://vos.es/api/v1/pago`} onSubmit={onSubmit} method="POST">
+											<form  className={`w-100 ${false?'d-none':''}`} action={`https://app.11josep.daw.iesevalorpego.es/api/v1/pago`} onSubmit={onSubmit} method="POST">
 											<input type="hidden" name="arrayProductes" value={JSON.stringify({"nom":joc.titul, "preu":joc.preu})} />
 											<input type="hidden" name="productes" value={JSON.stringify({"nom":joc.titul, "preu":joc.preu})} />
 											<input type="hidden" name="preu" value={joc.preu} />

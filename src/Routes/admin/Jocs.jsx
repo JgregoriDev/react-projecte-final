@@ -116,7 +116,7 @@ const Jocs = ({title}) => {
   return (
     <div className='container-fluid h-75-vh'>
       <div className="row">
-        <div className="d-none d-md-block col col-md-2">
+        <div className="d-none d-md-block col col-lg-2">
           <div className="d-flex mt-2 w-100 gap-2 flex-column">
             <Dropdown props="Usuaris" links={{"Nomlink1":"Llistar usuaris","ToLink1":"/admin","Nomlink2":"Afegir usuari","ToLink2":"/"}}></Dropdown>
             <Dropdown props="Jocs" links={{"Nomlink1":"Llistar Jocs","ToLink1":"/admin/jocs","Nomlink2":"Afegir Joc","ToLink2":"/admin/joc/nou"}} ></Dropdown>
@@ -146,10 +146,10 @@ const Jocs = ({title}) => {
                   <tr key={joc.id}>
                     <td>{index + 1}</td>
                     <td>{joc.titul}</td>
-                    <td>
-                      <button onClick={() => borrarJoc(joc)} className='btn btn-primary mx-1' title={`Borrar ${joc.titul}`}><i className="bi bi-trash-fill"></i></button>
+                    <td className='d-flex flex-column flex-lg-row gap-1'>
+                      <button onClick={() => borrarJoc(joc)} className='btn btn-primary ' title={`Borrar ${joc.titul}`}><i className="bi bi-trash-fill"></i></button>
                       <Link className='btn btn-secondary' to={`/admin/joc/${joc.id}/editar`} title={`Editar ${joc.titul}`}><i className="bi bi-pencil-square"></i></Link>
-                      <Link className='btn btn-secondary mx-1' to={`/videojoc/${joc.titul}`} title={`Visualitzar ${joc.titul}`}><i className="bi bi-eye"></i></Link>
+                      <Link className='btn btn-secondary ' to={`/videojoc/${joc.titul}`} title={`Visualitzar ${joc.titul}`}><i className="bi bi-eye"></i></Link>
                     </td>
                   </tr>
                 )
@@ -158,7 +158,7 @@ const Jocs = ({title}) => {
             </tbody>
           </table>
         </div>
-        <div className="d-none d-md-block col col-md-2"></div>
+        <div className="d-none d-md-block col col-lg-2"></div>
       </div>
     </div>
   )

@@ -1,10 +1,12 @@
-import React, { useState, useEffect,createContext } from 'react'
+import React, { useState, useEffect, createContext } from 'react'
 import { BrowserRouter as Router, Routes, Route, NavLink, Link } from 'react-router-dom'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import jwt_decode from "jwt-decode";
+
 
 import Logo from "../assets/images/icon64x64.png";
 import Usuaris from "../Routes/admin/Usuaris";
@@ -20,6 +22,7 @@ import Banejar from '../Routes/admin/Banejar';
 import Index from '../Routes/Index';
 import Login from '../Routes/Login';
 import Registrar from '../Routes/Registrar';
+import Payment from '../Routes/Payment';
 import PresentarJoc from '../Routes/Presentar-joc';
 import Profile from '../Routes/Profile';
 import Notfound from '../Routes/404';
@@ -39,6 +42,7 @@ const vosTitle = {
   "comprar": "Vos - Comprar",
   "admin": "Vos - Panel de administrador",
   "adminNou": "Vos - Afegir joc",
+  "pago": "Vos - Pagar joc",
   "adminEditar": "Vos - Editar joc",
   "joc": "Vos - Joc",
   "registrar": "Vos - Registrar usuari",
@@ -56,6 +60,7 @@ const Contain = () => {
   const [Usuari, setUsuari] = useState({});
   const [Marques, setMarques] = useState([]);
   const [Email, setEmail] = useState("Login");
+  const [Role, setRole] = useState("");
   const arrayAux = [];
   const [Carrito, setCarrito] = useState([]);
   const [CarritoTamany, setCarritoTamany] = useState(0);
@@ -75,10 +80,16 @@ const Contain = () => {
 
 
   useEffect(() => {
-    const email = localStorage.getItem("token");
-    if (email) {
-      const email = JSON.parse(localStorage.getItem("token"));
-      setEmail(email.email);
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      const token_JSON = JSON.parse(token).token;
+      const email = jwt_decode(token_JSON);
+      console.log("🚀 ~ file: Contain.jsx:87 ~ useEffect ~ email", email)
+
+      setEmail(email.username);
+      setRole(email?.roles[1]??"");
+      console.log(Role);
     }
   }, [Email])
 
@@ -180,7 +191,7 @@ const Contain = () => {
                     {Email !== "Login" ? <NavDropdown.Item onClick={() => borrarLS()}>
                       Tanca sesió
                     </NavDropdown.Item> : ""}
-                    {Email !== "Login" ? <NavDropdown.Item as={NavLink} to={"/admin"}>
+                    {Email !== "Login" && Role==="ROLE_ADMIN"  ? <NavDropdown.Item as={NavLink} to={"/admin"}>
                       Panel d'administrador
                     </NavDropdown.Item> : ""}
                   </NavDropdown>
@@ -193,8 +204,9 @@ const Contain = () => {
         <Routes>
           <Route path='/carret' element={<Carret title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
           <Route path='/FAQ' element={<FAQ />}></Route>
-          <Route path='/pago-realitzat' element={<PagoRealitzat title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
-          <Route path='/pago-rechazat' element={<PagoRechazat title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
+          <Route path='/acceptat' element={<PagoRealitzat title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
+          <Route path='/pago' element={<Payment title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
+          <Route path='/denegat' element={<PagoRechazat title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
           <Route path='/admin' element={<Usuaris title={vosTitle.admin} />}></Route>
           <Route path='/admin/jocs' element={<Jocs title={vosTitle.admin} />}></Route>
           <Route path='/admin/joc/nou' element={<JocForm title={vosTitle.adminNou} />}></Route>
