@@ -6,7 +6,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link } from 'react-router-dom'
 import useTitle from "../../Hooks/useTitle";
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+
 import "../../assets/style/Space.css"
+const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
+const FILE_SIZE = 10240;
 
 const SignupSchema = yup.object().shape({
   titul: yup
@@ -26,9 +30,15 @@ const SignupSchema = yup.object().shape({
     .integer(),
   preu: yup
     .number()
-    .max(300, "El valor màxim del camp preu  es 1000")
+    .max(300, "El valor màxim del camp preu  es 300")
     .required()
     .positive("El camp preu ha de ser un valor positiu").integer(),
+  portada: yup
+    .mixed()
+    .required('Una imatge es requrida')
+    .test(1000, "File Size is too large", value => !value || value[0].size <= FILE_SIZE)
+    .test('format',
+    'upload file', (value) => !value || (value && SUPPORTED_FORMATS.includes(value[0].type))),
 });
 
 
@@ -39,6 +49,8 @@ const JocForm = (props) => {
   const navigate = useNavigate();
   const [plataformes, setplataformes] = useState([]);
   const [FeedbackServer, setFeedbackServer] = useState("");
+  const [FileError, setFileError] = useState({ "error": false, "missatge": "" });
+
   const [valorId, setValorId] = useState(0);
   const [Show, setShow] = useState(false);
   const [generes, setgeneres] = useState([]);
@@ -131,57 +143,77 @@ const JocForm = (props) => {
     // console.log(auxGeneres);
     // data.generes = auxGeneres;
     // data.videojoc_plataforma = auxPlataformes;
-  
+    setFileError({ "error": false, "missatge": "" })
+
+
     let errorGenere = false;
     let errorPlataforma = false;
+    // if (data.portada.length < 1) {
+    //   errorArchiu = true;
+    //   setFileError({ "error": true, "missatge": <p className='text-danger'>El camp portada no ha sigut omplit</p> })
+    // } else {
+    //   console.log(data.portada[0].name.toLowerCase().endsWith(".png"));
+    //   if (!data.portada[0].name.toLowerCase().endsWith(".png") || !data.portada[0].name.toLowerCase().endsWith(".jpg") || !data.portada[0].nametoLowerCase().endsWith(".jpeg")) {
+    //     errorArchiu = true;
+    //     setFileError({ "error": true, "missatge": <p className='text-danger'>No has posat un archiu png o jpeg</p> })
+
+    //   }
+
+    // }
+
+
+
+
     data.generes.forEach(g => {
 
       const n = generes.findIndex(genere => genere.genere === g);
-      if (n === -1){
+      if (n === -1) {
         errorGenere = true;
         return;
       }
-        
+
 
     });
     data.plataforma.forEach(p => {
-
       const n = plataformes.findIndex(plataforma => plataforma.plataforma === p);
-      if (n === -1){
+      if (n === -1) {
         errorPlataforma = true;
         return;
       }
-        
-
     });
+
+
+
     if (errorGenere) {
       setErrorMessageGeneres("Genere no trobat");
     }
-    if(errorPlataforma){
+
+    if (errorPlataforma) {
       setErrorMessagePlataformes("Plataforma no trobada");
     }
-    if(!errorPlataforma && !errorGenere){
+    if (!errorPlataforma && !errorGenere) {
       token = JSON.parse(localStorage.getItem("token"));
-      console.log(data);
-      const insertat=insertarJoc(token,data);
+      const insertat = insertarJoc(token, data);
       insertat.then(result => {
-        if(result?.Title==="Videojoc pujat de manera satisfactoria"){
+        if (result?.Title === "Videojoc pujat de manera satisfactoria") {
           setFeedbackServer(<p className='text-success'>{`Videojoc insertat de manera correcta`}</p>);
         }
-        if(result?.Title==="Error"){
+        if (result?.Title === "Error") {
           setFeedbackServer(<p className='text-error'>{`Error`}</p>);
 
         }
-        
+
       }).catch((err) => {
         console.error("🚀 ~ file: JocForm.jsx:170 ~ insertat..then ~ err", err)
-        
+
       });
       // insertat.then((result) => {
       //   console.log(result);
       // }).catch((err) => {
-        
+
       // });
+    } else {
+      return;
     }
   };
 
@@ -198,9 +230,9 @@ const JocForm = (props) => {
     bodyContent.append("cantitat", valor.cantitat);
     bodyContent.append("portada", valor.portada[0] ?? '');
     bodyContent.append("fechaEstreno", valor.fechaEstreno);
-    bodyContent.append("portada", null);
+    // bodyContent.append("portada", null);
     bodyContent.append("preu", valor.preu);
-    // bodyContent.append(".append("portada", valor.portada);
+    bodyContent.append("portada", valor.portada);
     bodyContent.append("generes", JSON.stringify(valor.generes));
     bodyContent.append("videojoc_plataforma", JSON.stringify(valor.plataforma));
     let response = await fetch(`${process.env.REACT_APP_DOMAIN_API}videojoc/nou`, {
@@ -292,6 +324,7 @@ const JocForm = (props) => {
               <input className='form-control' ref={register} id="portada" type="file"
                 {...register("portada")}
               />
+              {/* {FileError?.missatge} */}
               {errors.portada && <small className='text-danger'>{errors.portada.message}</small>}
             </div>
             <div className="mb-3">
@@ -309,7 +342,7 @@ const JocForm = (props) => {
                 {generes && generes.length > 0 && generes.map((genere) => {
 
                   return <option key={genere.id}
-                  value={genere.genere}>{genere.genere}</option>
+                    value={genere.genere}>{genere.genere}</option>
                 })}
               </select>
               <span className="text-danger">{ErrorMessageGeneres}</span>
@@ -332,7 +365,7 @@ const JocForm = (props) => {
               <input type="submit" className='btn-primary btn' value="Enviar" />
             </div>
             <div className="text-center my-3 gap-1 g">
-                <p> {FeedbackServer}</p>
+              <p> {FeedbackServer}</p>
 
 
             </div>

@@ -14,7 +14,7 @@ const MenuCookies = () => {
   }, [Show])
   
   const onClick=() =>{
-    console.log(Show);
+    // console.log(Show);
     setShow(false);
     localStorage.setItem("cookies",Show);
 

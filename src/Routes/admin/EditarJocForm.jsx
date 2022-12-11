@@ -7,6 +7,8 @@ import * as yup from "yup";
 import { Link } from 'react-router-dom'
 import "../../assets/style/Space.css";
 import useTitle from "../../Hooks/useTitle";
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+
 const SignupSchema = yup.object().shape({
   titul: yup
     .string()
@@ -28,7 +30,15 @@ const SignupSchema = yup.object().shape({
     .max(1000, "El valor màxim del camp preu  es 300")
     // .required()
     .positive("El camp preu ha de ser un valor positiu").integer(),
-
+  portada: yup
+    .mixed()
+    .required("Es necesari proporcionar un archiu")
+    .test("type", "Sols son acceptats els formats d'arxius: .jpeg, .jpg, png", (value) => {
+      return value && (
+        value[0].type === "image/jpeg" ||
+        value[0].type === "image/png"
+      );
+    }),
 });
 
 
@@ -121,7 +131,7 @@ const JocForm = (props) => {
     const joc = conseguirJoc();
     joc
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         if (typeof result.Videojoc === 'object') {
           // setJoc(result.Videojoc);
           setTitul(result.Videojoc.titul);
@@ -166,7 +176,7 @@ const JocForm = (props) => {
   }
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     // const auxGeneres = [...GeneresJoc];
     // const auxPlataformes = [...PlataformesJoc];
     setGenereNotFound({ "missatge": "", "genereNotFound": false });
@@ -246,7 +256,7 @@ const JocForm = (props) => {
 
     //   }).catch((err) => {
 
-      // });
+    // });
   };
 
 
@@ -373,7 +383,7 @@ const JocForm = (props) => {
 
             <div className="mb-3">
               <label className="form-label" htmlFor="portada">Archiu</label>
-              <input className='form-control' ref={register} id="portada" type="file"
+              <input className='form-control' id="portada" type="file"
                 {...register("portada")}
               />
               {errors.portada && <small className='text-danger'>{errors.portada.message}</small>}
