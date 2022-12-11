@@ -87,9 +87,9 @@ const Carrito = (props) => {
 		<div className="container-fluid h-75-vh">
 			<div className="row">
 				<div className="col-12 col-lg-2"></div>
-				<div className="col-8">
+				<div className="col-12 col-lg-8">
 					<div className="row">
-						<div className="col col-lg-8">
+						<div className="col-12 col-lg-8">
 						<div className="my-2 d-block d-lg-none flex-column gap-3">
 								<div className="d-block d-lg-none">
 								<p>
