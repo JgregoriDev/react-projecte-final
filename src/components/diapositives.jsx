@@ -47,7 +47,7 @@ const Diapositives = () => {
             <p>
               {joc.descripcio}
             </p>
-            <Link title={`Conseguir ara ${joc.titul}`} className="btn btn-primary" to={`/videojoc/${joc.id}`}>Conseguir ara</Link>
+            <Link title={`Conseguir ara ${joc.titul}`} className="btn btn-primary" to={`/videojoc/${joc.titul}`}>Conseguir ara</Link>
           </Carousel.Caption>
         </Carousel.Item>
         )})}
