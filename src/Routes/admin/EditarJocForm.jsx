@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,NavLink } from 'react-router-dom'
 import jwt_decode from "jwt-decode";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -298,6 +298,13 @@ const JocForm = (props) => {
       <div className="row">
         <div className="col-12 col-lg-2"></div>
         <div className="col-12 col-lg-8">
+          <Breadcrumb className='mt-3'>
+            <Breadcrumb.Item as={Link} to="/">Inici</Breadcrumb.Item>
+            <Breadcrumb.Item as={Link} to="/admin/jocs">
+              Joc
+            </Breadcrumb.Item>
+            <Breadcrumb.Item as={Link} active>Editar joc</Breadcrumb.Item>
+          </Breadcrumb>
           <h1>Editar joc</h1>
           <form action="" onSubmit={handleSubmit(onSubmit)} method="post">
             <div className="mb-3">

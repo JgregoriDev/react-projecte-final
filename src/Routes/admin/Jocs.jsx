@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link,NavLink } from 'react-router-dom'
 import jwt_decode from "jwt-decode";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -8,8 +8,9 @@ import Dropdown from '../../components/Dropdown';
 import HeaderAdminResponsive from '../../components/HeaderAdminResponsive';
 import useTitle from '../../Hooks/useTitle';
 import "../../assets/style/Space.css"
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
-const Jocs = ({title}) => {
+const Jocs = ({ title }) => {
   useTitle(title)
   const [Jocs, setJocs] = useState([]);
   const navigate = useNavigate();
@@ -24,53 +25,53 @@ const Jocs = ({title}) => {
         navigate(`/`);
       }
 
-    }else{
+    } else {
       navigate(`/`);
 
     }
-    
+
   }, [])
 
 
   useEffect(() => {
     conseguirLlistatJocs()
-    .then((result) => {
-      if(Array.isArray(result.Jocs)){
-        setJocs(result.Jocs);
-      }
-    }).catch((err) => {
-      console.error(err);
-    });
-    
-    
+      .then((result) => {
+        if (Array.isArray(result.Jocs)) {
+          setJocs(result.Jocs);
+        }
+      }).catch((err) => {
+        console.error(err);
+      });
+
+
   }, [])
-  
 
 
 
 
-  
 
-  const borrarJoc =  (joc) => {
+
+
+  const borrarJoc = (joc) => {
     if (window.confirm("Estas segur de borrar aquest joc?")) {
       console.log(joc);
       const id = Jocs.findIndex((j) => j === joc);
       // if (id > -1) {
-        const newJocs=Jocs.filter((j)=>{
-          return j.id!== joc.id;
-        })
-    
-        setJocs(newJocs);
-        const borrar=borrarPeticioJoc(joc.id);
-        borrar.then((result) => {
-          if(result.Titol==="Borrat joc de manera satisfactoria"){
-            console.log(JSON.parse(result));
-            // conseguirLlistatJocs()
-          }
-        }).catch((err) => {
-          
-        });
-      }
+      const newJocs = Jocs.filter((j) => {
+        return j.id !== joc.id;
+      })
+
+      setJocs(newJocs);
+      const borrar = borrarPeticioJoc(joc.id);
+      borrar.then((result) => {
+        if (result.Titol === "Borrat joc de manera satisfactoria") {
+          console.log(JSON.parse(result));
+          // conseguirLlistatJocs()
+        }
+      }).catch((err) => {
+
+      });
+    }
     // }
   }
 
@@ -79,7 +80,7 @@ const Jocs = ({title}) => {
     let headersList = {
       "Accept": "*/*",
       "Authorization": `Bearer ${token}`,
-      'Access-Control-Allow-Origin':true,
+      'Access-Control-Allow-Origin': true,
       "Content-Type": "application/json"
     }
 
@@ -102,8 +103,8 @@ const Jocs = ({title}) => {
       "Authorization": `Bearer ${token.token}`
     }
 
-   let response = await fetch(`${process.env.REACT_APP_DOMAIN_API}admin/videojocs`, {
-    // let response = await fetch("http://vos.es/api/v1/admin/videojocs", {
+    let response = await fetch(`${process.env.REACT_APP_DOMAIN_API}admin/videojocs`, {
+      // let response = await fetch("http://vos.es/api/v1/admin/videojocs", {
       method: "GET",
       headers: headersList
     });
@@ -118,20 +119,27 @@ const Jocs = ({title}) => {
       <div className="row">
         <div className="d-none d-lg-block col col-lg-2">
           <div className="d-flex mt-2 w-100 gap-2 flex-column">
-            <Dropdown props="Usuaris" links={{"Nomlink1":"Llistar usuaris","ToLink1":"/admin","Nomlink2":"Afegir usuari","ToLink2":"/"}}></Dropdown>
-            <Dropdown props="Jocs" links={{"Nomlink1":"Llistar Jocs","ToLink1":"/admin/jocs","Nomlink2":"Afegir Joc","ToLink2":"/admin/joc/nou"}} ></Dropdown>
-            <Dropdown props="Generes" links={{"Nomlink1":"Llistar Generes","ToLink1":"/","Nomlink2":"Afegir genere","ToLink2":"/"}}></Dropdown>
-            <Dropdown props="Plataformes" links={{"Nomlink1":"Llistar Plataformes","ToLink1":"/","Nomlink2":"Afegir Plataforma","ToLink2":"/"}}></Dropdown>
+            <Dropdown props="Usuaris" links={{ "Nomlink1": "Llistar usuaris", "ToLink1": "/admin", "Nomlink2": "Afegir usuari", "ToLink2": "/" }}></Dropdown>
+            <Dropdown props="Jocs" links={{ "Nomlink1": "Llistar Jocs", "ToLink1": "/admin/jocs", "Nomlink2": "Afegir Joc", "ToLink2": "/admin/joc/nou" }} ></Dropdown>
+            <Dropdown props="Generes" links={{ "Nomlink1": "Llistar Generes", "ToLink1": "/", "Nomlink2": "Afegir genere", "ToLink2": "/" }}></Dropdown>
+            <Dropdown props="Plataformes" links={{ "Nomlink1": "Llistar Plataformes", "ToLink1": "/", "Nomlink2": "Afegir Plataforma", "ToLink2": "/" }}></Dropdown>
           </div>
         </div>
         <div className="col-12 col-lg-8">
-        <HeaderAdminResponsive></HeaderAdminResponsive>
+          <HeaderAdminResponsive></HeaderAdminResponsive>
+          <Breadcrumb className='mt-3'>
+            <Breadcrumb.Item as={NavLink} to="/">Inici</Breadcrumb.Item>
+            <Breadcrumb.Item as={NavLink} to="/admin/jocs">
+              Jocs
+            </Breadcrumb.Item>
+            <Breadcrumb.Item  as={NavLink} active>Llistar jocs</Breadcrumb.Item>
+          </Breadcrumb>
           <h1 className='text-center'>Llista Jocs</h1>
           <div className="text-end">
-          <Link to={`/admin/joc/nou`} className="btn btn-primary"><i className="bi bi-plus-circle-fill mx-1"></i><span className="d-none d-lg-inline">Videojoc nou</span></Link>
+            <Link to={`/admin/joc/nou`} className="btn btn-primary"><i className="bi bi-plus-circle-fill mx-1"></i><span className="d-none d-lg-inline">Videojoc nou</span></Link>
 
           </div>
-      {/* <Link to={`/admin`}>Llistar usuaris</Link> */}
+          {/* <Link to={`/admin`}>Llistar usuaris</Link> */}
           <table className="table table-striped">
             <thead>
               <tr>
