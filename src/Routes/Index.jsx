@@ -157,7 +157,7 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 							{Videojocs &&
 								Videojocs.map((joc, index) => (
 									<div
-										className="col-12 col-md-6 border border-1 col-lg-4 justify-content-center border-2 my-3 gap-9"
+										className="col-12 col-lg-6 border border-1 col-lg-4 justify-content-center border-2 my-3 gap-9"
 										key={joc.id}
 									>
 										<Link className="d-blockw-100 h-auto" to={`/videojoc/${joc.titul}`}>

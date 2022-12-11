@@ -79,7 +79,7 @@ const Usuaris = ({title}) => {
           </div>
 
         </div>
-        <div className="col-12 col-md-8">
+        <div className="col-12 col-lg-8">
         <HeaderAdminResponsive></HeaderAdminResponsive>
         <h1 className="text-center">Administrar Usuaris</h1>
           {/* <Link to={`/admin/jocs`}>Llistar jocs</Link> */}

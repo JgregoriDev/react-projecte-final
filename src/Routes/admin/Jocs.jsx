@@ -116,7 +116,7 @@ const Jocs = ({title}) => {
   return (
     <div className='container-fluid h-75-vh'>
       <div className="row">
-        <div className="d-none d-md-block col col-lg-2">
+        <div className="d-none d-lg-block col col-lg-2">
           <div className="d-flex mt-2 w-100 gap-2 flex-column">
             <Dropdown props="Usuaris" links={{"Nomlink1":"Llistar usuaris","ToLink1":"/admin","Nomlink2":"Afegir usuari","ToLink2":"/"}}></Dropdown>
             <Dropdown props="Jocs" links={{"Nomlink1":"Llistar Jocs","ToLink1":"/admin/jocs","Nomlink2":"Afegir Joc","ToLink2":"/admin/joc/nou"}} ></Dropdown>
@@ -124,7 +124,7 @@ const Jocs = ({title}) => {
             <Dropdown props="Plataformes" links={{"Nomlink1":"Llistar Plataformes","ToLink1":"/","Nomlink2":"Afegir Plataforma","ToLink2":"/"}}></Dropdown>
           </div>
         </div>
-        <div className="col-12 col-md-8">
+        <div className="col-12 col-lg-8">
         <HeaderAdminResponsive></HeaderAdminResponsive>
           <h1 className='text-center'>Llista Jocs</h1>
           <div className="text-end">
