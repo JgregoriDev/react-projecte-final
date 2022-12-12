@@ -82,8 +82,8 @@ const Usuaris = ({ title }) => {
         <div className="col-12 col-lg-8">
           <HeaderAdminResponsive></HeaderAdminResponsive>
           <Breadcrumb className='mt-3'>
-            <Breadcrumb.Item as={NavLink} to="/">Inici</Breadcrumb.Item>
-            <Breadcrumb.Item as={NavLink} active>Llistar usuaris</Breadcrumb.Item>
+            <Breadcrumb.Item ><Link to="/">Inici</Link></Breadcrumb.Item>
+            <Breadcrumb.Item active>Llistar usuaris</Breadcrumb.Item>
           </Breadcrumb>
           <h1 className="text-center">Administrar Usuaris</h1>
           {/* <Link to={`/admin/jocs`}>Llistar jocs</Link> */}

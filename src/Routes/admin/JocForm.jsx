@@ -9,7 +9,7 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb';
 
 import "../../assets/style/Space.css"
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
-const FILE_SIZE = 10240;
+const FILE_SIZE = 102400;
 
 const SignupSchema = yup.object().shape({
   titul: yup
@@ -20,6 +20,7 @@ const SignupSchema = yup.object().shape({
   descripcio: yup
     .string()
     .required("El camp descripció es un camp requerit")
+    .min(3, "Ha de contindre mínim 3 caractes")
     .max(200, "El camp descripció ha de tindre mínim 200 caracters"),
   cantitat: yup
     .number()
@@ -34,10 +35,11 @@ const SignupSchema = yup.object().shape({
     .positive("El camp preu ha de ser un valor positiu").integer(),
   portada: yup
     .mixed()
+    .nullable()
     .required('Una imatge es requrida')
-    .test(1000, "File Size is too large", value => !value || value[0].size <= FILE_SIZE)
+    .test("portada", "L'archiu supera el tamany maxim", value => value || value[0].size <= FILE_SIZE)
     .test('format',
-    'upload file', (value) => !value || (value && SUPPORTED_FORMATS.includes(value[0].type))),
+    'No es format png ni jpg', (value) => !value || (value && SUPPORTED_FORMATS.includes(value[0].type))),
 });
 
 
@@ -277,13 +279,13 @@ const JocForm = (props) => {
       <div className="row">
         <div className="col-12 col-lg-2"></div>
         <div className="col-12 col-lg-8">
-        <Breadcrumb className="mt-3">
-							<Breadcrumb.Item as={NavLink} to="/">Inici</Breadcrumb.Item>
+        <Breadcrumb className="">
+							<Breadcrumb.Item ><Link to={"/"}>Inici</Link></Breadcrumb.Item>
 							
-							<Breadcrumb.Item as={NavLink} to="/admin/joc">
-								Joc
+							<Breadcrumb.Item >
+								<Link to="/admin/jocs">Llistar jocs</Link>
 							</Breadcrumb.Item>
-							<Breadcrumb.Item as={NavLink} active>Insertar joc</Breadcrumb.Item>
+							<Breadcrumb.Item  active>Insertar joc</Breadcrumb.Item>
 						</Breadcrumb>
           <h1>Insertar Joc</h1>
           <form action="" onSubmit={handleSubmit(onSubmit)} method="post">
@@ -372,7 +374,7 @@ const JocForm = (props) => {
               <input type="submit" className='btn-primary btn' value="Enviar" />
             </div>
             <div className="text-center my-3 gap-1 g">
-              <p> {FeedbackServer}</p>
+            {FeedbackServer}
 
 
             </div>

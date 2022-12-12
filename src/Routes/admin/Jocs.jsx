@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate, Link,NavLink } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import jwt_decode from "jwt-decode";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -128,11 +128,10 @@ const Jocs = ({ title }) => {
         <div className="col-12 col-lg-8">
           <HeaderAdminResponsive></HeaderAdminResponsive>
           <Breadcrumb className='mt-3'>
-            <Breadcrumb.Item as={NavLink} to="/">Inici</Breadcrumb.Item>
-            <Breadcrumb.Item as={NavLink} to="/admin/jocs">
-              Jocs
+            <Breadcrumb.Item ><Link to="/">Inici</Link></Breadcrumb.Item>
+            <Breadcrumb.Item active>
+              Llistar jocs
             </Breadcrumb.Item>
-            <Breadcrumb.Item  as={NavLink} active>Llistar jocs</Breadcrumb.Item>
           </Breadcrumb>
           <h1 className='text-center'>Llista Jocs</h1>
           <div className="text-end">

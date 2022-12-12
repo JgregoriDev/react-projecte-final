@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react'
 import { NavItem } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'
-import "../../assets/style/Space.css"
+import "../../assets/style/Space.css";
+import jwt_decode from 'jwt-decode';
 
 const Banejar = () => {
   let token = '';
   const navigate = useNavigate();
   useEffect(() => {
     token = JSON.parse(localStorage.getItem("token")).token;
+    const role=jwt_decode(token)
     const estatUsuari = banejarUsuari();
     estatUsuari
       .then((resultat) => {

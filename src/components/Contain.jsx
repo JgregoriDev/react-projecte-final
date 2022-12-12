@@ -85,11 +85,11 @@ const Contain = () => {
     if (token) {
       const token_JSON = JSON.parse(token).token;
       const email = jwt_decode(token_JSON);
-      console.log("🚀 ~ file: Contain.jsx:87 ~ useEffect ~ email", email)
+      // console.log("🚀 ~ file: Contain.jsx:87 ~ useEffect ~ email", email)
 
       setEmail(email.username);
       setRole(email?.roles[1]??"");
-      console.log(Role);
+      // console.log(Role);
     }
   }, [Email])
 

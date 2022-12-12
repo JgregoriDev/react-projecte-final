@@ -299,10 +299,10 @@ const JocForm = (props) => {
         <div className="col-12 col-lg-2"></div>
         <div className="col-12 col-lg-8">
           <Breadcrumb className='mt-3'>
-            <Breadcrumb.Item as={Link} to="/">Inici</Breadcrumb.Item>
-            <Breadcrumb.Item as={Link} to="/admin/jocs">
-              Joc
-            </Breadcrumb.Item>
+        	<Breadcrumb.Item ><Link to={"/"}>Inici</Link></Breadcrumb.Item>
+							<Breadcrumb.Item >
+								<Link to="/admin/jocs">Llistar jocs</Link>
+							</Breadcrumb.Item>
             <Breadcrumb.Item as={Link} active>Editar joc</Breadcrumb.Item>
           </Breadcrumb>
           <h1>Editar joc</h1>
@@ -344,11 +344,9 @@ const JocForm = (props) => {
                 value={Cantitat}
                 {...register("cantitat", {
                   onChange: (e) => {
-                    // console.log(e.target.value);
                     setCantitat(e.target.value);
                   },
                   onBlur: (e) => {
-                    // console.log(e.target.value);
                     setCantitat(e.target.value);
                   },
                 })}
