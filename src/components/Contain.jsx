@@ -13,6 +13,7 @@ import Usuaris from "../Routes/admin/Usuaris";
 import PagoRealitzat from "../Routes/PagoRealitzat";
 import PagoRechazat from "../Routes/PagoRechazat";
 import Jocs from "../Routes/admin/Jocs";
+import Mapa from "../Routes/MapaWeb";
 import { Peu } from "./peu";
 import About from '../Routes/About';
 import Plataforma from '../Routes/Plataforma';
@@ -204,6 +205,7 @@ const Contain = () => {
         <Routes>
           <Route path='/carret' element={<Carret title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
           <Route path='/FAQ' element={<FAQ />}></Route>
+          <Route path='/mapa' element={<Mapa />}></Route>
           <Route path='/acceptat' element={<PagoRealitzat title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
           <Route path='/pago' element={<Payment title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
           <Route path='/denegat' element={<PagoRechazat title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>

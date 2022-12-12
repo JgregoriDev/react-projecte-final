@@ -24,6 +24,7 @@ const Banejar = () => {
   const banejarUsuari = async () => {
     let headersList = {
       "Accept": "*/*",
+      
       "Authorization": `Bearer ${token}`,
       "Content-Type": "application/json"
     }
@@ -34,7 +35,7 @@ const Banejar = () => {
     const id = window.location.pathname.split("/")[2];
     //  let response = await fetch(`http://vos.es/api/v1/usuari/${id}/banejar`, { 
     let response = await fetch(`${process.env.REACT_APP_DOMAIN_API}usuari/${id}/banejar`, {
-      method: "POST",
+      method: "PUT",
       body: bodyContent,
       headers: headersList
     });
