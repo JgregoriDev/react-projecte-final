@@ -13,8 +13,9 @@ import Toast from "../components/toast";
 import "../assets/style/thumbnails.css";
 import "../assets/style/Space.css";
 import BackToTop from "../components/ButtonScrollToTop";
-const Index = ({ afegirProducteAlCarret, title }) => {
+const Index = ({ afegirProducteAlCarret, title,editarPreu }) => {
 	useTitle(title);
+	console.log(editarPreu);
 	const params = useParams("");
 	const [Videojocs, setVideojocs] = useState([]);
 	const [Login, setLogin] = useState(false);
@@ -202,14 +203,20 @@ const Index = ({ afegirProducteAlCarret, title }) => {
 												<i className="bi bi-cart"></i>
 											
 											</Button>{" "}
-											<form  className={`w-100 ${false?'d-none':''}`} action={`https://app.11josep.daw.iesevalorpego.es/api/v1/pago`} onSubmit={onSubmit} method="POST">
+											{/* <form  className={`w-100 ${false?'d-none':''}`} action={`https://app.11josep.daw.iesevalorpego.es/api/v1/pago`} onSubmit={onSubmit} method="POST">
 											<input type="hidden" name="arrayProductes" value={JSON.stringify({"nom":joc.titul, "preu":joc.preu})} />
 											<input type="hidden" name="productes" value={JSON.stringify({"nom":joc.titul, "preu":joc.preu})} />
 											<input type="hidden" name="preu" value={joc.preu} />
-											<button className="btn btn-primary mx-2" onClick={()=>localStorage.setItem("producteIndividual",JSON.stringify(joc))} {...(!Login ? {disabled: true} : {})} title="Comprar videojoc ja"  type="submit">
+											* <button className="btn btn-primary mx-2" onClick={()=>localStorage.setItem("producteIndividual",JSON.stringify(joc))} {...(!Login ? {disabled: true} : {})} title="Comprar videojoc ja"  type="submit">
 												Comprar ja
-											</button>
-										</form>
+											</button> 
+										</form> */}
+											<Link className="btn btn-primary mx-2" to={"/pagament"} onClick={(e)=>{
+												console.log(joc.preu);
+												editarPreu(joc.preu);
+											}} {...(!Login ? {disabled: true} : {})} title="Comprar videojoc ja"  type="submit">
+												Comprar ja
+											</Link>
 										</div>
 									</div>
 								))}

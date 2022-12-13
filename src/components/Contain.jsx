@@ -71,6 +71,9 @@ const Contain = () => {
     console.log("🚀 ~ file: Contain.jsx:71 ~ Contain ~ Preu", Preu)
     
   }
+  const getPreu=()=>{
+    return Preu;
+  }
   const modificarTitul = (title) => {
     setTitle(title);
   };
@@ -212,8 +215,8 @@ const Contain = () => {
           <Route path='/FAQ' element={<FAQ />}></Route>
           <Route path='/mapa' element={<Mapa />}></Route>
           <Route path='/acceptat' element={<PagoRealitzat title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
-          <Route path='/pagament' element={<Payment title={vosTitle.carret} preu={Preu} buidarCarret={() => buidarCarret()} />}></Route>
-          <Route path='/denegat' element={<PagoRechazat title={vosTitle.carret} editarPreu={editarPreu} />}></Route>
+          <Route path='/pagament' element={<Payment title={vosTitle.carret} getPreu={getPreu} buidarCarret={() => buidarCarret()} />}></Route>
+          <Route path='/denegat' element={<PagoRechazat title={vosTitle.carret}  />}></Route>
           <Route path='/admin' element={<Usuaris title={vosTitle.admin} />}></Route>
           <Route path='/admin/jocs' element={<Jocs title={vosTitle.admin} />}></Route>
           <Route path='/admin/joc/nou' element={<JocForm title={vosTitle.adminNou} />}></Route>

@@ -31,7 +31,7 @@ const SearchBar = ({width}) => {
 						formMethod="GET"
 						placeholder="Buscar"
 					/>
-					<div className="mb-3 text-warning">
+					<div className="mb-3 text-danger">
 						{BuscarError}
 					</div>
 					<button type="submit" title="Buscar" className={`btn btn-primary ${width}`}>
