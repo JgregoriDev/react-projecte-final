@@ -60,12 +60,17 @@ const Contain = () => {
   const [title, setTitle] = useState("");
   const [Usuari, setUsuari] = useState({});
   const [Marques, setMarques] = useState([]);
+  const [Preu, setPreu] = useState(0)
   const [Email, setEmail] = useState("Login");
   const [Role, setRole] = useState("");
   const arrayAux = [];
   const [Carrito, setCarrito] = useState([]);
   const [CarritoTamany, setCarritoTamany] = useState(0);
-
+  const editarPreu=(preu)=>{
+    setPreu(preu);
+    console.log("🚀 ~ file: Contain.jsx:71 ~ Contain ~ Preu", Preu)
+    
+  }
   const modificarTitul = (title) => {
     setTitle(title);
   };
@@ -207,19 +212,19 @@ const Contain = () => {
           <Route path='/FAQ' element={<FAQ />}></Route>
           <Route path='/mapa' element={<Mapa />}></Route>
           <Route path='/acceptat' element={<PagoRealitzat title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
-          <Route path='/pago' element={<Payment title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
-          <Route path='/denegat' element={<PagoRechazat title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
+          <Route path='/pagament' element={<Payment title={vosTitle.carret} preu={Preu} buidarCarret={() => buidarCarret()} />}></Route>
+          <Route path='/denegat' element={<PagoRechazat title={vosTitle.carret} editarPreu={editarPreu} />}></Route>
           <Route path='/admin' element={<Usuaris title={vosTitle.admin} />}></Route>
           <Route path='/admin/jocs' element={<Jocs title={vosTitle.admin} />}></Route>
           <Route path='/admin/joc/nou' element={<JocForm title={vosTitle.adminNou} />}></Route>
           <Route path='/admin/joc/:id/editar' element={<EditarJocForm title={vosTitle.adminEditar} />}></Route>
           <Route path='/usuari/:id/ban' element={<Banejar title={vosTitle.banjejar} />}></Route>
           <Route path='/galletes' element={<Galletes title={vosTitle.cookies} props={[Carrito, buidar]} />}></Route>
-          <Route path='/buscar' element={<Buscar title={vosTitle.buscar} />}></Route>
+          {/* <Route path='/buscar' element={<Buscar title={vosTitle.buscar} />}></Route> */}
           <Route path='/buscar/:buscar' element={<Buscar title={vosTitle.buscar} />}></Route>
           <Route path='/filtrar/:min/:max' element={<FiltratgePreu title={vosTitle.filtratge} />}></Route>
-          <Route path='/' element={<Index title={vosTitle.inici} afegirProducteAlCarret={afegirProducteAlCarret} />}></Route>
-          <Route path='/videojoc/:id' element={<PresentarJoc title={vosTitle.joc} />}></Route>
+          <Route path='/' element={<Index title={vosTitle.inici} editarPreu={editarPreu} afegirProducteAlCarret={afegirProducteAlCarret} />}></Route>
+          <Route path='/videojoc/:id' element={<PresentarJoc afegirProducteAlCarret={afegirProducteAlCarret} title={vosTitle.joc} />}></Route>
           <Route path='/sobre-nosaltres' element={<About title={vosTitle.about}></About>}></Route>
           <Route path='/perfil' element={<Profile title={vosTitle.dashboard} Usuari></Profile>}></Route>
           <Route path='/plataforma/:id' element={<Plataforma title={vosTitle.plataforma}></Plataforma>}></Route>
