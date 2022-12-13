@@ -13,9 +13,8 @@ import Toast from "../components/toast";
 import "../assets/style/thumbnails.css";
 import "../assets/style/Space.css";
 import BackToTop from "../components/ButtonScrollToTop";
-const Index = ({ afegirProducteAlCarret, title,editarPreu }) => {
+const Index = ({ afegirProducteAlCarret, title,editarJoc }) => {
 	useTitle(title);
-	console.log(editarPreu);
 	const params = useParams("");
 	const [Videojocs, setVideojocs] = useState([]);
 	const [Login, setLogin] = useState(false);
@@ -212,9 +211,8 @@ const Index = ({ afegirProducteAlCarret, title,editarPreu }) => {
 											</button> 
 										</form> */}
 											<Link className="btn btn-primary mx-2" to={"/pagament"} onClick={(e)=>{
-												console.log(joc.preu);
-												editarPreu(joc.preu);
-											}} {...(!Login ? {disabled: true} : {})} title="Comprar videojoc ja"  type="submit">
+												editarJoc(joc);
+											}} {...(!Login ? {disabled: true} : {})} title="Comprar videojoc ja" >
 												Comprar ja
 											</Link>
 										</div>

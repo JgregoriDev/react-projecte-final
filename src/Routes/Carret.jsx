@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import useTitle from "../Hooks/useTitle";
 import Toast from "../components/toast";
-import  "../assets/style/Space.css";
+import "../assets/style/Space.css";
 import ContainerRecomanacio from "../components/ContainerRecomanacio";
 const Carrito = (props) => {
 	// const { carrito, buidar, title } = props;
@@ -14,7 +14,7 @@ const Carrito = (props) => {
 	const [Login, setLogin] = useState(false);
 	let token;
 	const [Show, setShow] = useState(false);
-	let n=[];
+	let n = [];
 	useEffect(() => {
 		const items = JSON.parse(localStorage.getItem('carrito'));
 		if (items !== Carrito) {
@@ -26,38 +26,38 @@ const Carrito = (props) => {
 			}
 			setPreuTotal(preu);
 		}
-		token=localStorage.getItem("token");
-		if(!token){
-			
+		token = localStorage.getItem("token");
+		if (!token) {
+		
 		}
 
 	}, []);
 	useEffect(() => {
-		let n=[];
+		let n = [];
 		for (const iterator of ArrayCarret) {
 			n.push(`Preu joc:${iterator.preu} Nom: ${iterator.titul}`);
 		}
-		let string=n.join(',\n');
+		let string = n.join(',\n');
 		setArrayCarretTractat(n);
-	
-	
+
+
 	}, [ArrayCarret])
-	
+
 	useEffect(() => {
-		const token= localStorage.getItem("token");
-		if(token){
+		const token = localStorage.getItem("token");
+		if (token) {
 			setLogin(true);
 		}
-	
-	
-	}, [])
-	
 
-	const borrarVideojocCarret = ({id,titul,preu}) => {
+
+	}, [])
+
+
+	const borrarVideojocCarret = ({ id, titul, preu }) => {
 		// console.log(id,titul,preu)
-		let n=ArrayCarret.findIndex((joc)=>joc.id===id);
-		const auxPreu=PreuTotal-preu;
-		const arrayAux=ArrayCarret.splice(n,1);
+		let n = ArrayCarret.findIndex((joc) => joc.id === id);
+		const auxPreu = PreuTotal - preu;
+		const arrayAux = ArrayCarret.splice(n, 1);
 		setArrayCarret(ArrayCarret);
 		localStorage.setItem("carrito", JSON.stringify(ArrayCarret));
 		setPreuTotal(auxPreu);
@@ -74,12 +74,12 @@ const Carrito = (props) => {
 			setShow(false);
 		}, 1300);
 	};
-	
-	const desactivarBoto=()=>{
-		if(PreuTotal<1)
+
+	const desactivarBoto = () => {
+		if (PreuTotal < 1)
 			return "disabled";
 		else
-		  return "";
+			return "";
 	}
 
 
@@ -90,29 +90,29 @@ const Carrito = (props) => {
 				<div className="col-12 col-lg-8">
 					<div className="row">
 						<div className="col-12 col-lg-8">
-						<div className="my-2 d-block d-lg-none flex-column gap-3">
+							<div className="my-2 d-block d-lg-none flex-column gap-3">
 								<div className="d-block d-lg-none">
-								<p>
-									<b>Detalls</b>
-								</p>
-								<p>
-									<b>
-										Total productes:{" "}
-										{ArrayCarret !== undefined ? `${ArrayCarret.length}` : ""}
-									</b>
-								</p>
-								<p>
-									<b>Preu:</b> {PreuTotal}
-								</p>
+									<p>
+										<b>Detalls</b>
+									</p>
+									<p>
+										<b>
+											Total productes:{" "}
+											{ArrayCarret !== undefined ? `${ArrayCarret.length}` : ""}
+										</b>
+									</p>
+									<p>
+										<b>Preu:</b> {PreuTotal}
+									</p>
 								</div>
-									<form className={`w-100  ${!Login?'d-none':''}`} action="https://app.11josep.daw.iesevalorpego.es/api/v1/pago" method="POST">
+								<form className={`w-100  ${!Login ? 'd-none' : ''}`} action="https://app.11josep.daw.iesevalorpego.es/api/v1/pago" method="POST">
 									<input type="hidden" name="productes" value={JSON.stringify(ArrayCarretTractat)} />
 									<input type="hidden" name="preu" value={PreuTotal} />
-									<button {...(ArrayCarret.length===0 ? {disabled: true} : {})} className="btn btn-primary w-100" type="submit">
+									<button {...(ArrayCarret.length === 0 ? { disabled: true } : {})} className="btn btn-primary w-100" type="submit">
 										Pagar
 									</button>
 								</form>
-							
+
 								<Link to="/" title="Tornar a la tenda" className="w-100 my-2 btn btn-secondary mb-3">
 									<i className="bi bi-arrow-left-short"></i>
 									<span className="d-none d-md-inline">Tornar a la tenda</span>
@@ -183,13 +183,13 @@ const Carrito = (props) => {
 									<b>Detalls</b>
 								</p>
 								<p>
-									{ArrayCarret.length>0?<>
-									<b>
-										Total productes:{" "}
-									</b>
-									</>:<><p className="text-danger">No hi han productes en la llista</p></>}
-										{/* {ArrayCarret !== undefined ? `${ArrayCarret.length}` : ""} */}
-									
+									{ArrayCarret.length > 0 ? <>
+										<b>
+											Total productes:{" "}
+										</b>
+									</> : <><p className="text-danger">No hi han productes en la llista</p></>}
+									{/* {ArrayCarret !== undefined ? `${ArrayCarret.length}` : ""} */}
+
 								</p>
 								<p>
 									<b>Preu:</b> {PreuTotal} €
@@ -203,28 +203,34 @@ const Carrito = (props) => {
 								""
 							)}
 							<div className="d-none d-lg-flex flex-column gap-3">
-								{Login?
-								<>
-										<form  className={`w-100 ${!Login?'d-none':''}`} action={`${process.env.REACT_APP_DOMAIN_PAYMENT}`} method="POST">
+								{Login ?
+									<>
+										{/* <form  className={`w-100 ${!Login?'d-none':''}`} action={`${process.env.REACT_APP_DOMAIN_PAYMENT}`} method="POST">
 									<input type="hidden" name="arrayProductes" value={JSON.stringify(ArrayCarret)} />
 									<input type="hidden" name="productes" value={JSON.stringify(ArrayCarretTractat)} />
 									<input type="hidden" name="preu" value={PreuTotal} />
 									<button className="btn btn-primary w-100"{...(ArrayCarret.length===0 || PreuTotal===0 ? {"disabled": true} : {})} type="submit">
 										Pagar
 									</button>
-								</form>
-								<Link to="/" title="Tornar a la tenda" className="btn btn-secondary mb-3">
-									<i className="bi bi-arrow-left-short"></i>
-									<span className="d-none d-md-inline">Tornar a la tenda</span>
-								</Link>
-								</>:<>
-								<p className="text-danger">Has de fer login per a poder comprar</p>
-								</>}
+								</form> */}
+
+										<Link className={`btn btn-primary ${ArrayCarret.length===0 || PreuTotal===0 ? "d-none":""}`}  {...(ArrayCarret.length===0 || PreuTotal===0 ? {"disabled": true} : {})} to={`/pago?pago=${PreuTotal}`} onClick={(e) => {
+										}} {...(!Login ? { disabled: true } : {})} title="Comprar videojocs del carret">
+											Comprar ja
+										</Link>
+
+										<Link to="/" title="Tornar a la tenda" className="btn btn-secondary mb-3">
+											<i className="bi bi-arrow-left-short"></i>
+											<span className="d-none d-md-inline">Tornar a la tenda</span>
+										</Link>
+									</> : <>
+										<p className="text-danger">Has de fer login per a poder comprar</p>
+									</>}
 								<div className="mb-9">&nbsp;</div>
 							</div>
 						</div>
 						<ContainerRecomanacio width={`w-100`} />
-						
+
 					</div>
 				</div>
 				<div className="col col-2"></div>

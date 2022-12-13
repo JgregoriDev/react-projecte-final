@@ -33,7 +33,7 @@ export default function CheckoutForm() {
           setMessage("El pagament s'està siguent processat.");
           break;
         case "requires_payment_method":
-          setMessage("El pagament no s'ha realitzat correctament, torneu-ho a provar.");
+          setMessage("El pagament no s'ha realitzat correctament, tornau-ho a provar.");
           break;
         default:
           setMessage("Alguna cosa ha anat malament.");
@@ -54,9 +54,10 @@ export default function CheckoutForm() {
 
     const { error } = await stripe.confirmPayment({
       elements,
+      // return_url: `https://11josep.daw.iesevalorpego.es/FAQ`,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `${process.env.REACT_APP_DOMAIN_API}`,
+        return_url: `https://11josep.daw.iesevalorpego.es/`,
       },
     });
 

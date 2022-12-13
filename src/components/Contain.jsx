@@ -24,6 +24,7 @@ import Index from '../Routes/Index';
 import Login from '../Routes/Login';
 import Registrar from '../Routes/Registrar';
 import Payment from '../Routes/Payment';
+import PaymentMultiple from '../Routes/PaymentMultiple';
 import PresentarJoc from '../Routes/Presentar-joc';
 import Profile from '../Routes/Profile';
 import Notfound from '../Routes/404';
@@ -60,19 +61,18 @@ const Contain = () => {
   const [title, setTitle] = useState("");
   const [Usuari, setUsuari] = useState({});
   const [Marques, setMarques] = useState([]);
-  const [Preu, setPreu] = useState(0)
+  const [Videojoc, setVideojoc] = useState(0)
   const [Email, setEmail] = useState("Login");
   const [Role, setRole] = useState("");
   const arrayAux = [];
   const [Carrito, setCarrito] = useState([]);
   const [CarritoTamany, setCarritoTamany] = useState(0);
-  const editarPreu=(preu)=>{
-    setPreu(preu);
-    console.log("🚀 ~ file: Contain.jsx:71 ~ Contain ~ Preu", Preu)
+  const editarJoc=(joc)=>{
+    setVideojoc(joc);
     
   }
-  const getPreu=()=>{
-    return Preu;
+  const getJoc=()=>{
+    return Videojoc;
   }
   const modificarTitul = (title) => {
     setTitle(title);
@@ -215,7 +215,8 @@ const Contain = () => {
           <Route path='/FAQ' element={<FAQ />}></Route>
           <Route path='/mapa' element={<Mapa />}></Route>
           <Route path='/acceptat' element={<PagoRealitzat title={vosTitle.carret} buidarCarret={() => buidarCarret()} />}></Route>
-          <Route path='/pagament' element={<Payment title={vosTitle.carret} getPreu={getPreu} buidarCarret={() => buidarCarret()} />}></Route>
+          <Route path='/pagament' element={<Payment title={vosTitle.carret} getJoc={getJoc} buidarCarret={() => buidarCarret()} />}></Route>
+          <Route path='/pago' element={<PaymentMultiple title={vosTitle.carret} getJoc={getJoc} buidarCarret={() => buidarCarret()} />}></Route>
           <Route path='/denegat' element={<PagoRechazat title={vosTitle.carret}  />}></Route>
           <Route path='/admin' element={<Usuaris title={vosTitle.admin} />}></Route>
           <Route path='/admin/jocs' element={<Jocs title={vosTitle.admin} />}></Route>
@@ -226,7 +227,7 @@ const Contain = () => {
           {/* <Route path='/buscar' element={<Buscar title={vosTitle.buscar} />}></Route> */}
           <Route path='/buscar/:buscar' element={<Buscar title={vosTitle.buscar} />}></Route>
           <Route path='/filtrar/:min/:max' element={<FiltratgePreu title={vosTitle.filtratge} />}></Route>
-          <Route path='/' element={<Index title={vosTitle.inici} editarPreu={editarPreu} afegirProducteAlCarret={afegirProducteAlCarret} />}></Route>
+          <Route path='/' element={<Index title={vosTitle.inici} editarJoc={editarJoc} afegirProducteAlCarret={afegirProducteAlCarret} />}></Route>
           <Route path='/videojoc/:id' element={<PresentarJoc afegirProducteAlCarret={afegirProducteAlCarret} title={vosTitle.joc} />}></Route>
           <Route path='/sobre-nosaltres' element={<About title={vosTitle.about}></About>}></Route>
           <Route path='/perfil' element={<Profile title={vosTitle.dashboard} Usuari></Profile>}></Route>
