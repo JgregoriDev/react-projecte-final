@@ -224,7 +224,7 @@ const Carrito = (props) => {
 											<span className="d-none d-md-inline">Tornar a la tenda</span>
 										</Link>
 									</> : <>
-										<p className="text-danger">Has de fer login per a poder comprar</p>
+										<p className="text-danger">Has d'iniciar sessió per a poder comprar</p>
 									</>}
 								<div className="mb-9">&nbsp;</div>
 							</div>

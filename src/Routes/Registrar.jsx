@@ -63,7 +63,7 @@ const Registrar = () => {
     resposta.then((result) => {
       if (result.Title === "usuari registrat") {
         ErrorMissatges.respostaServer = result?.Title;
-        setErrorsMissatges(ErrorMissatges);
+        setErrorsMissatges({respostaServer:"Usuari registrat de manera correcta"});
         setPersonalization("text-success");
       }
       if (result?.code === 500) {

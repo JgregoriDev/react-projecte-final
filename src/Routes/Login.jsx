@@ -1,22 +1,23 @@
-import React, { useState,useContext,useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useTitle from "../Hooks/useTitle";
 import jwt_decode from "jwt-decode";
 import { isLogged } from "../components/Contain";
+import "../assets/style/Space.css";
 const Login = ({ title }) => {
 	const { setIsLogged, logged } = useContext(isLogged);
 	const [ErrorMessage, setErrorMessage] = useState('');
 	const [isLogin, setIsLogin] = useState(false);
 	useTitle(title)
-  let token;
-  const navigate = useNavigate();
+	let token;
+	const navigate = useNavigate();
 
-  useEffect(() => {
-    token = JSON.parse(localStorage.getItem("token"));
-    if (token) {
-      navigate(`/`);
-    }
-  }, [])
+	useEffect(() => {
+		token = JSON.parse(localStorage.getItem("token"));
+		if (token) {
+			navigate(`/`);
+		}
+	}, [])
 	const onSubmit = (e) => {
 		e.preventDefault();
 		const objecteDadesLogin = {
@@ -30,9 +31,9 @@ const Login = ({ title }) => {
 				if (result?.Title) {
 					if (result.Title === "Login incocorrecte") {
 						setErrorMessage("Error dades incorrectes");
-					}else if(result.Title === "Usuari banejat"){
+					} else if (result.Title === "Usuari banejat") {
 						setErrorMessage("Error usuari banejat");
-					}else if(result?.token) {
+					} else if (result?.token) {
 						// console.log(result);
 						const token = {
 							id: result.id,
@@ -59,7 +60,7 @@ const Login = ({ title }) => {
 			"Content-Type": "application/json",
 		};
 		// 'Access-Control-Allow-Origin':"*",
-		
+
 		console.log(objecte);
 		let bodyContent = JSON.stringify({
 			email: objecte.email,
@@ -77,32 +78,35 @@ const Login = ({ title }) => {
 		return data;
 	};
 	return (
-		<div className="row">
-			<div className="col-2"></div>
-			<div className="col-8">
-				<form
-					action=""
-					onSubmit={(e) => {
-						onSubmit(e);
-					}}
-					method="post"
-				>
-					<div className="mb-3">
-						<label htmlFor="usuari">Usuari</label>
-						<input id="usuari" className="form-control" type="text" />
-					</div>
-					<div className="mb-3">
-						<label htmlFor="contrasenya">Contrasenya</label>
-						<input id="contrasenya" className="form-control" type="password" />
-					</div>
-					<div className="d-flex justify-content-center">
-						<input type="submit" className="btn btn-primary" value="Login" />
-					</div>
-					<small className="text-danger">{ErrorMessage}</small>
-				</form>
-				<div className="mt-50vh"></div>
+		<div className="container-fluid h-75-vh">
+
+			<div className="row">
+				<div className="col-12 col-lg-2"></div>
+				<div className="col-12 col-lg-8">
+					<form
+						action=""
+						onSubmit={(e) => {
+							onSubmit(e);
+						}}
+						method="post"
+					>
+						<div className="mt-3 mb-3">
+							<label htmlFor="usuari">Usuari</label>
+							<input id="usuari" className="form-control" type="text" />
+						</div>
+						<div className="mb-3">
+							<label htmlFor="contrasenya">Contrasenya</label>
+							<input id="contrasenya" className="form-control" type="password" />
+						</div>
+						<div className="d-flex justify-content-center">
+							<input type="submit" className="btn btn-primary" value="Login" />
+						</div>
+						<small className="text-danger">{ErrorMessage}</small>
+					</form>
+					<div className="mt-50vh"></div>
+				</div>
+				<div className="col-lg-2"></div>
 			</div>
-			<div className="col-2"></div>
 		</div>
 	);
 };
