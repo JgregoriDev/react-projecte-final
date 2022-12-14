@@ -32,14 +32,8 @@ const SignupSchema = yup.object().shape({
     .number()
     .max(300, "El valor màxim del camp preu  es 300")
     .required()
-    .positive("El camp preu ha de ser un valor positiu").integer(),
-  portada: yup
-    .mixed()
-    .nullable()
-    .required('Una imatge es requrida')
-    .test("portada", "L'archiu supera el tamany maxim", value => value || value[0].size <= FILE_SIZE)
-    .test('format',
-    'No es format png ni jpg', (value) => !value || (value && SUPPORTED_FORMATS.includes(value[0].type))),
+    .positive("El camp preu ha de ser un valor positiu")
+
 });
 
 
@@ -200,8 +194,10 @@ const JocForm = (props) => {
           setFeedbackServer(<p className='text-success'>{`Videojoc insertat de manera correcta`}</p>);
         }
         if (result?.Title === "Error") {
-          setFeedbackServer(<p className='text-error'>{`Error`}</p>);
-
+          setFeedbackServer(<p className='text-danger'>{`Error`}</p>);
+          if(result.result.errors.children.portada.errors.length > 0){
+            setFileError({ "error": true, "missatge": result.result.errors.children.portada.errors[0] })
+          }
         }
 
       }).catch((err) => {
@@ -333,8 +329,7 @@ const JocForm = (props) => {
               <input className='form-control' ref={register} id="portada" type="file"
                 {...register("portada")}
               />
-              {/* {FileError?.missatge} */}
-              {errors.portada && <small className='text-danger'>{errors.portada.message}</small>}
+              <small className='text-danger'>{FileError.missatge}</small> 
             </div>
             <div className="mb-3">
               <label className="form-label" htmlFor="plataformes">Plataformes:</label>

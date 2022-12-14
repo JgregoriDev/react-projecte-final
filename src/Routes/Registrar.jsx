@@ -107,7 +107,7 @@ const Registrar = () => {
   }
 
   return (
-    <div className='container-fluid'>
+    <div className='container-fluid h-75-vh'>
       <div className="row">
         <div className="col-2"></div>
         <div className="col-8">

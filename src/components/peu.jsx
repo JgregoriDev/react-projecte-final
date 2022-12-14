@@ -42,6 +42,7 @@ export const Peu = () => {
 				<div className="d-flex d-lg-flex py-5  col-12 col-lg-3   justify-content-around align-items-center">
 					<a
 						href="https://www.twitter.com"
+						target={"_black"}
 						title="Twitter vos"
 						className="icon nav-link"
 					>
@@ -49,6 +50,7 @@ export const Peu = () => {
 					</a>
 					<a
 						href="https://www.facebook.com"
+						target={"_black"}
 						title="Facebook vos"
 						className="icon nav-link"
 					>
@@ -56,6 +58,7 @@ export const Peu = () => {
 					</a>
 					<a
 						href="https://www.instagram.com"
+						target={"_black"}
 						title="Instagram vos"
 						className="icon nav-link"
 					>

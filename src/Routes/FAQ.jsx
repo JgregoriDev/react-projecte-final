@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Collapse } from 'react-bootstrap'
-import "../assets/style/targets.css"
+import "../assets/style/targets.css";
+import "../assets/style/Space.css";
+
 const FAQ = () => {
 
   const [open, setOpen] = useState(false);
@@ -9,15 +11,9 @@ const FAQ = () => {
   const [open4, setOpen4] = useState(false);
 
 
-  const espais = () => {
-    return (
-      <>
-        <div className='mb-5'>&nbsp;</div>
-      </>
-    );
-  }
+
   return (
-    <div className='container-fluid'>
+    <div className='container-fluid h-75-vh'>
       <div className="row">
         <div className="d-none d-lg-block col-2"></div>
         <div className="col-12 col-lg-8">
@@ -112,10 +108,7 @@ const FAQ = () => {
             </div>
           </div>
         </div>
-        {open === false ? (espais()) : null}
-        {open2 === false ? (espais()) : null}
-        {open3 === false ? (espais()) : null}
-        {open4 === false ? (espais()) : null}
+      
         <div className="d-none d-lg-block col-2"></div>
       </div>
     </div>

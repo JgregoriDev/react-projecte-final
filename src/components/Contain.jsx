@@ -35,6 +35,7 @@ import FiltrePreu from './Filtratge';
 import FAQ from '../Routes/FAQ';
 import JocForm from '../Routes/admin/JocForm';
 import EditarJocForm from '../Routes/admin/EditarJocForm';
+import "../assets/style/Space.css";
 //Objecte de titols
 const vosTitle = {
   "about": "Vos - Sobre nosaltres",
