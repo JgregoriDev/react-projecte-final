@@ -184,7 +184,7 @@ const Plataforma = ({ title }) => {
 							? Generes.map((gen) => {
 								return (
 									<div className="mb-4 ms-3" key={gen.id}>
-										<Link className={`${gen.id===parseInt(Genere)?"text-black":""}`} to={{
+										<Link className={`${gen.id===parseInt(Genere)?"fw-bold text-black":""}`} to={{
 											pathname: "",
 											search: `genere=${gen.id}`,
 										}}>{gen.genere}</Link>

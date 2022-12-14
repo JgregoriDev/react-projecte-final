@@ -12,6 +12,7 @@ import useTitle from "../Hooks/useTitle";
 import Toast from "../components/toast";
 import "../assets/style/thumbnails.css";
 import "../assets/style/Space.css";
+import "../assets/style/Hover.css";
 import BackToTop from "../components/ButtonScrollToTop";
 const Index = ({ afegirProducteAlCarret, title,editarJoc }) => {
 	useTitle(title);
@@ -161,15 +162,20 @@ const Index = ({ afegirProducteAlCarret, title,editarJoc }) => {
 										key={joc.id}
 									>
 										<Link className="d-blockw-100 h-auto" to={`/videojoc/${joc.titul}`}>
+											
+											<div className="sombra">
 											<img
+												
 												loading="lazy"
 												src={joc.portada}
 												title={`${joc.titul}`}
-												className={`thumbnails`}
+												className={`thumbnails sombra`}
 												alt=""
 											/>
+											</div>
+											
 										</Link>
-										<h5>
+										<h5 className="my-3">
 											<Link to={`/videojoc/${joc.titul}`}>
 												{joc.titul}
 											</Link>
