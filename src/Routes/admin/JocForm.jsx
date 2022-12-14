@@ -244,31 +244,31 @@ const JocForm = (props) => {
 
   }
 
-  const onClick = (e, item) => {
-    if (item?.genere) {
-      if (GeneresJoc.has(item)) {
-        GeneresJoc.delete(item);
-      } else {
-        GeneresJoc.add(item);
+  // const onClick = (e, item) => {
+  //   if (item?.genere) {
+  //     if (GeneresJoc.has(item)) {
+  //       GeneresJoc.delete(item);
+  //     } else {
+  //       GeneresJoc.add(item);
 
-      }
-      // setGeneresJoc(new Set(GeneresJoc));
+  //     }
+  
 
-      console.log(GeneresJoc);
-    }
+  //     console.log(GeneresJoc);
+  //   }
 
-    if (item?.plataforma) {
-      if (PlataformesJoc.has(item)) {
-        PlataformesJoc.delete(item);
-      } else {
-        PlataformesJoc.add(item);
+  //   if (item?.plataforma) {
+  //     if (PlataformesJoc.has(item)) {
+  //       PlataformesJoc.delete(item);
+  //     } else {
+  //       PlataformesJoc.add(item);
 
-      }
-      setPlataformesJoc(new Set(PlataformesJoc));
+  //     }
+  //     setPlataformesJoc(new Set(PlataformesJoc));
 
-      console.log(PlataformesJoc);
-    }
-  }
+  //     console.log(PlataformesJoc);
+  //   }
+  // }
 
   return (
     <div className="container-fluid h-75-vh">
