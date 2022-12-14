@@ -10,13 +10,13 @@ const Plataforma = ({ title }) => {
 	const { id } = useParams();
 	const search = useLocation().search;
 	let genere = new URLSearchParams(search).get("genere") ?? 0;
-	console.log(genere);
 	const [Jocs, setJocs] = useState([]);
 	const [Error, setError] = useState('');
 	const [IsLoading, setIsLoading] = useState(false);
 	const [Plataforma, setPlataforma] = useState("");
 	const [Marca, setMarca] = useState([]);
 	const [Generes, setGeneres] = useState([]);
+	const [Genere, setGenere] = useState([]);
 	useTitle(title);
 	useEffect(() => {
 		// console.log(id);
@@ -41,6 +41,7 @@ const Plataforma = ({ title }) => {
 	}, [id]);
 	useEffect(() => {
 		genere = new URLSearchParams(search).get("genere") ?? 0;
+		setGenere(genere);
 		if (genere === 0) {
 			setIsLoading(false);
 			conseguirJocsPlataforma()
@@ -60,7 +61,6 @@ const Plataforma = ({ title }) => {
 					console.error(err);
 				});
 		} else {
-			console.log("Genere cambiat"+ genere);
 			
 						setIsLoading(false);
 			conseguirJocsPlataformaGenere()
@@ -136,7 +136,7 @@ const Plataforma = ({ title }) => {
 							? (spinner()) :  Jocs.length>0? Jocs.map((Joc) => {
 								// console.log(Joc);
 								return (
-									<div key={Joc.id} className="col gap-5 col-lg-4">
+									<div key={Joc.id} className="col gap-5 my-3 px-4 col-lg-4">
 										<Link to={`/videojoc/${Joc.titul}`}>
 											<img
 												src={`${Joc.portada}`}
@@ -178,15 +178,16 @@ const Plataforma = ({ title }) => {
 							</Link>
 
 						</div> : null}
-
+						<div className="mt-4"></div>
+						.
 						{Generes
-							? Generes.map((Genere) => {
+							? Generes.map((gen) => {
 								return (
-									<div className="mb-3 ms-3" key={Genere.id}>
-										<Link to={{
+									<div className="mb-4 ms-3" key={gen.id}>
+										<Link className={`${gen.id===parseInt(Genere)?"text-black":""}`} to={{
 											pathname: "",
-											search: `genere=${Genere.id}`,
-										}}>{Genere.genere}</Link>
+											search: `genere=${gen.id}`,
+										}}>{gen.genere}</Link>
 									</div>
 								);
 							})
