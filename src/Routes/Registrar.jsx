@@ -13,19 +13,19 @@ const SignupSchema = yup.object().shape({
   email: yup
     .string()
     .required("El camp email es un camp requerit")
-    .min(3, "El camp email ha de contindre mínim 3 caractes")
-    .max(200, "El camp email ha de tindre mínim 200 caracters"),
+    .min(3, "El camp email ha de contindre mínim 3 caràcters")
+    .max(200, "El camp email ha de tindre màxim 200 caràcters"),
   passwordA: yup
     .string()
     .required("El camp contrasenya es un camp requerit")
-    .min(6, "El camp contrasenya ha de contindre mínim 6 caracters")
-    .max(200, "El contrasenya  ha de tindre mínim 200 caracters"),
+    .min(6, "El camp contrasenya ha de contindre mínim 6 caràcters")
+    .max(200, "El contrasenya  ha de tindre mínim 200 caràcters"),
   passwordB: yup
     .string()
     .required("El camp repeteix contrasenya es un camp requerit")
     .oneOf([yup.ref('passwordA'), null], 'Les contrasenyes deuen ser exactament igual')
-    .min(7, "El camp repetir contrasenya ha de contindre mínim 6 caracters")
-    .max(200, "El camp repetir contrasenya  ha de tindre mínim 200 caracters"),
+    .min(6, "El camp repetir contrasenya ha de contindre mínim 6 caràcters")
+    .max(200, "El camp repetir contrasenya  ha de tindre mínim 200 caràcters"),
 
 });
 
