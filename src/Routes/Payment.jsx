@@ -15,13 +15,13 @@ const stripePromise = loadStripe(`pk_test_51M152rABbpLr9iO4CBr74NqVkAXruYuGc8RpF
 
 export default function Payment(props) {
   const [clientSecret, setClientSecret] = useState("");
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("token"))?.token;
     console.log(token);
     // Create PaymentIntent as soon as the page loads
-    if(!token){
+    if (!token) {
       navigate("/")
     }
     let headersList = {
@@ -35,7 +35,7 @@ export default function Payment(props) {
     fetch(`${process.env.REACT_APP_DOMAIN_API}payment`, {
       method: "POST",
       headers: headersList,
-      body: JSON.stringify({"items": [{ id: "xl-tshirt" , "preu":props.getJoc().preu}] }),
+      body: JSON.stringify({ "items": [{ id: "xl-tshirt", "preu": props.getJoc().preu }] }),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
@@ -55,6 +55,9 @@ export default function Payment(props) {
         <div className="col-12 col-lg-2"></div>
         <div className="col-12 col-lg-8">
           <div className="d-grid justify-content-center align-items-center w-100 h-auto">
+            <button className="btn btn-primary w-25 my-1" onClick={()=>navigate(-1)} title="Tornar arrere">
+              <i class="bi bi-arrow-left"></i>
+            </button>
             <h1>Comprar joc</h1>
             <h3>Titol: {props?.getJoc()?.titul}</h3>
             <img src={`${props?.getJoc()?.portada}`} className="w-100 h-auto" alt="" />

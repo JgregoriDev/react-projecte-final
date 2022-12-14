@@ -229,7 +229,7 @@ const Contain = () => {
           <Route path='/buscar/:buscar' element={<Buscar title={vosTitle.buscar} />}></Route>
           <Route path='/filtrar/:min/:max' element={<FiltratgePreu title={vosTitle.filtratge} />}></Route>
           <Route path='/' element={<Index title={vosTitle.inici} editarJoc={editarJoc} afegirProducteAlCarret={afegirProducteAlCarret} />}></Route>
-          <Route path='/videojoc/:id' element={<PresentarJoc afegirProducteAlCarret={afegirProducteAlCarret} title={vosTitle.joc} />}></Route>
+          <Route path='/videojoc/:id' element={<PresentarJoc afegirProducteAlCarret={afegirProducteAlCarret} editarJoc={editarJoc} title={vosTitle.joc} />}></Route>
           <Route path='/sobre-nosaltres' element={<About title={vosTitle.about}></About>}></Route>
           <Route path='/perfil' element={<Profile title={vosTitle.dashboard} Usuari></Profile>}></Route>
           <Route path='/plataforma/:id' element={<Plataforma title={vosTitle.plataforma}></Plataforma>}></Route>

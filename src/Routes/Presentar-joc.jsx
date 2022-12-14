@@ -9,7 +9,7 @@ import NotFound from "../assets/images/404.png";
 import "../assets/style/badge.css";
 import useTitle from "../Hooks/useTitle";
 import "../assets/style/Space.css";
-const PresentarJoc = ({ title }) => {
+const PresentarJoc = ({ title,editarJoc }) => {
 	const navigate = useNavigate('');
 	const [Videojoc, setVideojoc] = useState({});
 	const [VideojocTrobat, setVideojocTrobat] = useState("");
@@ -240,9 +240,11 @@ const PresentarJoc = ({ title }) => {
 									<path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
 								</svg>
 							</Button>{" "}
-							<Button title="Comprar ja" className="mx-2" variant="primary">
-								Comprar ya
-							</Button>{" "}
+											<Link className="btn btn-primary mx-2" to={"/pagament"} onClick={(e)=>{
+												editarJoc(Videojoc);
+											}} title="Comprar videojoc ja" >
+												Comprar ja
+											</Link>
 						</div>
 
 						<div className="my-3">{Usuari === null ? "" : formComentari()}</div>
