@@ -63,7 +63,7 @@ export default function PaymentMultiple(props) {
         <div className="col-12 col-lg-8">
           <div className="d-grid justify-content-center align-items-center w-100 h-auto">
             <button className="btn btn-primary w-25 my-1" onClick={() => navigate(-1)} title="Tornar arrere">
-              <i class="bi bi-arrow-left"></i>
+              <i className="bi bi-arrow-left"></i>
             </button>
             <h1>Comprar jocs del carret</h1>
             {/* <h3>Titol: {props?.getJoc()?.titul}</h3> */}
@@ -79,14 +79,14 @@ export default function PaymentMultiple(props) {
               </thead>
               <tbody>
 
-                {Carrito.map((videojoc, index) => {
+                {Carrito ? Carrito.map((videojoc, index) => {
                   return (<tr>
                     <td>{index + 1}</td>
                     <td>{videojoc.titul}</td>
                     <td><img src={videojoc.portada} className="w-50 h-auto" alt="" /></td>
                     <td>{videojoc.preu} €</td>
                   </tr>)
-                })}
+                }): null}
               </tbody>
             </table>
             <p className="fw-bolder">Preu Total: {pagament} €</p>

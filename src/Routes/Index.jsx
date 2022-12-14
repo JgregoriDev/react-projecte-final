@@ -14,12 +14,12 @@ import "../assets/style/thumbnails.css";
 import "../assets/style/Space.css";
 import "../assets/style/Hover.css";
 import BackToTop from "../components/ButtonScrollToTop";
-const Index = ({ afegirProducteAlCarret, title,editarJoc }) => {
+const Index = ({ afegirProducteAlCarret, title, editarJoc }) => {
 	useTitle(title);
 	const params = useParams("");
 	const [Videojocs, setVideojocs] = useState([]);
 	const [Login, setLogin] = useState(false);
-	
+
 	const [Show, setShow] = useState();
 	const [TotalPages, setTotalPages] = useState(1);
 	const numero = [];
@@ -34,7 +34,7 @@ const Index = ({ afegirProducteAlCarret, title,editarJoc }) => {
 	let ord = `&orden=${orden}` ?? "";
 	let min = new URLSearchParams(search).get("filtrarMin") ?? '';
 	let max = new URLSearchParams(search).get("filtrarMax") ?? '';
-	
+
 	useEffect(() => {
 		getVideojocsFromServer();
 	}, [pagina]);
@@ -43,12 +43,12 @@ const Index = ({ afegirProducteAlCarret, title,editarJoc }) => {
 		getVideojocsFromServer();
 	}, [filtrar, orden])
 	useEffect(() => {
-		const token=localStorage.getItem('token');
-		if(token) {
+		const token = localStorage.getItem('token');
+		if (token) {
 			setLogin(true);
 		}
 	}, [])
-	
+
 
 	const getVideojocsFromServer = async () => {
 		page = page <= 0 ? 1 : page;
@@ -108,13 +108,31 @@ const Index = ({ afegirProducteAlCarret, title,editarJoc }) => {
 		afegirProducteAlCarret(joc);
 
 	};
-
+	let anterior = page - 1;
+	let seguent = parseInt(page) + 1;
+	if (anterior <= 1)
+		anterior = 1;
+	if (seguent >= TotalPages)	
+		seguent = TotalPages;
+	numero.push(
+		<Link
+			className={`page-link`}
+			title={`Pàgina anterior ${anterior}`}
+			{...(anterior === 1 ? { disabled: true } : {})}
+			to={{
+				pathname: "",
+				search: `pagina=${anterior}${filt}${ord}`,
+			}}
+		>
+			&lt;
+		</Link>
+	);
 	for (let i = 1; i <= TotalPages; i++) {
 		numero.push(
 			<Link
-				key={i}
 				className={`page-link ${page === i ? "active" : ""}`}
 				onClick={() => scrollToTop()}
+				title={`Pàgina ${i}`}
 				to={{
 					pathname: "",
 					search: `pagina=${i}${filt}${ord}`,
@@ -124,12 +142,26 @@ const Index = ({ afegirProducteAlCarret, title,editarJoc }) => {
 			</Link>
 		);
 	}
+	numero.push(
+		<Link
+			title={`Pàgina següent ${seguent}`}
+			{...(seguent === TotalPages ? { disabled: true } : {})}
+			className={`page-link`}
+			onClick={() => scrollToTop()}
+			to={{
+				pathname: "",
+				search: `pagina=${seguent}${filt}${ord}`,
+			}}
+		>
+			&gt;
+		</Link>
+	);
 
 	return (
 		<div className="h-75-vh">
 			{/* Diapositives */}
 			<div className="container-fluid">
-				
+
 				<div className="row">
 					<div className="d-none d-lg-block col-12">
 						{page > 1 || page === undefined ? (
@@ -144,17 +176,17 @@ const Index = ({ afegirProducteAlCarret, title,editarJoc }) => {
 				<div className="row">
 					<div className="d-none d-lg-block col col-lg-2"></div>
 					<div className="col col-lg-8">
-							{/* Blog de busqueda i filtratge per preu només sera visible en mobil */}
-							<div className="d-block d-lg-none">
-								<SearchBar width={`w-100`}></SearchBar>
-								<FilterPreu width={`w-100`} />
-							</div>
-								<Filter props={[`/`, orden, filtrar]}></Filter>
+						{/* Blog de busqueda i filtratge per preu només sera visible en mobil */}
+						<div className="d-block d-lg-none">
+							<SearchBar width={`w-100`}></SearchBar>
+							<FilterPreu width={`w-100`} />
+						</div>
+						<Filter props={[`/`, orden, filtrar]}></Filter>
 
 
-							<h1 id="Ancora">Videojocs Pàgina {page}</h1>
-							{Videojocs.length < 1 ? infiniteSpinner() : ""}
-							<div className="row">
+						<h1 id="Ancora">Videojocs Pàgina {page}</h1>
+						{Videojocs.length < 1 ? infiniteSpinner() : ""}
+						<div className="row">
 							{Videojocs &&
 								Videojocs.map((joc, index) => (
 									<div
@@ -162,18 +194,18 @@ const Index = ({ afegirProducteAlCarret, title,editarJoc }) => {
 										key={joc.id}
 									>
 										<Link className="d-blockw-100 h-auto" to={`/videojoc/${joc.titul}`}>
-											
+
 											<div className="sombra">
-											<img
-												
-												loading="lazy"
-												src={joc.portada}
-												title={`${joc.titul}`}
-												className={`thumbnails sombra`}
-												alt=""
-											/>
+												<img
+
+													loading="lazy"
+													src={joc.portada}
+													title={`${joc.titul}`}
+													className={`thumbnails sombra`}
+													alt=""
+												/>
 											</div>
-											
+
 										</Link>
 										<h5 className="my-3">
 											<Link to={`/videojoc/${joc.titul}`}>
@@ -182,7 +214,7 @@ const Index = ({ afegirProducteAlCarret, title,editarJoc }) => {
 										</h5>
 										<p>Preu: {joc.preu}€</p>
 										<p>
-										<i class="bi bi-clock me-1	"></i>
+											<i className="bi bi-clock me-1	"></i>
 											Fecha Estreno:{" "}
 											{new Date(joc.fechaEstreno).toLocaleDateString()}
 										</p>
@@ -196,7 +228,7 @@ const Index = ({ afegirProducteAlCarret, title,editarJoc }) => {
 												variant="secondary"
 											>
 												<i className="bi bi-cart"></i>
-											
+
 											</Button>
 											{/* <form  className={`w-100 ${false?'d-none':''}`} action={`https://app.11josep.daw.iesevalorpego.es/api/v1/pago`} onSubmit={onSubmit} method="POST">
 											<input type="hidden" name="arrayProductes" value={JSON.stringify({"nom":joc.titul, "preu":joc.preu})} />
@@ -206,9 +238,9 @@ const Index = ({ afegirProducteAlCarret, title,editarJoc }) => {
 												Comprar ja
 											</button> 
 										</form> */}
-											<Link className="btn btn-primary mx-2" to={"/pagament"} onClick={(e)=>{
+											<Link className="btn btn-primary mx-2" to={"/pagament"} onClick={(e) => {
 												editarJoc(joc);
-											}} {...(!Login ? {disabled: true} : {})} title="Comprar videojoc ja" >
+											}} {...(!Login ? { disabled: true } : {})} title="Comprar videojoc ja" >
 												Comprar ja
 											</Link>
 										</div>
@@ -219,22 +251,22 @@ const Index = ({ afegirProducteAlCarret, title,editarJoc }) => {
 							) : (
 								""
 							)}
-							</div>
-							<div className="py-3 d-flex justify-content-center">
-								<nav aria-label="Page navigation example">
-									<ul className="pagination d-flex m-0">{numero}</ul>
-								</nav>
-							</div>
 						</div>
-						<div className="d-none d-lg-flex flex-column col col-lg-2">
+						<div className="py-3 d-flex justify-content-center">
+							<nav aria-label="Page navigation example">
+								<ul className="pagination d-flex m-0">{numero}</ul>
+							</nav>
+						</div>
+					</div>
+					<div className="d-none d-lg-flex flex-column col col-lg-2">
 						{/* Blog de busqueda i filtratge per preu només sera visible en tamany tablet */}
 						<SearchBar width={`w-75`}></SearchBar>
 						<FilterPreu width={`w-75`} />
 					</div>
-					</div>
 				</div>
-				<BackToTop></BackToTop>
 			</div>
+			<BackToTop></BackToTop>
+		</div>
 	);
 };
 

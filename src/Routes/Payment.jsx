@@ -56,7 +56,7 @@ export default function Payment(props) {
         <div className="col-12 col-lg-8">
           <div className="d-grid justify-content-center align-items-center w-100 h-auto">
             <button className="btn btn-primary w-25 my-1" onClick={()=>navigate(-1)} title="Tornar arrere">
-              <i class="bi bi-arrow-left"></i>
+              <i className="bi bi-arrow-left"></i>
             </button>
             <h1>Comprar joc</h1>
             <h3>Titol: {props?.getJoc()?.titul}</h3>
