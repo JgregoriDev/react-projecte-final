@@ -17,7 +17,7 @@ const PresentarJoc = ({ title,editarJoc }) => {
 	const [Comentaris, setComentaris] = useState([]);
 	const [NComentaris, setNComentaris] = useState(0);
 	const [Carrito, setCarrito] = useState([]);
-	const [Usuari, setUsuari] = useState(null);
+	const [Usuari, setUsuari] = useState({login:false,email:""});
 	const [Missatge, setMissatge] = useState('');
 	const [errorMissatge, seterrorMissatge] = useState('');
 	const [errorVotacio, seterrorVotacio] = useState('');
@@ -41,7 +41,7 @@ const PresentarJoc = ({ title,editarJoc }) => {
 	const conseguirToken = () => {
 		if (localStorage.getItem("token")) {
 			const token = localStorage.getItem("token");
-			setUsuari(token.email);
+			setUsuari({login:true,email:token.email});
 		}
 	};
 
@@ -75,7 +75,6 @@ const PresentarJoc = ({ title,editarJoc }) => {
 		seterrorVotacio("");
 		seterrorMissatge("");
 		const numero = parseInt(e.target[0].value);
-		console.log("🚀 ~ file: Presentar-joc.jsx ~ line 69 ~ onSubmit ~ isNaN(numero)", Number.isInteger(numero))
 		if (!Number.isInteger(numero)) {
 			enviar = false;
 			seterrorVotacio("El valor de la votacio no pot ser text");
@@ -112,7 +111,6 @@ const PresentarJoc = ({ title,editarJoc }) => {
 
 	const peticion = async (e) => {
 		const { id, email, token } = JSON.parse(localStorage.getItem("token"));
-		console.trace(token);
 		let headersList = {
 			"Accept": "*/*",
 			"Authorization": `"Bearer ${token}`,
@@ -216,7 +214,7 @@ const PresentarJoc = ({ title,editarJoc }) => {
 									)
 								})}</p>
 								<p>
-									<b>Fecha llançament</b>:{" "}
+									<b>Fecha llançament</b>:
 									{new Date(Videojoc.fechaEstreno).toLocaleDateString()}
 								</p>
 								<p>
@@ -240,7 +238,7 @@ const PresentarJoc = ({ title,editarJoc }) => {
 									<path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
 								</svg>
 							</Button>{" "}
-											<Link className="btn btn-primary mx-2" to={"/pagament"} onClick={(e)=>{
+											<Link className={`btn btn-primary mx-2 ${!Usuari?.login ? "d-none":""}`} to={"/pagament"} onClick={(e)=>{
 												editarJoc(Videojoc);
 											}} title="Comprar videojoc ja" >
 												Comprar ja

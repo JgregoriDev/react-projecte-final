@@ -238,9 +238,9 @@ const Index = ({ afegirProducteAlCarret, title, editarJoc }) => {
 												Comprar ja
 											</button> 
 										</form> */}
-											<Link className="btn btn-primary mx-2" to={"/pagament"} onClick={(e) => {
+											<Link className={`btn btn-primary mx-2 ${!Login?"d-none":''}`} to={"/pagament"} onClick={(e) => {
 												editarJoc(joc);
-											}} {...(!Login ? { disabled: true } : {})} title="Comprar videojoc ja" >
+											}} title="Comprar videojoc ja" >
 												Comprar ja
 											</Link>
 										</div>

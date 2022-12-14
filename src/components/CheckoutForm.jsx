@@ -57,8 +57,9 @@ export default function CheckoutForm() {
       // return_url: `https://11josep.daw.iesevalorpego.es/FAQ`,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: `https://11josep.daw.iesevalorpego.es/`,
+        return_url: `https://11josep.daw.iesevalorpego.es/acceptat`,
       },
+      
     });
 
     // This point will only be reached if there is an immediate error when
