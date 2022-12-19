@@ -46,7 +46,7 @@ const PagoRealitzat = () => {
       <div className="row">
         <div className="col-12 col-lg-2"></div>
         <div className="col-12 col-lg-8">
-        <h1>Pago realitzat de manera satisfactoria</h1>
+        <h1 className='text-success'>Pagament realitzat de manera satisfactoria</h1>
         </div>
         <div className="col-12 col-lg-2"></div>
       </div>

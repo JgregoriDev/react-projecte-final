@@ -12,9 +12,9 @@ const plan = {
 const SignupSchema = yup.object().shape({
   email: yup
     .string()
-    .required("El camp email es un camp requerit")
-    .min(3, "El camp email ha de contindre mínim 3 caràcters")
-    .max(200, "El camp email ha de tindre màxim 200 caràcters"),
+    .required("El camp nom usuari es un camp requerit")
+    .min(3, "El camp nom usuari ha de contindre mínim 3 caràcters")
+    .max(200, "El camp nom usuari ha de tindre màxim 200 caràcters"),
   passwordA: yup
     .string()
     .required("El camp contrasenya es un camp requerit")
@@ -111,7 +111,7 @@ const Registrar = () => {
           <h1>Usuaris</h1>
           <form action="" onSubmit={handleSubmit(onSubmit)} method="post">
             <div className="mb-3">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email">Nom usuari</label>
               <input type="text" className='form-control' {...register("email")} />
               {errors.email && <small className='text-danger'>{errors.email.message}</small>}
             </div>

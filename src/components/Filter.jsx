@@ -27,7 +27,7 @@ const Filter = ({props}) => {
 						hash: "#Orden",
 					}}
 				>
-					<i className="bi bi-sort-numeric-up"></i>Preu
+					<i className="bi bi-sort-numeric-up"></i>Preu Ascendent
 				</Link>
 				<Link
 					className={`btn btn-secondary  ${props.at(-1)==="preu"  && props.at(-2)==="DESC"?"d-none":""}` }
@@ -38,7 +38,7 @@ const Filter = ({props}) => {
 						hash: "#Orden",
 					}}
 				>
-					<i className="bi bi-sort-numeric-down d-inline"></i>Preu 
+					<i className="bi bi-sort-numeric-down d-inline"></i>Preu Descendent
 				</Link>
 				<Link
 					className={`btn btn-secondary  ${props.at(-1)==="fechaEstreno" && props.at(-2)==="ASC"?"d-none":""}`}
@@ -50,7 +50,7 @@ const Filter = ({props}) => {
 					}}
 				>
 					<i className="bi bi-sort-numeric-down d-inline"></i>
-					Data
+					Data Ascendent
 				</Link>
 				<Link
 					className={`btn btn-secondary  ${props.at(-1)==="fechaEstreno" && props.at(-2)==="DESC"?"d-none":""}`}
@@ -62,7 +62,7 @@ const Filter = ({props}) => {
 					}}
 				>
 					<i className="bi bi-sort-numeric-down d-inline"></i>
-					Data
+					Data Descendent
 				</Link>
 				{/* <Link
 					className={`btn btn-secondary  ${filtrat==="fechaEstreno"  && props.at(-2)==="DESC"?"d-none":""}`}

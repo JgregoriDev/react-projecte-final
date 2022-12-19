@@ -112,7 +112,7 @@ const Index = ({ afegirProducteAlCarret, title, editarJoc }) => {
 	let seguent = parseInt(page) + 1;
 	if (anterior <= 1)
 		anterior = 1;
-	if (seguent >= TotalPages)	
+	if (seguent >= TotalPages)
 		seguent = TotalPages;
 	numero.push(
 		<Link
@@ -215,7 +215,7 @@ const Index = ({ afegirProducteAlCarret, title, editarJoc }) => {
 										<p>Preu: {joc.preu}€</p>
 										<p>
 											<i className="bi bi-clock me-1	"></i>
-											Fecha Estreno:{" "}
+											Data d'estrena:{" "}
 											{new Date(joc.fechaEstreno).toLocaleDateString()}
 										</p>
 										<div className="d-flex justify-content-around my-2 py-2">
@@ -238,7 +238,7 @@ const Index = ({ afegirProducteAlCarret, title, editarJoc }) => {
 												Comprar ja
 											</button> 
 										</form> */}
-											<Link className={`btn btn-primary mx-2 ${!Login?"d-none":''}`} to={"/pagament"} onClick={(e) => {
+											<Link className={`btn btn-primary mx-2 ${!Login ? "d-none" : ''}`} to={"/pagament"} onClick={(e) => {
 												editarJoc(joc);
 											}} title="Comprar videojoc ja" >
 												Comprar ja
