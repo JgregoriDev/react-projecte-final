@@ -9,9 +9,25 @@
   top: 80vh;
   border-radius: 15px;
 
-  font-size: 0.8rem;
+  font-size: 1.2rem;
   left: 45%;
   height: 50px;
   width: 250px;
   z-index: 5;
+}
+@media screen and (min-width: 0px) and (max-width:512px) {
+  .missatge{
+    left: 15%;
+    height: 100px;
+    width: 250px;
+    font-size: 0.75rem;
+  }
+}
+@media screen and (min-width: 513px) and (max-width:1080px) {
+  .missatge{
+    left: 35%;
+    height: 120px;
+    width: 250px;
+    font-size: 1rem;
+  }
 }

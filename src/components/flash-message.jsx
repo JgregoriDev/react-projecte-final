@@ -7,13 +7,13 @@ export const Flash = () => {
 	let [type, setType] = useState("");
 
 	useEffect(() => {
-		Bus.addListener("flash", ({ message, type }) => {
+		window.addListener("flash", ({ message, type }) => {
 			setVisibility(true);
 			setMessage(message);
 			setType(type);
 			setTimeout(() => {
 				setVisibility(false);
-			}, 4000);
+			}, 2000);
 		});
 	}, []);
 
