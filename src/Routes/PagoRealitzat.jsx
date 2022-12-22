@@ -22,6 +22,9 @@ const PagoRealitzat = () => {
           });
         }
       }
+      setTimeout(() =>{
+        navigate("/");
+      },1200);
       //  InsertarPago()
       //  .then((result) => {
       //    console.log(result);

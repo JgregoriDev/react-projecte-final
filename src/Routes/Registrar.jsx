@@ -68,7 +68,7 @@ const Registrar = () => {
       }
       if (result?.code === 500) {
         if (result?.message.includes("Duplicate entry")){
-          setErrorsMissatges({ respostaServer: "Aquest correu ja està en ús" });
+          setErrorsMissatges({ respostaServer: "Aquest nom d'usuari ja està en ús" });
 
         }
         setPersonalization("text-danger");
